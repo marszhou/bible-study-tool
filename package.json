@@ -186,6 +186,7 @@
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
+    "antd": "^2.13.7",
     "devtron": "^1.4.0",
     "electron-debug": "^1.2.0",
     "font-awesome": "^4.7.0",
