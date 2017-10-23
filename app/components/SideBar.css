@@ -1,6 +1,11 @@
 .sidebar {
-
+  background-color:rgba(0, 0, 0, 0.404)
 }
 .sidebarPrimaryItems {
-
+  position: absolute;
+  top: 0;
+}
+.sidebarToolItems {
+  position: absolute;
+  bottom: 0;
 }

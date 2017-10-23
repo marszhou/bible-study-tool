@@ -3,6 +3,7 @@ import {React, PropTypes} from 'app/bootstrap'; // eslint-disable-line
 export const ItemPropType = PropTypes.shape({
   text: PropTypes.string,
   icon: PropTypes.string,
+  key: PropTypes.string
 });
 
 const SideBarItem = () => {
