@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import { DatePicker, Button, Modal } from "antd";
 import styles from "./Home.css";
 import NavPane from "./NavPane";
+import GlobalComputedCss from './GlobalComputedCss';
 
 export default class Home extends Component {
   props: {};
@@ -32,6 +33,8 @@ export default class Home extends Component {
     return (
       <div>
         <div className={styles.container} data-tid="container">
+          <GlobalComputedCss />
+          <div className="my-class">mmm</div>
           <NavPane />
           <DatePicker />
           <Button type="primary" onClick={this.showModal}>
@@ -47,6 +50,7 @@ export default class Home extends Component {
             <p>Some contents...</p>
             <p>Some contents...</p>
           </Modal>
+          <i className="fa fa-address-book" aria-hidden="true" />
         </div>
       </div>
     );
