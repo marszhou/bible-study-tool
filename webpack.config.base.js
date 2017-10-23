@@ -38,6 +38,9 @@ export default {
       path.join(__dirname, 'app'),
       'node_modules',
     ],
+    alias: {
+      'app': __dirname + '/app'
+    }
   },
 
   plugins: [
