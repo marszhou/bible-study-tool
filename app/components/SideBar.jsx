@@ -19,24 +19,27 @@ export default class extends React.Component {
   };
 
   render() {
+    const size = (this.props.style.width || 48) * 0.8;
     return (
       <div
-        className={cx({ [styles.sidebar]: true })}
-        style={Object.assign({position: 'absolute', top: 0, bottom: 0}, this.props.style)}
+        className={cx({ [styles.sideBar]: true })}
+        style={Object.assign(
+          { position: "absolute", top: 0, bottom: 0 },
+          this.props.style,
+        )}
       >
-        <div className={styles.sidebarPrimaryItems}>
-        2
+        <div className={styles.sideBarPrimaryItems}>
           {this.props.primaryItems.map(item => (
             <SideBarItem
               key={item.key}
               item={item}
               type="primary"
               highlighted={false}
+              style={{ fontSize: size * 0.5, lineHeight: size+'px', height: size, width: size }}
             />
           ))}
         </div>
-        <div className={styles.sidebarToolItems}>
-        1
+        <div className={styles.sideBarToolItems}>
           {this.props.toolItems.map(item => (
             <SideBarItem key={item.key} item={item} type="tool" />
           ))}
