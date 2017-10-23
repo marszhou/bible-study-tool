@@ -4,7 +4,7 @@ import React, { Component } from "react";
 // import { DatePicker, Button, Modal } from "antd";
 import styles from "./Home.css";
 // import NavPane from "./NavPane";
-// import GlobalComputedCss from './GlobalComputedCss';
+import GlobalComputedCss from './GlobalComputedCss';
 import SideBar from "./SideBar";
 
 export default class Home extends Component {
@@ -21,7 +21,8 @@ export default class Home extends Component {
     return (
       <div>
         <div className={styles.container} data-tid="container">
-          <SideBar />
+          <SideBar style={{width: 48}}/>
+          <GlobalComputedCss />
         </div>
       </div>
     );
