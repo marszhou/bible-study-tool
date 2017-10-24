@@ -7,14 +7,14 @@ export default class extends React.Component {
     primaryItems: PropTypes.arrayOf(ItemPropType),
     toolItems: PropTypes.arrayOf(ItemPropType),
     style: PropTypes.object,
-    onItemClick: PropTypes.func
+    onItemClick: PropTypes.func,
   };
 
   static defaultProps = {
     style: {},
     primaryItems: [],
     toolItems: [],
-    onItemClick: null
+    onItemClick: null,
   };
 
   constructor(props) {
@@ -36,9 +36,9 @@ export default class extends React.Component {
       });
     }
 
-    const { onItemClick } = this.props
-    if (onItemClick && typeof onItemClick === 'function' ) {
-      onItemClick(type, index, event.nativeEvent)
+    const { onItemClick } = this.props;
+    if (onItemClick && typeof onItemClick === "function") {
+      onItemClick(type, index, event.nativeEvent);
     }
   }
 
