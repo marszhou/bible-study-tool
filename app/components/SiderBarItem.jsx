@@ -7,9 +7,14 @@ export const ItemPropType = PropTypes.shape({
   key: PropTypes.string,
 });
 
-const SideBarItem = ({ item, style }) => {
+const SideBarItem = ({ item, style, highlighted, onClick = () => {} }) => {
   return (
-    <div className={styles.sideBarItem}>
+    <div
+      className={cx({
+        [styles.sideBarItem]: true,
+        [styles.highlightedItem]: highlighted,
+      })}
+    >
       <i
         className={cx({
           fa: true,
@@ -18,6 +23,7 @@ const SideBarItem = ({ item, style }) => {
         })}
         aria-hidden="true"
         style={style}
+        onClick={onClick}
       />
     </div>
   );
@@ -30,11 +36,13 @@ SideBarItem.propTypes = {
   highlighted: PropTypes.bool,
   type: PropTypes.oneOf(ItemTypes),
   style: PropTypes.object,
+  onClick: PropTypes.func,
 };
 
 SideBarItem.defaultProps = {
   highlighted: false,
   type: ItemTypes[0],
   style: {},
+  onClick: null,
 };
 export default SideBarItem;

@@ -23,27 +23,40 @@ export default class Home extends Component {
         <div className={styles.container} data-tid="container">
           <SideBar
             style={{ width: 48 }}
+            onItemClick={(type, index) => console.log(type, index)}
             primaryItems={[
               {
-                text: "1",
+                text: "圣经",
                 icon: "book",
                 key: "book",
               },
               {
-                text: "2",
+                text: "搜索",
                 icon: "search",
-                key: "search"
+                key: "search",
               },
               {
-                text: "3",
+                text: "我的收藏",
                 icon: "star",
-                key: "favorite"
+                key: "favorite",
               },
               {
-                text: "4",
+                text: "原文字典",
                 icon: "font",
-                key: "origin"
-              }
+                key: "origin",
+              },
+            ]}
+            toolItems={[
+              {
+                text: "GitHub",
+                icon: "github",
+                key: "github",
+              },
+              {
+                text: "设置",
+                icon: "cog",
+                key: "preference",
+              },
             ]}
           />
           <GlobalComputedCss />
