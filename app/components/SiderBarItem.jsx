@@ -7,12 +7,13 @@ export const ItemPropType = PropTypes.shape({
   key: PropTypes.string,
 });
 
-const SideBarItem = ({ item, style, highlighted, onClick = () => {} }) => {
+const SideBarItem = ({ item, style, highlighted, type, onClick = () => {} }) => {
   return (
     <div
       className={cx({
         [styles.sideBarItem]: true,
         [styles.highlightedItem]: highlighted,
+        [type]: true
       })}
     >
       <i
