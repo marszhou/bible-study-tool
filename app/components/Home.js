@@ -6,6 +6,7 @@ import styles from "./Home.css";
 // import NavPane from "./NavPane";
 import GlobalComputedCss from "./GlobalComputedCss";
 import SideBar from "./SideBar";
+import BibleSelector from "./bible-selector/BibleSelector"
 
 export default class Home extends Component {
   props: {};
@@ -59,6 +60,9 @@ export default class Home extends Component {
               },
             ]}
           />
+          <div className='content'>
+            <BibleSelector />
+          </div>
           <GlobalComputedCss />
         </div>
       </div>
