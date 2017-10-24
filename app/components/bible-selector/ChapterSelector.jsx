@@ -5,12 +5,14 @@ class ChapterSelector extends React.Component {
   static propTypes = {
     count: PropTypes.number,
     selected: PropTypes.number,
+    visible: PropTypes.boolean,
     onSelect: PropTypes.function,
   };
 
   static defaultProps = {
     count: 0,
     selected: 0, // start from 1
+    visible: false,
     onSelect: () => {},
   };
 
@@ -35,12 +37,12 @@ class ChapterSelector extends React.Component {
   }
 
   render() {
-    return (
+    return this.props.visible ? (
       <div>
         {this.renderTitle()}
         {this.renderItems()}
       </div>
-    );
+    ) : null;
   }
 }
 
