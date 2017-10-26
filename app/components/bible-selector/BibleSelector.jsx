@@ -9,7 +9,7 @@ class BibleSelector extends React.Component {
     chapter: PropTypes.number,
     verse: PropTypes.number,
     bookGroups: PropTypes.array,
-    onChange: PropTypes.function,
+    onChange: PropTypes.func,
   };
 
   static defaultProps = {
