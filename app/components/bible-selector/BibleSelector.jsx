@@ -2,21 +2,22 @@ import { React, PropTypes, cx } from "app/bootstrap"; // eslint-disable-line
 import BookSelector from "./BookSelector";
 import ChapterSelector from "./ChapterSelector";
 import VerseSelector from "./VerseSelector";
+import { PropType_BookGroup } from './BookGroup'
 
 class BibleSelector extends React.Component {
   static propTypes = {
-    book: PropTypes.string,
+    bookId: PropTypes.number,
     chapter: PropTypes.number,
     verse: PropTypes.number,
-    bookGroups: PropTypes.array,
+    bookGroups: PropTypes.arrayOf(PropType_BookGroup),
     onChange: PropTypes.func,
   };
 
   static defaultProps = {
-    book: null,
+    bookId: -1,
     chapter: 0,
     verse: 0,
-    bookGroups: null,
+    bookGroups: [],
     onChange: () => {},
   };
 
@@ -43,13 +44,13 @@ class BibleSelector extends React.Component {
   }
 
   render() {
-    const { book: bookId, chapter, verse, bookGroups } = this.props;
+    const { bookId, chapter, verse, bookGroups } = this.props;
     const book = this.getBookFromID(bookId);
 
     return (
       <div>
         <BookSelector
-          book={book}
+          currentBookId={bookId}
           bookGroups={bookGroups}
           onSelect={this.handleBookSelect}
         />

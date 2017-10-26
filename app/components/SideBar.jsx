@@ -1,11 +1,11 @@
 import { React, PropTypes, cx } from "app/bootstrap"; // eslint-disable-line
 import styles from "./SideBar.css";
-import SideBarItem, { ItemPropType } from "./SiderBarItem";
+import SideBarItem, { PropType_Item } from "./SiderBarItem";
 
 export default class extends React.Component {
   static propTypes = {
-    primaryItems: PropTypes.arrayOf(ItemPropType),
-    toolItems: PropTypes.arrayOf(ItemPropType),
+    primaryItems: PropTypes.arrayOf(PropType_Item),
+    toolItems: PropTypes.arrayOf(PropType_Item),
     style: PropTypes.object,
     onItemClick: PropTypes.func,
   };

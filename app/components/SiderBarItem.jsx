@@ -1,7 +1,7 @@
 import { React, PropTypes, cx } from "app/bootstrap"; // eslint-disable-line
 import styles from "./SideBar.css";
 
-export const ItemPropType = PropTypes.shape({
+export const PropType_Item = PropTypes.shape({
   text: PropTypes.string,
   icon: PropTypes.string,
   key: PropTypes.string,
@@ -33,7 +33,7 @@ const SideBarItem = ({ item, style, highlighted, type, onClick = () => {} }) => 
 export const ItemTypes = ["primary", "tool"];
 
 SideBarItem.propTypes = {
-  item: ItemPropType.isRequired,
+  item: PropType_Item.isRequired,
   highlighted: PropTypes.bool,
   type: PropTypes.oneOf(ItemTypes),
   style: PropTypes.object,
