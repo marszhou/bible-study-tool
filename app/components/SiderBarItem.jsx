@@ -1,5 +1,5 @@
-import { React, PropTypes, cx } from "app/bootstrap"; // eslint-disable-line
-import styles from "./SideBar.css";
+import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
+import styles from './SideBar.css';
 
 export const PropType_Item = PropTypes.shape({
   text: PropTypes.string,
@@ -7,19 +7,25 @@ export const PropType_Item = PropTypes.shape({
   key: PropTypes.string,
 });
 
-const SideBarItem = ({ item, style, highlighted, type, onClick = () => {} }) => {
+const SideBarItem = ({
+  item,
+  style,
+  highlighted,
+  type,
+  onClick = () => {},
+}) => {
   return (
     <div
       className={cx({
         [styles.sideBarItem]: true,
         [styles.highlightedItem]: highlighted,
-        [type]: true
+        [type]: true,
       })}
     >
       <i
         className={cx({
           fa: true,
-          ["fa-" + item.icon]: true,
+          ['fa-' + item.icon]: true,
           [styles.sideBarItemIcon]: true,
         })}
         aria-hidden="true"
@@ -30,7 +36,7 @@ const SideBarItem = ({ item, style, highlighted, type, onClick = () => {} }) => 
   );
 };
 
-export const ItemTypes = ["primary", "tool"];
+export const ItemTypes = ['primary', 'tool'];
 
 SideBarItem.propTypes = {
   item: PropType_Item.isRequired,

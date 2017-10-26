@@ -1,8 +1,8 @@
-import { React, PropTypes, cx } from "app/bootstrap"; // eslint-disable-line
-import BookSelector from "./BookSelector";
-import ChapterSelector from "./ChapterSelector";
-import VerseSelector from "./VerseSelector";
-import { PropType_BookGroup } from './BookGroup'
+import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
+import BookSelector from './BookSelector';
+import ChapterSelector from './ChapterSelector';
+import VerseSelector from './VerseSelector';
+import { PropType_BookGroup } from './BookGroup';
 
 class BibleSelector extends React.Component {
   static propTypes = {

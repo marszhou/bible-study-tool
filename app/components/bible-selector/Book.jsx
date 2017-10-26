@@ -1,4 +1,4 @@
-import { React, PropTypes, cx } from "app/bootstrap"; // eslint-disable-line
+import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
 
 export const PropType_Book = PropTypes.shape({
   id: PropTypes.number,
@@ -9,7 +9,7 @@ export const PropType_Book = PropTypes.shape({
 const Book = ({ book, highlighted, onClick }) => {
   return (
     <li className={cx({ highlighted })}>
-      <span onClick={onClick} role="button" tabIndex='0'>
+      <span onClick={onClick} role="button" tabIndex="0">
         {book.name}
       </span>
     </li>

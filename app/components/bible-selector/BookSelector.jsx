@@ -1,5 +1,5 @@
-import { React, PropTypes, cx } from "app/bootstrap"; // eslint-disable-line
-import BookGroup, { PropType_BookGroup } from "./BookGroup";
+import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
+import BookGroup, { PropType_BookGroup } from './BookGroup';
 
 class BookSelector extends React.Component {
   static propTypes = {

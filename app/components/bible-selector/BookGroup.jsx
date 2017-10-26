@@ -1,5 +1,5 @@
-import { React, PropTypes, cx } from "app/bootstrap"; // eslint-disable-line
-import Book, { PropType_Book } from "./Book";
+import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
+import Book, { PropType_Book } from './Book';
 
 const BookGroup = ({ group, currentBookId, onSelect }) => {
   return (
@@ -28,12 +28,12 @@ export const PropType_BookGroup = PropTypes.shape({
 BookGroup.propTypes = {
   group: PropType_BookGroup.isRequired,
   currentBookId: PropTypes.number,
-  onSelect: PropTypes.func
+  onSelect: PropTypes.func,
 };
 
 BookGroup.defaultProps = {
   currentBookId: -1,
-  onSelect: () => {}
+  onSelect: () => {},
 };
 
 export default BookGroup;
