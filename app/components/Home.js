@@ -8,6 +8,8 @@ import GlobalComputedCss from './GlobalComputedCss';
 import SideBar from './SideBar';
 import BibleSelector from './bible-selector/BibleSelector';
 
+import Modal from './common/Modal';
+
 export default class Home extends Component {
   props: {};
   state: { visible: boolean };
@@ -113,6 +115,9 @@ export default class Home extends Component {
               ]}
             />
           </div>
+          <Modal>
+              hahah
+          </Modal>
           <GlobalComputedCss />
         </div>
       </div>
