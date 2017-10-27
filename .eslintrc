@@ -34,7 +34,8 @@
     "react/prefer-stateless-function": "off",
     "react/no-unused-prop-types": 1,
     "react/no-array-index-key": 0,
-    "jsx-a11y/label-has-for": 0
+    "jsx-a11y/label-has-for": 0,
+    "no-unused-vars": 1
   },
   "plugins": [
     "flowtype",
