@@ -18,7 +18,7 @@ const Book = ({ book, highlighted, onClick }) => {
 
 Book.propTypes = {
   book: PropType_Book.isRequired,
-  highlighted: PropTypes.boolean,
+  highlighted: PropTypes.bool,
   onClick: PropTypes.func,
 };
 
