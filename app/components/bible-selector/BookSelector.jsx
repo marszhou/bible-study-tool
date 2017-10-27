@@ -6,23 +6,26 @@ class BookSelector extends React.Component {
   static propTypes = {
     currentBookId: PropTypes.number,
     bookGroups: PropTypes.arrayOf(PropType_BookGroup),
+    classNames: PropTypes.array,
     onSelect: PropTypes.func,
   };
 
   static defaultProps = {
     currentBookId: -1,
     bookGroups: [],
+    classNames: [],
     onSelect: () => {},
   };
 
   render() {
-    const { bookGroups, currentBookId, onSelect } = this.props;
+    const { bookGroups, currentBookId, classNames, onSelect } = this.props;
 
     return (
       <div
         className={cx({
           [styles.column]: true,
           [styles.bookSelector]: true,
+          ...classNames
         })}
       >
         <div className={styles.title}>

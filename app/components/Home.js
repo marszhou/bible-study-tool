@@ -64,6 +64,9 @@ export default class Home extends Component {
           />
           <div className="content">
             <BibleSelector
+              columnClassNames={{
+                'client-height': true
+              }}
               bookGroups={[
                 {
                   id: 1,
