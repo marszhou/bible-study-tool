@@ -12,17 +12,17 @@ import Modal from './common/Modal';
 
 export default class Home extends Component {
   props: {};
-  state: { visible: boolean, bookId: number };
+  state: { visible: boolean, bookId: number, listStyle: string };
   constructor(props: {}) {
     super(props);
     this.state = {
       visible: false,
-      bookId: 0
+      bookId: 0,
+      listStyle: 'list'
     };
   }
 
   handleBibleSelectorChange = (change: {}) => {
-    console.log(change);
     this.setState(change)
   };
 
@@ -72,10 +72,13 @@ export default class Home extends Component {
             <BibleSelector
               bookId={this.state.bookId}
               onChange={this.handleBibleSelectorChange}
+              bookListStyle={this.state.listStyle}
+              onBookListStyleToggle={() => this.setState({
+                listStyle: this.state.listStyle === 'list' ? 'grid' : 'list'
+              })}
               columnClassNames={{
                 'client-height': true,
               }}
-              bookListStyle="grid"
               bookGroups={[
                 {
                   id: 1,

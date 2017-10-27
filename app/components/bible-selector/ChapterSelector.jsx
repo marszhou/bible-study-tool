@@ -1,18 +1,21 @@
 import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
 import { Button } from 'antd';
+import styles from './BibleSelector.css';
 
 class ChapterSelector extends React.Component {
   static propTypes = {
     count: PropTypes.number,
     selected: PropTypes.number,
-    visible: PropTypes.boolean,
-    onSelect: PropTypes.function,
+    visible: PropTypes.bool,
+    classNames: PropTypes.object,
+    onSelect: PropTypes.func,
   };
 
   static defaultProps = {
     count: 0,
     selected: 0, // start from 1
-    visible: false,
+    visible: true,
+    classNames: [],
     onSelect: () => {},
   };
 
@@ -37,8 +40,16 @@ class ChapterSelector extends React.Component {
   }
 
   render() {
+    const {classNames } = this.props
+
     return this.props.visible ? (
-      <div>
+      <div
+        className={cx({
+          [styles.column]: true,
+          [styles.bookSelector]: true,
+          ...classNames,
+        })}
+      >
         {this.renderTitle()}
         {this.renderItems()}
       </div>

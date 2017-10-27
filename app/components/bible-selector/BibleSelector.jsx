@@ -13,6 +13,7 @@ class BibleSelector extends React.Component {
     columnClassNames: PropTypes.object,
     bookListStyle: PropTypes.oneOf(['list', 'grid']),
     onChange: PropTypes.func,
+    onBookListStyleToggle: PropTypes.func
   };
 
   static defaultProps = {
@@ -23,6 +24,7 @@ class BibleSelector extends React.Component {
     columnClassNames: {},
     bookListStyle: 'list',
     onChange: () => {},
+    onBookListStyleToggle: () => {}
   };
 
   handleBookSelect = book => {
@@ -48,21 +50,22 @@ class BibleSelector extends React.Component {
   }
 
   render() {
-    const { bookId, chapter, verse, bookGroups, columnClassNames, bookListStyle } = this.props;
+    const { bookId, chapter, verse, bookGroups, columnClassNames, bookListStyle, onBookListStyleToggle } = this.props;
     const book = this.getBookFromID(bookId);
 
     return (
-      <div>
+      <div style={{display: 'flex'}}>
         <BookSelector
           currentBookId={bookId}
           bookGroups={bookGroups}
           classNames={columnClassNames}
           listStyle={bookListStyle}
           onSelect={this.handleBookSelect}
+          onListStyleToggle={onBookListStyleToggle}
         />
         {book ? (
           <ChapterSelector
-            count={book.chapters}
+            count={book.chapterCount}
             selected={chapter}
             classNames={columnClassNames}
             onSelect={this.handleChapterSelect}

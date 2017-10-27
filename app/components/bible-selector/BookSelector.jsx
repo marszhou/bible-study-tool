@@ -9,6 +9,7 @@ class BookSelector extends React.Component {
     classNames: PropTypes.object,
     listStyle: PropTypes.oneOf(['list', 'grid']),
     onSelect: PropTypes.func,
+    onListStyleToggle: PropTypes.func,
   };
 
   static defaultProps = {
@@ -17,28 +18,37 @@ class BookSelector extends React.Component {
     classNames: [],
     listStyle: 'list',
     onSelect: () => {},
+    onListStyleToggle: () => {},
   };
 
   render() {
-    const { bookGroups, currentBookId, classNames, listStyle, onSelect } = this.props;
+    const {
+      bookGroups,
+      currentBookId,
+      classNames,
+      listStyle,
+      onSelect,
+      onListStyleToggle
+    } = this.props;
 
     return (
       <div
         className={cx({
           [styles.column]: true,
           [styles.bookSelector]: true,
-          ...classNames
+          ...classNames,
         })}
       >
         <div className={styles.title}>
           <div className={styles.left}>
-            <span style={{ paddingLeft: 5, fontWeight: "bold" }}>书</span>
+            <span style={{ paddingLeft: 5, fontWeight: 'bold' }}>书</span>
           </div>
           <div className={styles.right}>
             <i
-              className="fa fa-th"
+              className={`fa fa-${listStyle !=='list' ? 'list' : 'th'}`}
               aria-hidden="true"
               style={{ paddingRight: 5 }}
+              onClick={onListStyleToggle}
             />
           </div>
           <div className={styles.content}>
