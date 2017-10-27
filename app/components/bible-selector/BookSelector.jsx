@@ -6,7 +6,7 @@ class BookSelector extends React.Component {
   static propTypes = {
     currentBookId: PropTypes.number,
     bookGroups: PropTypes.arrayOf(PropType_BookGroup),
-    classNames: PropTypes.array,
+    classNames: PropTypes.object,
     onSelect: PropTypes.func,
   };
 
@@ -53,14 +53,16 @@ class BookSelector extends React.Component {
             </div>
           </div>
         </div>
-        {bookGroups.map(group => (
-          <BookGroup
-            key={group.id}
-            group={group}
-            currentBookId={currentBookId}
-            onSelect={onSelect}
-          />
-        ))}
+        <div className="list-content">
+          {bookGroups.map(group => (
+            <BookGroup
+              key={group.id}
+              group={group}
+              currentBookId={currentBookId}
+              onSelect={onSelect}
+            />
+          ))}
+        </div>
       </div>
     );
   }

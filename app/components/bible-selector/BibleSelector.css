@@ -2,22 +2,29 @@
   width: 200px;
   color: black;
   background: white;
-
+  box-shadow: 3px 3px 5px 0px #333;
+  overflow: hidden;
 }
 
-.title {
+.column :global(.list-content) {
+  height: 100%;
+  /* background: red; */
+  overflow-y: auto;
+}
+
+.column > .title {
   background-color: #fff;
   height: 2.5em;
   line-height: 2.5em;
 }
 
-.title .left {
+.column > .title .left {
   float: left;
 }
-.title .right {
+.column > .title .right {
   float: right;
 }
-.title .content {
+.column > .title .content {
   padding: 0 20px;
 }
 .search input[type='text'] {
@@ -34,9 +41,9 @@
 }
 .search {
   position: relative;
-  border: 1px solid #AAA;
+  border: 1px solid #aaa;
   line-height: 1.8em;
-  display:inline-block;
+  display: inline-block;
   border-radius: 16px;
 }
 
@@ -45,8 +52,31 @@
   left: 7px;
   top: 5px;
   pointer-events: none;
-  color: #AAA;
+  color: #aaa;
   font-size: 10px;
 }
 .bookSelector {
+}
+.bookGroup {
+}
+.bookGroup > .title {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  line-height: 2em;
+  font-weight: bold;
+  font-size: 14px;
+  background-color: #aaa;
+  padding-left: 5px;
+  position: sticky;
+  top: 0px;
+}
+
+.bookGroup li {
+  line-height: 2.4em;
+  border-bottom: 1px solid #eeecec;
+  margin-left: 8px;
+}
+
+.bookGroup li:last-child {
+  border: 0;
 }

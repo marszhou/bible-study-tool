@@ -1,10 +1,11 @@
 import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
 import Book, { PropType_Book } from './Book';
+import styles from './BibleSelector.css'
 
 const BookGroup = ({ group, currentBookId, onSelect }) => {
   return (
-    <div>
-      <div>{group.name}</div>
+    <div className={styles.bookGroup}>
+      <div className={styles.title}>{group.name}</div>
       <ul>
         {group.books.map(book => (
           <Book
