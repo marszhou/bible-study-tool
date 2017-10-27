@@ -115,9 +115,6 @@ export default class Home extends Component {
               ]}
             />
           </div>
-          <Modal>
-              hahah
-          </Modal>
           <GlobalComputedCss />
         </div>
       </div>
