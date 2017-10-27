@@ -7,6 +7,7 @@ class BookSelector extends React.Component {
     currentBookId: PropTypes.number,
     bookGroups: PropTypes.arrayOf(PropType_BookGroup),
     classNames: PropTypes.object,
+    listStyle: PropTypes.oneOf(['list', 'grid']),
     onSelect: PropTypes.func,
   };
 
@@ -14,11 +15,12 @@ class BookSelector extends React.Component {
     currentBookId: -1,
     bookGroups: [],
     classNames: [],
+    listStyle: 'list',
     onSelect: () => {},
   };
 
   render() {
-    const { bookGroups, currentBookId, classNames, onSelect } = this.props;
+    const { bookGroups, currentBookId, classNames, listStyle, onSelect } = this.props;
 
     return (
       <div
@@ -57,6 +59,7 @@ class BookSelector extends React.Component {
           {bookGroups.map(group => (
             <BookGroup
               key={group.id}
+              listStyle={listStyle}
               group={group}
               currentBookId={currentBookId}
               onSelect={onSelect}

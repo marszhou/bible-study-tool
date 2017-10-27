@@ -12,13 +12,19 @@ import Modal from './common/Modal';
 
 export default class Home extends Component {
   props: {};
-  state: { visible: boolean };
+  state: { visible: boolean, bookId: number };
   constructor(props: {}) {
     super(props);
     this.state = {
       visible: false,
+      bookId: 0
     };
   }
+
+  handleBibleSelectorChange = (change: {}) => {
+    console.log(change);
+    this.setState(change)
+  };
 
   render() {
     return (
@@ -64,9 +70,12 @@ export default class Home extends Component {
           />
           <div className="content">
             <BibleSelector
+              bookId={this.state.bookId}
+              onChange={this.handleBibleSelectorChange}
               columnClassNames={{
-                'client-height': true
+                'client-height': true,
               }}
+              bookListStyle="grid"
               bookGroups={[
                 {
                   id: 1,

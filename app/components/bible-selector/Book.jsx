@@ -8,8 +8,8 @@ export const PropType_Book = PropTypes.shape({
 
 const Book = ({ book, highlighted, onClick }) => {
   return (
-    <li className={cx({ highlighted })}>
-      <span onClick={onClick} role="button" tabIndex="0">
+    <li className={cx({ highlighted })} onClick={onClick} role="button" tabIndex="0">
+      <span>
         {book.name}
       </span>
     </li>

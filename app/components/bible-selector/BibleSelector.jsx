@@ -11,6 +11,7 @@ class BibleSelector extends React.Component {
     verse: PropTypes.number,
     bookGroups: PropTypes.arrayOf(PropType_BookGroup),
     columnClassNames: PropTypes.object,
+    bookListStyle: PropTypes.oneOf(['list', 'grid']),
     onChange: PropTypes.func,
   };
 
@@ -20,11 +21,12 @@ class BibleSelector extends React.Component {
     verse: 0,
     bookGroups: [],
     columnClassNames: {},
+    bookListStyle: 'list',
     onChange: () => {},
   };
 
   handleBookSelect = book => {
-    this.props.onChange({ book });
+    this.props.onChange({ bookId: book.id });
   };
 
   handleChapterSelect = chapter => {
@@ -46,7 +48,7 @@ class BibleSelector extends React.Component {
   }
 
   render() {
-    const { bookId, chapter, verse, bookGroups, columnClassNames } = this.props;
+    const { bookId, chapter, verse, bookGroups, columnClassNames, bookListStyle } = this.props;
     const book = this.getBookFromID(bookId);
 
     return (
@@ -55,6 +57,7 @@ class BibleSelector extends React.Component {
           currentBookId={bookId}
           bookGroups={bookGroups}
           classNames={columnClassNames}
+          listStyle={bookListStyle}
           onSelect={this.handleBookSelect}
         />
         {book ? (

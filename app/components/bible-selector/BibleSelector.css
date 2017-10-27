@@ -4,11 +4,13 @@
   background: white;
   box-shadow: 3px 3px 5px 0px #333;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
 }
 
 .column :global(.list-content) {
-  height: 100%;
-  /* background: red; */
+  flex-grow: 1;
   overflow-y: auto;
 }
 
@@ -69,14 +71,57 @@
   padding-left: 5px;
   position: sticky;
   top: 0px;
-}
-
-.bookGroup li {
-  line-height: 2.4em;
-  border-bottom: 1px solid #eeecec;
-  margin-left: 8px;
+  box-shadow: 0 1px 3px;
 }
 
 .bookGroup li:last-child {
   border: 0;
 }
+
+.bookGroup ul.list li {
+  line-height: 2.4em;
+  border-bottom: 1px solid #eeecec;
+  margin-left: 8px;
+}
+
+.column ul.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 40px;
+  grid-gap: 2px;
+  /* justify-items: center; */
+  border: 1px solid black;
+  padding: 2px;
+}
+
+.column li {
+  cursor: default;
+}
+
+.column li:hover {
+  background-color: #fffec4;
+  transition: 1s;
+}
+
+.column li:global(.highlighted) {
+  background-color: #a9ebff;
+}
+
+.bookGroup ul.grid li {
+  /* align-self: center; */
+  border: 1px solid black;
+  border-radius: 2px;
+  display: block;
+  line-height: 3em;
+  text-align: center;
+}
+
+/* .bookGroup ul.grid li {
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+  margin: 2px;
+  border: 1px solid black;
+  vertical-align: middle;
+  padding: 3px;
+} */
