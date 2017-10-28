@@ -21,15 +21,59 @@ class BookSelector extends React.Component {
     onListStyleToggle: () => {},
   };
 
+  renderTitle() {
+    const { onListStyleToggle, listStyle } = this.props;
+
+    return (
+      <div className={styles.title}>
+        <div className={styles.left}>
+          <span style={{ paddingLeft: 5, fontWeight: 'bold' }}>书</span>
+        </div>
+        <div className={styles.right}>
+          <i
+            className={`fa fa-${listStyle !== 'list' ? 'list' : 'th'}`}
+            aria-hidden="true"
+            style={{ paddingRight: 5 }}
+            onClick={onListStyleToggle}
+          />
+        </div>
+        <div className={styles.content}>
+          <div className={styles.search}>
+            <i
+              className={cx({
+                fa: true,
+                'fa-search': true,
+                [styles.searchIcon]: true,
+              })}
+              aria-hidden="true"
+            />
+            <input type="text" placeholder="过滤..." />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderList() {
+    const { bookGroups, currentBookId, listStyle, onSelect } = this.props;
+
+    return (
+      <div className="list-content">
+        {bookGroups.map(group => (
+          <BookGroup
+            key={group.id}
+            listStyle={listStyle}
+            group={group}
+            currentBookId={currentBookId}
+            onSelect={onSelect}
+          />
+        ))}
+      </div>
+    );
+  }
+
   render() {
-    const {
-      bookGroups,
-      currentBookId,
-      classNames,
-      listStyle,
-      onSelect,
-      onListStyleToggle
-    } = this.props;
+    const { classNames } = this.props;
 
     return (
       <div
@@ -39,43 +83,8 @@ class BookSelector extends React.Component {
           ...classNames,
         })}
       >
-        <div className={styles.title}>
-          <div className={styles.left}>
-            <span style={{ paddingLeft: 5, fontWeight: 'bold' }}>书</span>
-          </div>
-          <div className={styles.right}>
-            <i
-              className={`fa fa-${listStyle !=='list' ? 'list' : 'th'}`}
-              aria-hidden="true"
-              style={{ paddingRight: 5 }}
-              onClick={onListStyleToggle}
-            />
-          </div>
-          <div className={styles.content}>
-            <div className={styles.search}>
-              <i
-                className={cx({
-                  fa: true,
-                  'fa-search': true,
-                  [styles.searchIcon]: true,
-                })}
-                aria-hidden="true"
-              />
-              <input type="text" placeholder="过滤..." />
-            </div>
-          </div>
-        </div>
-        <div className="list-content">
-          {bookGroups.map(group => (
-            <BookGroup
-              key={group.id}
-              listStyle={listStyle}
-              group={group}
-              currentBookId={currentBookId}
-              onSelect={onSelect}
-            />
-          ))}
-        </div>
+        {this.renderTitle()}
+        {this.renderList()}
       </div>
     );
   }
