@@ -1,5 +1,4 @@
 import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
-import { Button } from 'antd';
 import styles from './BibleSelector.css';
 
 class ChapterSelector extends React.Component {
@@ -24,34 +23,48 @@ class ChapterSelector extends React.Component {
   }
 
   renderTitle() {
-    return <div>选择章</div>;
+    return (
+      <div className={styles.title}>
+        <div className={styles.left}>
+          <span style={{ paddingLeft: 5, fontWeight: 'bold' }}>章</span>
+        </div>
+      </div>
+    );
   }
 
-  renderItems() {
-    return [...Array(this.props.count)].map((_, index) => (
-      <Button
-        key={index}
-        type={this.props.selected === index + 1 ? 'primary' : 'default'}
-        onClick={this.handleClick.bind(this, index + 1)}
-      >
-        {index + 1}
-      </Button>
-    ));
+  renderList() {
+    return (
+      <div className="list-content">
+        <ul className={styles.grid}>
+          {[...Array(this.props.count)].map((_, index) => (
+            <li
+              key={index}
+              role="button"
+              tabIndex="0"
+              type={this.props.selected === index + 1 ? 'primary' : 'default'}
+              onClick={this.handleClick.bind(this, index + 1)}
+            >
+              {index + 1}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
   }
 
   render() {
-    const {classNames } = this.props
+    const { classNames } = this.props;
 
     return this.props.visible ? (
       <div
         className={cx({
           [styles.column]: true,
-          [styles.bookSelector]: true,
+          [styles.chapterSelector]: true,
           ...classNames,
         })}
       >
         {this.renderTitle()}
-        {this.renderItems()}
+        {this.renderList()}
       </div>
     ) : null;
   }
