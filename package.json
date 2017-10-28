@@ -191,6 +191,7 @@
     "classnames": "^2.2.5",
     "devtron": "^1.4.0",
     "electron-debug": "^1.2.0",
+    "escape-string-regexp": "^1.0.5",
     "font-awesome": "^4.7.0",
     "history": "^4.6.3",
     "prop-types": "^15.6.0",
