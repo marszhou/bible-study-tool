@@ -10,6 +10,7 @@ class BookSelector extends React.Component {
     listStyle: PropTypes.oneOf(['list', 'grid']),
     onSelect: PropTypes.func,
     onListStyleToggle: PropTypes.func,
+    onFilterChange: PropTypes.func,
   };
 
   static defaultProps = {
@@ -19,6 +20,7 @@ class BookSelector extends React.Component {
     listStyle: 'list',
     onSelect: () => {},
     onListStyleToggle: () => {},
+    onFilterChange: () => {},
   };
 
   constructor(props) {
@@ -27,9 +29,11 @@ class BookSelector extends React.Component {
   }
 
   handleFilterChange = e => {
+    const filter = e.target.value.trim();
     this.setState({
-      filter: e.target.value.trim(),
+      filter,
     });
+    this.props.onFilterChange(filter);
   };
 
   renderTitle() {

@@ -3,7 +3,7 @@ import escapeStringRegexp from 'escape-string-regexp';
 import Book, { PropType_Book } from './Book';
 import styles from './BibleSelector.css';
 
-function filterBooks(filter, books) {
+export const filterBooks = (filter, books) => {
   if (!filter) return books;
 
   return books.filter(book => {
