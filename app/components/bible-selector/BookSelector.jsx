@@ -21,6 +21,17 @@ class BookSelector extends React.Component {
     onListStyleToggle: () => {},
   };
 
+  constructor(props) {
+    super(props);
+    this.state = { filter: '' };
+  }
+
+  handleFilterChange = e => {
+    this.setState({
+      filter: e.target.value.trim(),
+    });
+  };
+
   renderTitle() {
     const { onListStyleToggle, listStyle } = this.props;
 
@@ -47,7 +58,11 @@ class BookSelector extends React.Component {
               })}
               aria-hidden="true"
             />
-            <input type="text" placeholder="过滤..." />
+            <input
+              type="text"
+              placeholder="过滤..."
+              onChange={this.handleFilterChange}
+            />
           </div>
         </div>
       </div>
@@ -65,6 +80,7 @@ class BookSelector extends React.Component {
             listStyle={listStyle}
             group={group}
             currentBookId={currentBookId}
+            filter={this.state.filter}
             onSelect={onSelect}
           />
         ))}
