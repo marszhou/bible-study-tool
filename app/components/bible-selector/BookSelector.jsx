@@ -1,4 +1,4 @@
-import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
+import { React, PropTypes, cx, R } from 'app/bootstrap'; // eslint-disable-line
 import BookGroup, { PropType_BookGroup } from './BookGroup';
 import styles from './BibleSelector.css';
 
