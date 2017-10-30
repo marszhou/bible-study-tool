@@ -56,12 +56,19 @@ export default class Home extends Component {
                 <li>
                   <Link to="/bible-selector-demo">/bible-selector-demo</Link>
                 </li>
+                <li>
+                  <Link to="/read-demo">/read-demo</Link>
+                </li>
               </ul>
             </div>
 
             <Route
               path="/bible-selector-demo"
               render={props => <BibleSelectorPage test="1" />}
+            />
+            <Route
+              path="/read-demo"
+              component={require('../pages/ReadPage')}
             />
           </div>
 
