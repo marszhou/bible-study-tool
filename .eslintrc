@@ -4,7 +4,7 @@
     "sourceType": "module",
     "allowImportExportEverywhere": true
   },
-  "extends": "airbnb",
+  "extends": ["airbnb", "eslint:recommended"],
   "env": {
     "browser": true,
     "node": true
@@ -25,12 +25,18 @@
     "promise/always-return": "error",
     "promise/catch-or-return": "error",
     "promise/no-native": "off",
+    "react/forbid-prop-types": "off",
     "react/sort-comp": ["error", {
       "order": ["type-annotations", "static-methods", "lifecycle", "everything-else", "render"]
     }],
     "react/jsx-no-bind": "off",
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
-    "react/prefer-stateless-function": "off"
+    "react/prefer-stateless-function": "off",
+    "react/no-unused-prop-types": 1,
+    "react/no-array-index-key": 0,
+    "jsx-a11y/label-has-for": 0,
+    "no-unused-vars": 1,
+    "jsx-a11y/no-noninteractive-element-to-interactive-role": 0
   },
   "plugins": [
     "flowtype",

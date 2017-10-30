@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
-import { NavPane, NavPaneItem, Text } from 'react-desktop/windows';
+import React, { Component } from "react";
+import { NavPane, NavPaneItem, Text } from "react-desktop/windows";
 
 export default class extends Component {
   static propTypes = {
     theme: React.PropTypes.string,
-    color: React.PropTypes.string
+    color: React.PropTypes.string,
   };
 
   static defaultProps = {
-    color: '#cc7f29',
-    theme: 'light',
+    color: "#cc7f29",
+    theme: "light",
   };
 
   constructor() {
     super();
     this.state = {
-      selected: 'Item 1',
+      selected: "Item 1",
     };
   }
 
@@ -37,20 +37,32 @@ export default class extends Component {
   }
 
   renderIcon(name) {
-    const fill = this.props.theme === 'dark' ? '#ffffff' : '#000000';
+    const fill = this.props.theme === "dark" ? "#ffffff" : "#000000";
     switch (name) {
-      case 'Item 1':
+      case "Item 1":
         return (
-          <svg x="0px" y="0px" width="16px" height="14.9px" viewBox="0 0 16 14.9">
+          <svg
+            x="0px"
+            y="0px"
+            width="16px"
+            height="14.9px"
+            viewBox="0 0 16 14.9"
+          >
             <polygon
               fill={fill}
               points="16,5.6 10.6,4.7 8,0 5.4,4.7 0,5.7 3.8,9.6 3.1,14.9 8,12.6 13,14.8 12.3,9.5 "
             />
           </svg>
         );
-      case 'Item 2':
+      case "Item 2":
         return (
-          <svg x="0px" y="0px" width="16px" height="13.5px" viewBox="0 0 16 13.5">
+          <svg
+            x="0px"
+            y="0px"
+            width="16px"
+            height="13.5px"
+            viewBox="0 0 16 13.5"
+          >
             <path
               fill={fill}
               d="M16,4.2C16,1.9,14.1,0,11.7,0c-1.4,0-2.6,0.6-3.4,1.6c0,0,0,0,0,0C8.3,1.7,8.1,1.8,8,1.8
@@ -60,9 +72,15 @@ export default class extends Component {
             />
           </svg>
         );
-      case 'Item 3':
+      case "Item 3":
         return (
-          <svg x="0px" y="0px" width="16px" height="15.6px" viewBox="0 0 16 15.6">
+          <svg
+            x="0px"
+            y="0px"
+            width="16px"
+            height="15.6px"
+            viewBox="0 0 16 15.6"
+          >
             <path
               fill={fill}
               d="M14.9,3.2c0.7-0.9,1-1.7,1.1-2.4c0-0.2,0-0.4-0.1-0.5c0,0,0-0.1-0.1-0.1c0,0-0.1-0.1-0.1-0.1
@@ -88,10 +106,18 @@ export default class extends Component {
 
   render() {
     return (
-      <NavPane openLength={200} push color={this.props.color} theme={this.props.theme}>
-        {this.renderItem('Item 1', 'Content 1')}
-        {this.renderItem('Item 2', 'Content 2')}
-        {this.renderItem('Item 3', 'Content 3')}
+      <NavPane
+        openLength={200}
+        push
+        color={this.props.color}
+        theme={this.props.theme}
+        canPaneToggle={false}
+        defaultIsPaneExpanded={false}
+        paneExpandedLength={48}
+      >
+        {this.renderItem("Item 1", "Content 1")}
+        {this.renderItem("Item 2", "Content 2")}
+        {this.renderItem("Item 3", "Content 3")}
       </NavPane>
     );
   }
