@@ -14,7 +14,15 @@ import {
 class SplitPanePage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      selectedId: null,
+    };
+  }
+
+  handleTabClick(id) {
+    this.setState({
+      selectedId: id,
+    });
   }
 
   render() {
@@ -25,21 +33,30 @@ class SplitPanePage extends React.Component {
         minSize="100"
         primary="second"
       >
-        <Tabs selectedId="world">
+        <Tabs selectedId={this.state.selectedId}>
           <TabHead>
             <TabControlList type="front">
-              <TabControl>A</TabControl>
+              <TabControl onClick={() => console.log('aaa')}>A</TabControl>
               <TabControl>B</TabControl>
             </TabControlList>
             <TabTitleList>
-              <TabTitle id="hello">111</TabTitle>
-              <TabTitle id="world">222</TabTitle>
+              {[...Array(10)].map((v, index) => (
+                <TabTitle id={index + ''} key={index}>
+                  {index}
+                </TabTitle>
+              ))}
             </TabTitleList>
-            <TabControlList type="rear" />
+            <TabControlList type="rear">
+              <TabControl onClick={() => console.log('aaa')}>A</TabControl>
+              <TabControl>B</TabControl>
+            </TabControlList>
           </TabHead>
           <TabPanelList>
-            <TabPanel id="hello">AAA</TabPanel>
-            <TabPanel id="world">BBB</TabPanel>
+            {[...Array(10)].map((v, index) => (
+              <TabPanel id={index + ''} key={index}>
+                {index}
+              </TabPanel>
+            ))}
           </TabPanelList>
         </Tabs>
         <div />

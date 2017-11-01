@@ -6,7 +6,7 @@ export default function getComponent(
   defaultClassName,
   htmlTag = 'div',
 ) {
-  const Component = ({ children, classNames, style }) => {
+  const Component = ({ children, classNames, style, ...rest }) => {
     const defaultClassNames = Array.isArray(defaultClassName)
       ? defaultClassName.reduce((ret, c) => {
           ret[styles[c]] = true;
@@ -22,6 +22,7 @@ export default function getComponent(
           ...classNames,
         }),
         style,
+        ...rest
       },
       children,
     );

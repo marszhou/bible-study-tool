@@ -1,23 +1,29 @@
 .tabs {
-
+  border: 1px solid black;
 }
 .tabPanel {
 
 }
 .tabHead {
-
+  display: flex;
+  position: relative;
+}
+.tabLine {
+  position: absolute;
+  border: 1px solid black;
+  left: 0;
+  right: 0;
+  bottom: 0px;
+  z-index:1;
 }
 .tabBody {
-
-}
-.tabControlList {
 
 }
 .tabControl {
 
 }
 .tabControlList{
-
+  display: flex;
 }
 .tabControlList_front{
 
@@ -26,11 +32,41 @@
 
 }
 .tabTitleList {
+  /* flex item props */
+  flex: 1;
 
+  /* flex container props */
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+
+  width: 0px;
+  overflow: hidden;
+  /* overflow-y: visible; */
+  /* overflow-y: initial; */
 }
 .tabTitle{
+  border: 1px solid black;
+  border-bottom: none;
+  margin-left: 1px;
+  padding: 0 10px;
 
+  position: relative;
+  /* margin: auto; */
+  /* width: 50px; */
+  /* margin-bottom:-1px; */
 }
 .tabTitleSelected {
 
+}
+
+.tabTitleSelected::after {
+  content: '';
+  position: absolute;
+  height: 5px;
+  left: 0px;
+  right: 0px;
+  bottom: -3px;
+  background: #fff;
+  z-index: 2;
 }
