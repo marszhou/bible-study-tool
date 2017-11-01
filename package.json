@@ -200,13 +200,20 @@
     "react-desktop": "^0.3.2",
     "react-dom": "^16.0.0",
     "react-hot-loader": "3.0.0-beta.6",
+    "react-icon-base": "^2.1.1",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^5.0.0-alpha.6",
+    "react-split-pane": "^0.1.68",
+    "react-tabs": "^2.1.0",
+    "react-tabtab": "^0.8.0",
     "redux": "^3.7.1",
     "redux-thunk": "^2.2.0",
-    "source-map-support": "^0.4.15"
+    "semantic-ui-css": "^2.2.12",
+    "semantic-ui-react": "^0.75.1",
+    "source-map-support": "^0.4.15",
+    "uuid": "^3.1.0"
   },
   "devEngines": {
     "node": ">=7.x",
