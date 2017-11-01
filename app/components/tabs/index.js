@@ -1,15 +1,19 @@
 import Tabs from './Tabs'
-import TabList from './TabList'
-import TabControls from './TabControls'
-import TabItem from './TabItem'
-import TabTitle from './TabTitle'
+import TabControl from './TabControl'
+import TabControlList from './TabControlList'
+import TabHead from './TabHead'
 import TabPanel from './TabPanel'
+import TabPanelList from './TabPanelList'
+import TabTitle from './TabTitle'
+import TabTitleList from './TabTitleList'
 
 export {
   Tabs,
-  TabList,
-  TabControls,
-  TabItem,
+  TabControl,
+  TabControlList,
+  TabHead,
+  TabPanel,
+  TabPanelList,
   TabTitle,
-  TabPanel
+  TabTitleList
 }

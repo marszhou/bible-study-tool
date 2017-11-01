@@ -1,5 +1,14 @@
 import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
 import styles from './styles.css';
+import {
+  TabControl,
+  TabControlList,
+  TabHead,
+  TabPanel,
+  TabPanelList,
+  TabTitle,
+  TabTitleList
+} from './index';
 
 class Tabs extends React.Component {
   static propTypes = {
@@ -25,24 +34,30 @@ class Tabs extends React.Component {
 
     return (
       <div className={styles.Tabs}>
-        {React.Children.toArray(children).map(child => {
-          switch (true) {
-            case child.type.displayName === 'TabControls':
-              return React.cloneElement(child);
-            case child.type.displayName === 'TabList':
-              return React.cloneElement(
-                child,
-                {
-                  ...child.props,
-                  selectedId,
-                }
-              );
-            default:
-              return null;
-          }
-        })}
+        111
       </div>
     );
+
+    // return (
+    //   <div className={styles.Tabs}>
+    //     {React.Children.toArray(children).map(child => {
+    //       switch (true) {
+    //         case child.type.displayName === 'TabControls':
+    //           return React.cloneElement(child);
+    //         case child.type.displayName === 'TabList':
+    //           return React.cloneElement(
+    //             child,
+    //             {
+    //               ...child.props,
+    //               selectedId,
+    //             }
+    //           );
+    //         default:
+    //           return null;
+    //       }
+    //     })}
+    //   </div>
+    // );
   }
 }
 

@@ -1,6 +1,15 @@
 import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
 import SplitPane from 'react-split-pane';
-import { Tabs, TabItem, TabTitle, TabPanel, TabList, TabControls } from '../components/tabs';
+import {
+  Tabs,
+  TabControl,
+  TabControlList,
+  TabHead,
+  TabPanel,
+  TabPanelList,
+  TabTitle,
+  TabTitleList
+} from '../components/tabs';
 
 class SplitPanePage extends React.Component {
   constructor(props) {
@@ -17,17 +26,18 @@ class SplitPanePage extends React.Component {
         primary="second"
       >
         <Tabs>
-          <TabControls />
-          <TabList>
-            <TabItem key='xxxxx'>
-              <TabTitle>test</TabTitle>
-              <TabPanel>test</TabPanel>
-            </TabItem>
-            <TabItem>
-              <TabTitle>test2</TabTitle>
-              <TabPanel>test2</TabPanel>
-            </TabItem>
-          </TabList>
+          <TabHead>
+            <TabControlList type="front" />
+            <TabTitleList>
+              <TabTitle>111</TabTitle>
+              <TabTitle>222</TabTitle>
+            </TabTitleList>
+            <TabControlList type="rear" />
+          </TabHead>
+          <TabPanelList>
+            <TabPanel>AAA</TabPanel>
+            <TabPanel>BBB</TabPanel>
+          </TabPanelList>
         </Tabs>
         <div />
       </SplitPane>
