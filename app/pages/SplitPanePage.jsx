@@ -8,7 +8,7 @@ import {
   TabPanel,
   TabPanelList,
   TabTitle,
-  TabTitleList
+  TabTitleList,
 } from '../components/tabs';
 
 class SplitPanePage extends React.Component {
@@ -25,18 +25,21 @@ class SplitPanePage extends React.Component {
         minSize="100"
         primary="second"
       >
-        <Tabs>
+        <Tabs selectedId="world">
           <TabHead>
-            <TabControlList type="front" />
+            <TabControlList type="front">
+              <TabControl>A</TabControl>
+              <TabControl>B</TabControl>
+            </TabControlList>
             <TabTitleList>
-              <TabTitle>111</TabTitle>
-              <TabTitle>222</TabTitle>
+              <TabTitle id="hello">111</TabTitle>
+              <TabTitle id="world">222</TabTitle>
             </TabTitleList>
             <TabControlList type="rear" />
           </TabHead>
           <TabPanelList>
-            <TabPanel>AAA</TabPanel>
-            <TabPanel>BBB</TabPanel>
+            <TabPanel id="hello">AAA</TabPanel>
+            <TabPanel id="world">BBB</TabPanel>
           </TabPanelList>
         </Tabs>
         <div />

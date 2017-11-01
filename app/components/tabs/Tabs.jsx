@@ -1,14 +1,5 @@
 import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
 import styles from './styles.css';
-import {
-  TabControl,
-  TabControlList,
-  TabHead,
-  TabPanel,
-  TabPanelList,
-  TabTitle,
-  TabTitleList
-} from './index';
 
 class Tabs extends React.Component {
   static propTypes = {
@@ -24,40 +15,33 @@ class Tabs extends React.Component {
     selectedId: null,
   };
 
+  static childContextTypes = {
+    selectedId: PropTypes.string,
+  };
+
   constructor(props) {
     super(props);
     this.state = {};
   }
 
+  getChildContext() {
+    return {
+      selectedId: this.props.selectedId || this.getFisrtTabId(),
+    };
+  }
+
+  getFisrtTabId() {
+    return React.Children.toArray(
+      React.Children
+        .toArray(this.props.children)
+        .find(child => child.type.displayName === 'TabPanelList').props.children,
+    )[0].props.id;
+  }
+
   render() {
-    const { children, selectedId } = this.props;
+    const { children } = this.props;
 
-    return (
-      <div className={styles.Tabs}>
-        111
-      </div>
-    );
-
-    // return (
-    //   <div className={styles.Tabs}>
-    //     {React.Children.toArray(children).map(child => {
-    //       switch (true) {
-    //         case child.type.displayName === 'TabControls':
-    //           return React.cloneElement(child);
-    //         case child.type.displayName === 'TabList':
-    //           return React.cloneElement(
-    //             child,
-    //             {
-    //               ...child.props,
-    //               selectedId,
-    //             }
-    //           );
-    //         default:
-    //           return null;
-    //       }
-    //     })}
-    //   </div>
-    // );
+    return <div className={styles.tabs}>{children}</div>;
   }
 }
 

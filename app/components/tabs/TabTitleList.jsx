@@ -1,8 +1,6 @@
 import { React, PropTypes, cx } from "app/bootstrap"; // eslint-disable-line
+import getComponent from './helper'
 
-const TableTitleList = () => {
-  return (
-    <div>TableTitleList</div>
-  );
-};
-export default TableTitleList;
+const TabTitleList = getComponent('TabTitleList', 'tabTitleList', 'ul');
+
+export default TabTitleList;

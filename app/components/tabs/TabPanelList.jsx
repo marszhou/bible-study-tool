@@ -1,9 +1,6 @@
 import React from 'react';
+import getComponent from './helper'
 
-const TabPanelList = () => {
-  return (
-    <div>TabPanelList</div>
-  );
-};
+const TabPanelList = getComponent('TabPanelList', 'tabBody');
 
 export default TabPanelList;

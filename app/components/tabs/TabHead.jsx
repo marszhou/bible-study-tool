@@ -1,9 +1,6 @@
-import React from 'react';
+import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
+import getComponent from './helper'
 
-const TabHead = () => {
-  return (
-    <div>TabHead</div>
-  );
-};
+const TabHead = getComponent('TabHead', 'tabHead');
 
 export default TabHead;

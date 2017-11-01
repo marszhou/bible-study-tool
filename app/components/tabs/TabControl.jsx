@@ -1,9 +1,6 @@
-import React from 'react';
+import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
+import getComponent from './helper'
 
-const TabControl = () => {
-  return (
-    <div>TabControl</div>
-  );
-};
+const TabControl = getComponent('TabControl', 'tabControl', 'li');
 
 export default TabControl;
