@@ -31,16 +31,18 @@ class Tabs extends React.Component {
   }
 
   getFisrtTabId() {
-    return React.Children.toArray(
-      React.Children
-        .toArray(this.props.children)
-        .find(child => child.type.displayName === 'TabPanelList').props.children,
-    )[0].props.id;
+    const panelList = React.Children
+      .toArray(this.props.children)
+      .find(child => child.type.displayName === 'TabPanelList');
+    if (panelList && panelList.props.children.length > 0) {
+      return React.Children.toArray(panelList.props.children)[0].props.id;
+    }
+    return undefined;
   }
 
   getTabTitileListDOM() {
     if (!this.tabTitleList) {
-      this.tabTitleList = this.dom.querySelector("." + styles.tabTitleList)
+      this.tabTitleList = this.dom.querySelector('.' + styles.tabTitleList);
     }
     return this.tabTitleList;
   }
@@ -48,7 +50,7 @@ class Tabs extends React.Component {
   getTabTitleScrollInfo() {
     const tabTitleList = this.getTabTitileListDOM();
     const width = tabTitleList.getBoundingClientRect().width;
-    const {scrollWidth, scrollLeft} = tabTitleList;
+    const { scrollWidth, scrollLeft } = tabTitleList;
     return {
       width,
       scrollWidth,
@@ -64,7 +66,11 @@ class Tabs extends React.Component {
   render() {
     const { children } = this.props;
 
-    return <div className={styles.tabs} ref={node => this.dom = node}>{children}</div>;
+    return (
+      <div className={styles.tabs} ref={node => (this.dom = node)}>
+        {children}
+      </div>
+    );
   }
 }
 

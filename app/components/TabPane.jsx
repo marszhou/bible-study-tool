@@ -14,10 +14,25 @@ import {
 } from './tabs';
 
 class TabPane extends React.Component {
+  static propTypes = {
+    items: PropTypes.array,
+    selectedId: PropTypes.string,
+    onTabClick: PropTypes.func,
+    onTabClose: PropTypes.func,
+    onTabSort: PropTypes.func,
+  };
+
+  static defaultProps = {
+    items: [],
+    selectedId: null,
+    onTabClick: () => {},
+    onTabClose: () => {},
+    onTabSort: () => {},
+  };
+
   constructor(props) {
     super(props);
     this.state = {
-      selectedId: null,
       showLeftScrollBtn: false,
       showRightScrollBtn: false,
     };
@@ -30,16 +45,16 @@ class TabPane extends React.Component {
 
   componentDidMount() {
     delay(() => this.dealWithTabTitleScroll());
-    window.addEventListener('resize', this.handleResize)
+    window.addEventListener('resize', this.handleResize);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize)
+    window.removeEventListener('resize', this.handleResize);
   }
 
   handleResize = () => {
-    this.dealWithTabTitleScroll()
-  }
+    this.dealWithTabTitleScroll();
+  };
 
   dealWithTabTitleScroll() {
     this.tabTitleScrollInfo = this.tab.getTabTitleScrollInfo();
@@ -73,46 +88,60 @@ class TabPane extends React.Component {
     });
   }
 
+  // @todo maybe move this to other place
+  getItemTitle(item) {
+    return '';
+  }
+
+  getItemContent(item, index) {
+    return null;
+  }
+
   render() {
     const { showLeftScrollBtn, showRightScrollBtn } = this.state;
+    const { selectedId, items } = this.props;
     return (
-      <Tabs selectedId={this.state.selectedId} ref={node => (this.tab = node)}>
-        <TabHead>
-          <TabTitleList>
-            {[...Array(50)].map((v, index) => (
-              <TabTitle id={index + ''} key={index}>
-                {index}
-              </TabTitle>
-            ))}
-          </TabTitleList>
-          {showLeftScrollBtn || showRightScrollBtn ? (
-            <TabControlList type="rear">
-              <TabControl>
-                <button
-                  onClick={() => this.handleScrollTabTitle(-1)}
-                  disabled={!showLeftScrollBtn}
-                >
-                  <GoChevronLeft />
-                </button>
-              </TabControl>
-              <TabControl>
-                <button
-                  onClick={() => this.handleScrollTabTitle(1)}
-                  disabled={!showRightScrollBtn}
-                >
-                  <GoChevronRight />
-                </button>
-              </TabControl>
-            </TabControlList>
-          ) : null}
-        </TabHead>
-        <TabPanelList>
-          {[...Array(100)].map((v, index) => (
-            <TabPanel id={index + ''} key={index}>
-              {index}
-            </TabPanel>
-          ))}
-        </TabPanelList>
+      <Tabs selectedId={selectedId} ref={node => (this.tab = node)}>
+        {items.length > 0
+          ? [
+            <TabHead key="tabHead">
+              <TabTitleList>
+                {items.map(item => (
+                  <TabTitle id={item.id} key={item.id}>
+                    {this.getItemTitle(item)}
+                  </TabTitle>
+                  ))}
+              </TabTitleList>
+              {showLeftScrollBtn || showRightScrollBtn ? (
+                <TabControlList type="rear">
+                  <TabControl>
+                    <button
+                      onClick={() => this.handleScrollTabTitle(-1)}
+                      disabled={!showLeftScrollBtn}
+                    >
+                      <GoChevronLeft />
+                    </button>
+                  </TabControl>
+                  <TabControl>
+                    <button
+                      onClick={() => this.handleScrollTabTitle(1)}
+                      disabled={!showRightScrollBtn}
+                    >
+                      <GoChevronRight />
+                    </button>
+                  </TabControl>
+                </TabControlList>
+                ) : null}
+            </TabHead>,
+            <TabPanelList key="tabBody">
+              {items.map((item, index) => (
+                <TabPanel id={item.id} key={item.id}>
+                  {this.getItemContent(item, index)}
+                </TabPanel>
+                ))}
+            </TabPanelList>,
+            ]
+          : null}
       </Tabs>
     );
   }
