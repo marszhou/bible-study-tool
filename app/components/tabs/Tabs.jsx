@@ -38,10 +38,33 @@ class Tabs extends React.Component {
     )[0].props.id;
   }
 
+  getTabTitileListDOM() {
+    if (!this.tabTitleList) {
+      this.tabTitleList = this.dom.querySelector("." + styles.tabTitleList)
+    }
+    return this.tabTitleList;
+  }
+
+  getTabTitleScrollInfo() {
+    const tabTitleList = this.getTabTitileListDOM();
+    const width = tabTitleList.getBoundingClientRect().width;
+    const {scrollWidth, scrollLeft} = tabTitleList;
+    return {
+      width,
+      scrollWidth,
+      scrollLeft,
+    };
+  }
+
+  scrollTabTitleTo(next) {
+    const tabTitleList = this.getTabTitileListDOM();
+    tabTitleList.scrollLeft = next;
+  }
+
   render() {
     const { children } = this.props;
 
-    return <div className={styles.tabs}>{children}</div>;
+    return <div className={styles.tabs} ref={node => this.dom = node}>{children}</div>;
   }
 }
 

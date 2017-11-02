@@ -1,15 +1,6 @@
 import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
 import SplitPane from 'react-split-pane';
-import {
-  Tabs,
-  TabControl,
-  TabControlList,
-  TabHead,
-  TabPanel,
-  TabPanelList,
-  TabTitle,
-  TabTitleList,
-} from '../components/tabs';
+import TabPane from '../components/TabPane'
 
 class SplitPanePage extends React.Component {
   constructor(props) {
@@ -32,33 +23,9 @@ class SplitPanePage extends React.Component {
         defaultSize={200}
         minSize="100"
         primary="second"
+        onChange={() => this.tabPane.handleResize()}
       >
-        <Tabs selectedId={this.state.selectedId}>
-          <TabHead>
-            <TabControlList type="front">
-              <TabControl onClick={() => console.log('aaa')}>A</TabControl>
-              <TabControl>B</TabControl>
-            </TabControlList>
-            <TabTitleList>
-              {[...Array(10)].map((v, index) => (
-                <TabTitle id={index + ''} key={index}>
-                  {index}
-                </TabTitle>
-              ))}
-            </TabTitleList>
-            <TabControlList type="rear">
-              <TabControl onClick={() => console.log('aaa')}>A</TabControl>
-              <TabControl>B</TabControl>
-            </TabControlList>
-          </TabHead>
-          <TabPanelList>
-            {[...Array(10)].map((v, index) => (
-              <TabPanel id={index + ''} key={index}>
-                {index}
-              </TabPanel>
-            ))}
-          </TabPanelList>
-        </Tabs>
+        <TabPane ref={tabPane => this.tabPane = tabPane} />
         <div />
       </SplitPane>
     );

@@ -22,6 +22,13 @@
 .tabControl {
 
 }
+
+.tabControl > * + * {
+  margin-left: 3px;
+  }
+.tabControl button {
+  padding: 0 3px;
+}
 .tabControlList{
   display: flex;
 }
@@ -44,29 +51,34 @@
   overflow: hidden;
   /* overflow-y: visible; */
   /* overflow-y: initial; */
+  margin: 0 16px;
 }
 .tabTitle{
   border: 1px solid black;
   border-bottom: none;
-  margin-left: 1px;
   padding: 0 10px;
 
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+
   position: relative;
-  /* margin: auto; */
-  /* width: 50px; */
-  /* margin-bottom:-1px; */
+}
+.tabTitle + .tabTitle {
+  margin-left: 3px;
 }
 .tabTitleSelected {
-
+  color: rgb(114, 114, 114);
+  border-width: 2px;
+  font-weight: bold;
 }
 
 .tabTitleSelected::after {
   content: '';
   position: absolute;
-  height: 5px;
+  height: 2px;
   left: 0px;
   right: 0px;
-  bottom: -3px;
+  bottom: 0px;
   background: #fff;
   z-index: 2;
 }
