@@ -1,6 +1,6 @@
 import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
 import SplitPane from 'react-split-pane';
-import TabPane from '../components/TabPane'
+import { TabPane } from '../components/tabs';
 
 class SplitPanePage extends React.Component {
   constructor(props) {
@@ -25,7 +25,19 @@ class SplitPanePage extends React.Component {
         primary="second"
         onChange={() => this.tabPane.handleResize()}
       >
-        <TabPane ref={tabPane => this.tabPane = tabPane} />
+        <TabPane
+          ref={tabPane => (this.tabPane = tabPane)}
+          items={[
+            {
+              id: "1",
+              title: 'aaa',
+              props: {
+                content: 'test'
+              }
+            },
+          ]}
+          bodyRendererComponent={({content}) => <div>{content}</div>}
+        />
         <div />
       </SplitPane>
     );

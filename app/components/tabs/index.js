@@ -6,6 +6,7 @@ import TabPanel from './TabPanel'
 import TabPanelList from './TabPanelList'
 import TabTitle from './TabTitle'
 import TabTitleList from './TabTitleList'
+import TabPane from './TabPane'
 
 export {
   Tabs,
@@ -15,5 +16,6 @@ export {
   TabPanel,
   TabPanelList,
   TabTitle,
-  TabTitleList
+  TabTitleList,
+  TabPane
 }

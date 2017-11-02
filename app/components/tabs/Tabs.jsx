@@ -49,13 +49,19 @@ class Tabs extends React.Component {
 
   getTabTitleScrollInfo() {
     const tabTitleList = this.getTabTitileListDOM();
-    const width = tabTitleList.getBoundingClientRect().width;
-    const { scrollWidth, scrollLeft } = tabTitleList;
+    if (tabTitleList) {
+      const width = tabTitleList.getBoundingClientRect().width;
+      const { scrollWidth, scrollLeft } = tabTitleList;
+      return {
+        width,
+        scrollWidth,
+        scrollLeft,
+      };
+    }
     return {
-      width,
-      scrollWidth,
-      scrollLeft,
-    };
+      width: 0, scrollWidth: 0, scrollLeft: 0
+    }
+
   }
 
   scrollTabTitleTo(next) {
