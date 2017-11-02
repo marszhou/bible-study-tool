@@ -38,20 +38,17 @@ class TabPane extends React.Component {
   }
 
   handleResize = () => {
-    console.log('resize')
     this.dealWithTabTitleScroll()
   }
 
   dealWithTabTitleScroll() {
     this.tabTitleScrollInfo = this.tab.getTabTitleScrollInfo();
-    console.log(this.tabTitleScrollInfo);
 
     const { width, scrollLeft, scrollWidth } = this.tabTitleScrollInfo;
     const showLeftScrollBtn = scrollLeft > 0;
     const showRightScrollBtn = scrollWidth > width + scrollLeft;
     this.setState({ showLeftScrollBtn, showRightScrollBtn }, () => {
       this.tabTitleScrollInfo = this.tab.getTabTitleScrollInfo();
-      console.log(this.tabTitleScrollInfo);
     });
   }
 
