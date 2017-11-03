@@ -2,6 +2,7 @@ import { React, PropTypes, cx, ReactDOM } from 'app/bootstrap'; // eslint-disabl
 import delay from 'lodash/delay';
 import GoChevronLeft from '../../vendors/react-icons/lib/go/chevron-left';
 import GoChevronRight from '../../vendors/react-icons/lib/go/chevron-right';
+import TiDelete from '../../vendors/react-icons/lib/ti/delete';
 import {
   Tabs,
   TabControl,
@@ -12,6 +13,7 @@ import {
   TabTitle,
   TabTitleList,
 } from './index';
+import styles from './styles.css';
 
 class TabPane extends React.Component {
   static propTypes = {
@@ -95,14 +97,37 @@ class TabPane extends React.Component {
     });
   }
 
-  getItemContent(item, index) {
+  handleTabClose(e, id) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.props.onTabClose(id);
+  }
+
+  renderItemContent(item, index) {
     const { bodyRendererComponent: Body } = this.props;
     return <Body {...item.props} />;
   }
 
+  renderItemTitle(item) {
+    return [
+      <span key="content">{item.title}</span>,
+      <a
+        key="close"
+        className={styles.close}
+        role="button"
+        tabIndex="0"
+        href="#"
+        onClick={e => this.handleTabClose(e, item.id)}
+      >
+        <TiDelete />
+      </a>,
+    ];
+  }
+
   render() {
     const { showLeftScrollBtn, showRightScrollBtn } = this.state;
-    const { selectedId, items } = this.props;
+    const { selectedId, items, onTabClick } = this.props;
     return (
       <Tabs selectedId={selectedId} ref={node => (this.tab = node)}>
         {items.length > 0
@@ -110,8 +135,12 @@ class TabPane extends React.Component {
             <TabHead key="tabHead">
               <TabTitleList>
                 {items.map(item => (
-                  <TabTitle id={item.id} key={item.id}>
-                    {item.title}
+                  <TabTitle
+                    id={item.id}
+                    key={item.id}
+                    onClick={onTabClick.bind(null, item.id)}
+                  >
+                    {this.renderItemTitle(item)}
                   </TabTitle>
                   ))}
               </TabTitleList>
@@ -139,7 +168,7 @@ class TabPane extends React.Component {
             <TabPanelList key="tabBody">
               {items.map((item, index) => (
                 <TabPanel id={item.id} key={item.id}>
-                  {this.getItemContent(item, index)}
+                  {this.renderItemContent(item, index)}
                 </TabPanel>
                 ))}
             </TabPanelList>,

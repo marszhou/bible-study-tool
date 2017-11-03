@@ -54,14 +54,18 @@
   margin: 0 16px;
 }
 .tabTitle{
+  display: table;
   border: 1px solid black;
   border-bottom: none;
-  padding: 0 10px;
-
+  padding: 0 8px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-
   position: relative;
+  cursor: default;
+  opacity: 0.75;
+}
+.tabTitle:hover {
+  opacity: 1.0;
 }
 .tabTitle + .tabTitle {
   margin-left: 3px;
@@ -71,8 +75,14 @@
   color: rgb(114, 114, 114);
   border-width: 2px;
   font-weight: bold;
+  opacity: 1.0;
 }
-
+.tabTitle .close {
+  visibility: hidden;
+}
+.tabTitle:hover .close, .tabTitleSelected .close {
+  visibility: visible;
+}
 .tabTitleSelected::after {
   content: '';
   position: absolute;

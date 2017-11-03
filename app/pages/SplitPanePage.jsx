@@ -1,6 +1,6 @@
 import { React, PropTypes, cx, update } from 'app/bootstrap'; // eslint-disable-line
 import SplitPane from 'react-split-pane';
-import uuid from 'uuid/v1'
+import uuid from 'uuid/v1';
 import { TabPane } from '../components/tabs';
 
 class SplitPanePage extends React.Component {
@@ -25,29 +25,51 @@ class SplitPanePage extends React.Component {
       id: uuid(),
       title: uuid(),
       props: {
-        content: 'test ' + uuid()
-      }
-    }
-  }
-
-  handleTabClick(id) {
-    this.setState({
-      selectedId: id,
-    });
+        content: 'test ' + uuid(),
+      },
+    };
   }
 
   handleAddClick = () => {
-    console.log('add')
+    this.setState(
+      update(this.state, {
+        items: {
+          $push: [this.genNewItem()],
+        },
+      }),
+      this.tabPane.handleResize,
+    );
+  };
 
-    this.setState(update(this.state, {
-      items: {
-        $push: [this.genNewItem()]
-      }
-    }), this.tabPane.handleResize);
-  }
+  handleTabClick = itemId => {
+    this.setState({
+      selectedId: itemId,
+    });
+  };
+
+  handleTabClose = itemId => {
+    const { items, selectedId } = this.state;
+    const nextItems = items.filter(item => item.id !== itemId);
+    let nextSelectedId = selectedId;
+    if (itemId === selectedId) {
+      const findIndex = items.findIndex(item => item.id === itemId);
+      const prevItem =
+        findIndex - 1 > -1
+          ? items[findIndex - 1]
+          : findIndex + 1 < items.length ? items[findIndex + 1] : null;
+      nextSelectedId = (prevItem || {}).id;
+    }
+    this.setState(
+      {
+        items: nextItems,
+        selectedId: nextSelectedId,
+      },
+      this.tabPane.handleResize,
+    );
+  };
 
   render() {
-    const { items } = this.state;
+    const { items, selectedId } = this.state;
 
     return (
       <SplitPane
@@ -61,7 +83,10 @@ class SplitPanePage extends React.Component {
           <TabPane
             ref={tabPane => (this.tabPane = tabPane)}
             items={items}
+            selectedId={selectedId}
             bodyRendererComponent={({ content }) => <div>{content}</div>}
+            onTabClick={this.handleTabClick}
+            onTabClose={this.handleTabClose}
           />
           <button onClick={this.handleAddClick}>add</button>
         </div>
