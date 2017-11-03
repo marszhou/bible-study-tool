@@ -116,6 +116,7 @@
     ]
   },
   "devDependencies": {
+    "aws-sdk": "^2.143.0",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-jest": "^20.0.3",
@@ -174,6 +175,7 @@
     "redux-logger": "^3.0.6",
     "rimraf": "^2.6.1",
     "sass-loader": "^6.0.6",
+    "shebang-loader": "^0.0.1",
     "sinon": "^2.3.5",
     "spectron": "^3.7.0",
     "style-loader": "^0.18.1",
@@ -215,6 +217,7 @@
     "semantic-ui-css": "^2.2.12",
     "semantic-ui-react": "^0.75.1",
     "source-map-support": "^0.4.15",
+    "sqlite3": "^3.1.13",
     "uuid": "^3.1.0"
   },
   "devEngines": {
