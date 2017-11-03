@@ -1,0 +1,95 @@
+.tabs {
+  /* border: 1px solid black; */
+}
+.tabPanel {
+
+}
+.tabHead {
+  display: flex;
+  position: relative;
+}
+.tabLine {
+  position: absolute;
+  border: 1px solid black;
+  left: 0;
+  right: 0;
+  bottom: 0px;
+  z-index:1;
+}
+.tabBody {
+
+}
+.tabControl {
+
+}
+
+.tabControl > * + * {
+  margin-left: 3px;
+  }
+.tabControl button {
+  padding: 0 3px;
+}
+.tabControlList{
+  display: flex;
+}
+.tabControlList_front{
+
+}
+.tabControlList_rear{
+
+}
+.tabTitleList {
+  /* flex item props */
+  flex: 1;
+
+  /* flex container props */
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+
+  width: 0px;
+  overflow: hidden;
+  /* overflow-y: visible; */
+  /* overflow-y: initial; */
+  margin: 0 16px;
+}
+.tabTitle{
+  display: table;
+  border: 1px solid black;
+  border-bottom: none;
+  padding: 0 8px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  position: relative;
+  cursor: default;
+  opacity: 0.75;
+}
+.tabTitle:hover {
+  opacity: 1.0;
+}
+.tabTitle + .tabTitle {
+  margin-left: 3px;
+  white-space: nowrap;
+}
+.tabTitleSelected {
+  color: rgb(114, 114, 114);
+  border-width: 2px;
+  font-weight: bold;
+  opacity: 1.0;
+}
+.tabTitle .close {
+  visibility: hidden;
+}
+.tabTitle:hover .close, .tabTitleSelected .close {
+  visibility: visible;
+}
+.tabTitleSelected::after {
+  content: '';
+  position: absolute;
+  height: 2px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: #fff;
+  z-index: 2;
+}
