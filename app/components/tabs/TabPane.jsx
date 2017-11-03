@@ -15,11 +15,13 @@ import {
 
 class TabPane extends React.Component {
   static propTypes = {
-    items: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.any,
-      title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-      props: PropTypes.object
-    })),
+    items: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.any,
+        title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+        props: PropTypes.object,
+      }),
+    ),
     bodyRendererComponent: PropTypes.func.isRequired,
     selectedId: PropTypes.string,
     onTabClick: PropTypes.func,
@@ -94,7 +96,7 @@ class TabPane extends React.Component {
   }
 
   getItemContent(item, index) {
-    const {bodyRendererComponent: Body} = this.props
+    const { bodyRendererComponent: Body } = this.props;
     return <Body {...item.props} />;
   }
 
