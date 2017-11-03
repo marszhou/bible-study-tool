@@ -194,6 +194,7 @@
     "escape-string-regexp": "^1.0.5",
     "font-awesome": "^4.7.0",
     "history": "^4.6.3",
+    "immutability-helper": "^2.4.0",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
     "ramda": "^0.25.0",
