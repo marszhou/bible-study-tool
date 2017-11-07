@@ -27,7 +27,8 @@
     "test": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js",
     "test-all": "npm run lint && npm run flow && npm run build && npm run test && npm run test-e2e",
     "test-e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js e2e",
-    "test-watch": "npm test -- --watch"
+    "test-watch": "npm test -- --watch",
+    "install-app-deps": "electron-builder install-app-deps"
   },
   "browserslist": "electron 1.6",
   "build": {
@@ -116,6 +117,7 @@
     ]
   },
   "devDependencies": {
+    "aws-sdk": "^2.143.0",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-jest": "^20.0.3",
@@ -211,6 +213,7 @@
     "react-tabs": "^2.1.0",
     "react-tabtab": "^0.8.0",
     "redux": "^3.7.1",
+    "redux-saga": "^0.16.0",
     "redux-thunk": "^2.2.0",
     "semantic-ui-css": "^2.2.12",
     "semantic-ui-react": "^0.75.1",
