@@ -28,12 +28,12 @@ export default merge.smart(baseConfig, {
    */
   module: {
     rules: [
-      {
-        test: /\.js$/,
-        use: {
-          loader: 'shebang-loader',
-        },
-      },
+      // {
+      //   test: /\.js$/,
+      //   use: {
+      //     loader: 'shebang-loader',
+      //   },
+      // },
       {
         test: /\.global\.css$/,
         use: [

@@ -65,6 +65,9 @@ export default class Home extends Component {
                 <li>
                   <Link to="/icon-demo">/icon-demo</Link>
                 </li>
+                <li>
+                  <Link to="/sqlite-demo">/sqlite-demo</Link>
+                </li>
               </ul>
             </div>
 
@@ -78,6 +81,10 @@ export default class Home extends Component {
               component={require('../pages/SplitPanePage')}
             />
             <Route path="/icon-demo" component={require('../pages/IconPage')} />
+            <Route
+              path="/sqlite-demo"
+              component={require('../pages/SqliteDemoPage')}
+            />
           </div>
 
           <GlobalComputedCss />
