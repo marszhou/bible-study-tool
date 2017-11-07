@@ -27,8 +27,7 @@
     "test": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js",
     "test-all": "npm run lint && npm run flow && npm run build && npm run test && npm run test-e2e",
     "test-e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js e2e",
-    "test-watch": "npm test -- --watch",
-    "install-app-deps": "electron-builder install-app-deps"
+    "test-watch": "npm test -- --watch"
   },
   "browserslist": "electron 1.6",
   "build": {
