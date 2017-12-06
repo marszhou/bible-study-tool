@@ -36,7 +36,9 @@
     "react/no-array-index-key": 0,
     "jsx-a11y/label-has-for": 0,
     "no-unused-vars": 1,
-    "jsx-a11y/no-noninteractive-element-to-interactive-role": 0
+    "jsx-a11y/no-noninteractive-element-to-interactive-role": 0,
+    "import/no-mutable-exports": 0,
+    "react/no-find-dom-node": 0
   },
   "plugins": [
     "flowtype",

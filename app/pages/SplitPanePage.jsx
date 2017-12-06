@@ -68,6 +68,10 @@ class SplitPanePage extends React.Component {
     );
   };
 
+  handleTabSort = (sourceId, targetId, before) => {
+    console.log(sourceId, targetId, before);
+  }
+
   render() {
     const { items, selectedId } = this.state;
 
@@ -87,6 +91,7 @@ class SplitPanePage extends React.Component {
             bodyRendererComponent={({ content }) => <div>{content}</div>}
             onTabClick={this.handleTabClick}
             onTabClose={this.handleTabClose}
+            onTabSort={this.handleTabSort}
           />
           <button onClick={this.handleAddClick}>add</button>
         </div>

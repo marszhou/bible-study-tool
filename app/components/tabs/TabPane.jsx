@@ -128,7 +128,7 @@ class TabPane extends React.Component {
 
   render() {
     const { showLeftScrollBtn, showRightScrollBtn } = this.state;
-    const { selectedId, items, onTabClick } = this.props;
+    const { selectedId, items, onTabClick, onTabSort } = this.props;
     return (
       <Tabs selectedId={selectedId} ref={node => (this.tab = node)}>
         {items.length > 0
@@ -139,7 +139,8 @@ class TabPane extends React.Component {
                   <TabTitle
                     id={item.id}
                     key={item.id}
-                    onClick={onTabClick.bind(null, item.id)}
+                    onClick={() => onTabClick(item.id)}
+                    onSort={onTabSort}
                   >
                     {this.renderItemTitle(item)}
                   </TabTitle>
