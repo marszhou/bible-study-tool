@@ -15,6 +15,7 @@ import {
 } from './index';
 import styles from './styles.css';
 
+// main index component
 class TabPane extends React.Component {
   static propTypes = {
     items: PropTypes.arrayOf(
@@ -117,7 +118,7 @@ class TabPane extends React.Component {
         className={styles.close}
         role="button"
         tabIndex="0"
-        href="#"
+        href="###"
         onClick={e => this.handleTabClose(e, item.id)}
       >
         <TiDelete />
