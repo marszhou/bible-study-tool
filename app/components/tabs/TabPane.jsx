@@ -131,51 +131,47 @@ class TabPane extends React.Component {
     const { selectedId, items, onTabClick, onTabSort } = this.props;
     return (
       <Tabs selectedId={selectedId} ref={node => (this.tab = node)}>
-        {items.length > 0
-          ? [
-            <TabHead key="tabHead">
-              <TabTitleList>
-                {items.map(item => (
-                  <TabTitle
-                    id={item.id}
-                    key={item.id}
-                    onClick={() => onTabClick(item.id)}
-                    onSort={onTabSort}
-                  >
-                    {this.renderItemTitle(item)}
-                  </TabTitle>
-                  ))}
-              </TabTitleList>
-              {showLeftScrollBtn || showRightScrollBtn ? (
-                <TabControlList type="rear">
-                  <TabControl>
-                    <button
-                      onClick={() => this.handleScrollTabTitle(-1)}
-                      disabled={!showLeftScrollBtn}
-                    >
-                      <GoChevronLeft />
-                    </button>
-                  </TabControl>
-                  <TabControl>
-                    <button
-                      onClick={() => this.handleScrollTabTitle(1)}
-                      disabled={!showRightScrollBtn}
-                    >
-                      <GoChevronRight />
-                    </button>
-                  </TabControl>
-                </TabControlList>
-                ) : null}
-            </TabHead>,
-            <TabPanelList key="tabBody">
-              {items.map((item, index) => (
-                <TabPanel id={item.id} key={item.id}>
-                  {this.renderItemContent(item, index)}
-                </TabPanel>
-                ))}
-            </TabPanelList>,
-            ]
-          : null}
+        <TabHead key="tabHead">
+          <TabTitleList>
+            {items.map(item => (
+              <TabTitle
+                id={item.id}
+                key={item.id}
+                onClick={() => onTabClick(item.id)}
+                onSort={onTabSort}
+              >
+                {this.renderItemTitle(item)}
+              </TabTitle>
+            ))}
+          </TabTitleList>
+          {showLeftScrollBtn || showRightScrollBtn ? (
+            <TabControlList type="rear">
+              <TabControl>
+                <button
+                  onClick={() => this.handleScrollTabTitle(-1)}
+                  disabled={!showLeftScrollBtn}
+                >
+                  <GoChevronLeft />
+                </button>
+              </TabControl>
+              <TabControl>
+                <button
+                  onClick={() => this.handleScrollTabTitle(1)}
+                  disabled={!showRightScrollBtn}
+                >
+                  <GoChevronRight />
+                </button>
+              </TabControl>
+            </TabControlList>
+          ) : null}
+        </TabHead>
+        <TabPanelList key="tabBody">
+          {items.map((item, index) => (
+            <TabPanel id={item.id} key={item.id}>
+              {this.renderItemContent(item, index)}
+            </TabPanel>
+          ))}
+        </TabPanelList>
       </Tabs>
     );
   }
