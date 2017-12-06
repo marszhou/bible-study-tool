@@ -20,6 +20,12 @@ class SplitPanePage extends React.Component {
     };
   }
 
+  componentWillMount() {
+    if (!this.state.selectedId && this.state.items.length > 0) {
+      this.setState({selectedId: this.state.items[0].id });
+    }
+  }
+
   genNewItem() {
     return {
       id: uuid(),
@@ -31,12 +37,16 @@ class SplitPanePage extends React.Component {
   }
 
   handleAddClick = () => {
+    const nextState = update(this.state, {
+      items: {
+        $push: [this.genNewItem()],
+      },
+    });
+    if (nextState.items.length === 1) {
+      nextState.selectedId = nextState.items[0].id;
+    }
     this.setState(
-      update(this.state, {
-        items: {
-          $push: [this.genNewItem()],
-        },
-      }),
+      nextState,
       this.tabPane.handleResize,
     );
   };
@@ -53,11 +63,11 @@ class SplitPanePage extends React.Component {
     let nextSelectedId = selectedId;
     if (itemId === selectedId) {
       const findIndex = items.findIndex(item => item.id === itemId);
-      const prevItem =
+      const neighborItem =
         findIndex - 1 > -1
           ? items[findIndex - 1]
           : findIndex + 1 < items.length ? items[findIndex + 1] : null;
-      nextSelectedId = (prevItem || {}).id;
+      nextSelectedId = (neighborItem || {}).id;
     }
     this.setState(
       {
@@ -69,8 +79,18 @@ class SplitPanePage extends React.Component {
   };
 
   handleTabSort = (sourceId, targetId, before) => {
-    console.log(sourceId, targetId, before);
-  }
+    const { items } = this.state;
+    const pos =
+      items.findIndex(item => item.id === targetId) + (before ? 0 : 1);
+    const source = items.find(item => item.id === sourceId);
+    const newItems = [
+      ...items.slice(0, pos).filter(item => item.id !== sourceId),
+      source,
+      ...items.slice(pos).filter(item => item.id !== sourceId),
+    ];
+    // console.log(items.map(item=>item.id),'->',newItems.map(item => item.id));
+    this.setState({ items: newItems });
+  };
 
   render() {
     const { items, selectedId } = this.state;
