@@ -15,6 +15,7 @@ import {
 } from './index';
 import styles from './styles.css';
 
+// main index component
 class TabPane extends React.Component {
   static propTypes = {
     items: PropTypes.arrayOf(
@@ -117,7 +118,7 @@ class TabPane extends React.Component {
         className={styles.close}
         role="button"
         tabIndex="0"
-        href="#"
+        href="###"
         onClick={e => this.handleTabClose(e, item.id)}
       >
         <TiDelete />
@@ -127,53 +128,50 @@ class TabPane extends React.Component {
 
   render() {
     const { showLeftScrollBtn, showRightScrollBtn } = this.state;
-    const { selectedId, items, onTabClick } = this.props;
+    const { selectedId, items, onTabClick, onTabSort } = this.props;
     return (
       <Tabs selectedId={selectedId} ref={node => (this.tab = node)}>
-        {items.length > 0
-          ? [
-            <TabHead key="tabHead">
-              <TabTitleList>
-                {items.map(item => (
-                  <TabTitle
-                    id={item.id}
-                    key={item.id}
-                    onClick={onTabClick.bind(null, item.id)}
-                  >
-                    {this.renderItemTitle(item)}
-                  </TabTitle>
-                  ))}
-              </TabTitleList>
-              {showLeftScrollBtn || showRightScrollBtn ? (
-                <TabControlList type="rear">
-                  <TabControl>
-                    <button
-                      onClick={() => this.handleScrollTabTitle(-1)}
-                      disabled={!showLeftScrollBtn}
-                    >
-                      <GoChevronLeft />
-                    </button>
-                  </TabControl>
-                  <TabControl>
-                    <button
-                      onClick={() => this.handleScrollTabTitle(1)}
-                      disabled={!showRightScrollBtn}
-                    >
-                      <GoChevronRight />
-                    </button>
-                  </TabControl>
-                </TabControlList>
-                ) : null}
-            </TabHead>,
-            <TabPanelList key="tabBody">
-              {items.map((item, index) => (
-                <TabPanel id={item.id} key={item.id}>
-                  {this.renderItemContent(item, index)}
-                </TabPanel>
-                ))}
-            </TabPanelList>,
-            ]
-          : null}
+        <TabHead key="tabHead">
+          <TabTitleList>
+            {items.map(item => (
+              <TabTitle
+                id={item.id}
+                key={item.id}
+                onClick={() => onTabClick(item.id)}
+                onSort={onTabSort}
+              >
+                {this.renderItemTitle(item)}
+              </TabTitle>
+            ))}
+          </TabTitleList>
+          {showLeftScrollBtn || showRightScrollBtn ? (
+            <TabControlList type="rear">
+              <TabControl>
+                <button
+                  onClick={() => this.handleScrollTabTitle(-1)}
+                  disabled={!showLeftScrollBtn}
+                >
+                  <GoChevronLeft />
+                </button>
+              </TabControl>
+              <TabControl>
+                <button
+                  onClick={() => this.handleScrollTabTitle(1)}
+                  disabled={!showRightScrollBtn}
+                >
+                  <GoChevronRight />
+                </button>
+              </TabControl>
+            </TabControlList>
+          ) : null}
+        </TabHead>
+        <TabPanelList key="tabBody">
+          {items.map((item, index) => (
+            <TabPanel id={item.id} key={item.id}>
+              {this.renderItemContent(item, index)}
+            </TabPanel>
+          ))}
+        </TabPanelList>
       </Tabs>
     );
   }

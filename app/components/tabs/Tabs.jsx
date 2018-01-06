@@ -26,11 +26,11 @@ class Tabs extends React.Component {
 
   getChildContext() {
     return {
-      selectedId: this.props.selectedId || this.getFisrtTabId(),
+      selectedId: this.props.selectedId || this.getFirstTabId(),
     };
   }
 
-  getFisrtTabId() {
+  getFirstTabId() {
     const panelList = React.Children
       .toArray(this.props.children)
       .find(child => child.type.displayName === 'TabPanelList');
