@@ -24,3 +24,12 @@ export const getGroupedBooks = (state: stateType, groupId: string | number) =>
     state.books,
     fromBookGroups.getBookGroup(state.bookGroups, groupId)
   )
+
+export const getAllBookGroups = (state: stateType) =>
+  fromBookGroups.getAllBookGroups(state.bookGroups)
+
+export const getOldTestmentBooks = (state: stateType) =>
+  getGroupedBooks(state, 1)
+
+export const getNewTestmentBooks = (state: stateType) =>
+  getGroupedBooks(state, 2)
