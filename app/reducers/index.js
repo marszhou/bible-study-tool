@@ -1,20 +1,21 @@
 // @flow
 import { combineReducers } from 'redux'
 import { routerReducer as router } from 'react-router-redux'
-import counter from './counter'
 import books, * as fromBooks from './books'
 import bookGroups, * as fromBookGroups from './bookGroups'
+import verseCount, * as fromVerseCount from './verseCount'
 
 const rootReducer = combineReducers({
-  counter,
   router,
   books,
-  bookGroups
+  bookGroups,
+  verseCount
 })
 
-type stateType = {
+export type stateType = {
   books: fromBooks.booksStateType,
-  bookGroups: fromBookGroups.bookGroupsStateType
+  bookGroups: fromBookGroups.bookGroupsStateType,
+  verseCount: fromVerseCount.verseCountType
 };
 
 export default rootReducer
@@ -34,3 +35,10 @@ export const getOldTestmentBooks = (state: stateType) =>
 
 export const getNewTestmentBooks = (state: stateType) =>
   getGroupedBooks(state, 2)
+
+export const getVerseCountByBookAndChapter = (state: stateType, bookId: string, chapterIndex: string) =>
+  fromVerseCount.getVerseCountByBookAndChapter(
+    state.verseCount,
+    bookId,
+    chapterIndex
+  )
