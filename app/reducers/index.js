@@ -19,6 +19,7 @@ type stateType = {
 
 export default rootReducer
 
+// ↓↓↓↓ selectors ↓↓↓↓
 export const getGroupedBooks = (state: stateType, groupId: string | number) =>
   fromBooks.getGroupedBooks(
     state.books,

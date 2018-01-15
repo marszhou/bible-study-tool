@@ -12,12 +12,15 @@ export default combineReducers({
   allIds,
   byIds
 })
+// ↑↑↑↑ reducers ↑↑↑↑
 
+// define reducer type
 export type bookGroupsStateType = {
   allIds: Array<number>,
   byIds: { [key: string | number]: any }
 };
 
+// ↓↓↓↓ selectors ↓↓↓↓
 export const getAllBookGroups = (state: bookGroupsStateType) =>
   state.allIds.map((id: number | number) => state.byIds[id])
 
