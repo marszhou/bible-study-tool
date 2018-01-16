@@ -42,7 +42,7 @@ class ChapterSelector extends React.Component {
               role="button"
               tabIndex="0"
               type={this.props.selected === index + 1 ? 'primary' : 'default'}
-              className={this.props.selected=== index + 1? 'selected':''}
+              className={this.props.selected=== index + 1? 'highlighted':''}
               onClick={this.handleClick.bind(this, index + 1)}
             >
               {index + 1}

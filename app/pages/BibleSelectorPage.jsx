@@ -18,11 +18,12 @@ export default class BibleSelectorPage extends Component {
   };
 
   render() {
-    const {bookId, chapter, listStyle} = this.state
+    const {bookId, chapter, verse, listStyle} = this.state
     return (
       <BibleSelector
         bookId={bookId}
         chapter={chapter}
+        verse={verse}
         onChange={this.handleBibleSelectorChange}
         bookListStyle={listStyle}
         onBookListStyleToggle={() =>

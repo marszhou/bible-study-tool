@@ -79,7 +79,7 @@ class BibleSelector extends React.Component {
       bookId,
       filterBooks(this.state.bookFilter, this.getAllBooks()),
     );
-    console.log(chapter)
+    console.log(verse)
     return (
       <div style={{ display: 'flex' }}>
         <BookSelector
