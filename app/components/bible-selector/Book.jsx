@@ -1,7 +1,7 @@
 import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
 
 export const PropType_Book = PropTypes.shape({
-  id: PropTypes.number,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   name: PropTypes.string,
   chapterCount: PropTypes.number,
 });

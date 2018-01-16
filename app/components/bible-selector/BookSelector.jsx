@@ -4,7 +4,7 @@ import styles from './BibleSelector.css';
 
 class BookSelector extends React.Component {
   static propTypes = {
-    currentBookId: PropTypes.number,
+    currentBookId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     bookGroups: PropTypes.arrayOf(PropType_BookGroup),
     classNames: PropTypes.object,
     listStyle: PropTypes.oneOf(['list', 'grid']),

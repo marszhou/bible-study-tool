@@ -33,7 +33,7 @@ const BookGroup = ({ group, currentBookId, listStyle, filter, onSelect }) => {
 };
 
 export const PropType_BookGroup = PropTypes.shape({
-  id: PropTypes.number,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   name: PropTypes.string,
   books: PropTypes.arrayOf(PropType_Book),
 });

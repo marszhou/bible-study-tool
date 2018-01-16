@@ -2,14 +2,14 @@ import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
 import BookSelector from './BookSelector';
 import ChapterSelector from './ChapterSelector';
 import VerseSelector from './VerseSelector';
-import { PropType_BookGroup, filterBooks } from './BookGroup';
+import { filterBooks } from './BookGroup';
+import { getSelectorBookGroups, getVerseCoutOf } from '../../consts/bible'
 
 class BibleSelector extends React.Component {
   static propTypes = {
     bookId: PropTypes.number,
     chapter: PropTypes.number,
     verse: PropTypes.number,
-    bookGroups: PropTypes.arrayOf(PropType_BookGroup),
     columnClassNames: PropTypes.object,
     bookListStyle: PropTypes.oneOf(['list', 'grid']),
     onChange: PropTypes.func,
@@ -32,14 +32,15 @@ class BibleSelector extends React.Component {
     this.state = {
       bookFilter: '',
     };
+    this.bookGroups = getSelectorBookGroups()
   }
 
   handleBookSelect = book => {
-    this.props.onChange({ bookId: book.id });
+    this.props.onChange({ bookId: book.id, chapter: null, verse: null });
   };
 
   handleChapterSelect = chapter => {
-    this.props.onChange({ chapter });
+    this.props.onChange({ chapter, verse: null });
   };
 
   handleVerseSelect = verse => {
@@ -47,7 +48,7 @@ class BibleSelector extends React.Component {
   };
 
   getAllBooks() {
-    const { bookGroups } = this.props;
+    const { bookGroups } = this;
     return (bookGroups || []).reduce(
       (books, group) => [...books, ...group.books],
       [],
@@ -70,7 +71,6 @@ class BibleSelector extends React.Component {
       bookId,
       chapter,
       verse,
-      bookGroups,
       columnClassNames,
       bookListStyle,
       onBookListStyleToggle,
@@ -79,12 +79,12 @@ class BibleSelector extends React.Component {
       bookId,
       filterBooks(this.state.bookFilter, this.getAllBooks()),
     );
-
+    console.log(chapter)
     return (
       <div style={{ display: 'flex' }}>
         <BookSelector
           currentBookId={bookId}
-          bookGroups={bookGroups}
+          bookGroups={this.bookGroups}
           classNames={columnClassNames}
           listStyle={bookListStyle}
           onSelect={this.handleBookSelect}
@@ -99,9 +99,9 @@ class BibleSelector extends React.Component {
             onSelect={this.handleChapterSelect}
           />
         ) : null}
-        {book ? (
+        {book && chapter ? (
           <VerseSelector
-            count={50}
+            count={getVerseCoutOf(bookId, chapter)}
             selected={verse}
             classNames={columnClassNames}
             onSelect={this.handleVerseSelect}

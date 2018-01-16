@@ -1,21 +1,29 @@
 // @flow
 
 export const getSelectorBookGroups = () => {
-  ['1', '2'].map(groupId => {
+  return ['1', '2'].map(groupId => {
     const group = groupsById[groupId];
     return {
-      id:  group.id,
+      id:  +group.id,
       name: group.name_cn,
       books: group.books.map(bookId => {
         const book = booksById[bookId]
         return {
-          id: book.id,
+          id: +book.id,
           name: book.name_cn,
           chapterCount: +book.chapter_count
         }
       })
     }
   })
+}
+
+export const getVerseCoutOf = (bookId: number, chapter: number): ?number => {
+  const count = verseCountByBook[bookId] && verseCountByBook[bookId][chapter]
+  if (count) {
+    return +count
+  }
+  return null
 }
 
 export const booksById = {
