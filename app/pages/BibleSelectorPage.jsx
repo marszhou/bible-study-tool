@@ -1,39 +1,47 @@
-import React, { Component } from 'react';
-import BibleSelector from '../components/bible-selector/BibleSelector';
+import React, { Component } from 'react'
+import BibleSelector from '../components/bible-selector/BibleSelector'
 
 export default class BibleSelectorPage extends Component {
-  props: {};
-  state: { visible: boolean, bookId: number, listStyle: string };
+  props: {}
+  state: {
+    visible: boolean,
+    value: {
+      bookId: -1,
+      chapter: 0,
+      verse: 0
+    },
+    listStyle: string
+  }
   constructor(props: {}) {
-    super(props);
+    super(props)
     this.state = {
       visible: false,
       bookId: 0,
-      listStyle: 'list',
-    };
+      listStyle: 'list'
+    }
   }
 
-  handleBibleSelectorChange = (change: {}) => {
-    this.setState(change);
-  };
+  handleBibleSelectorChange = (value) => {
+    console.log('select', value)
+    this.setState({value})
+  }
 
   render() {
-    const {bookId, chapter, verse, listStyle} = this.state
+    const { value, listStyle } = this.state
     return (
       <BibleSelector
-        bookId={bookId}
-        chapter={chapter}
-        verse={verse}
+        value={value}
         onChange={this.handleBibleSelectorChange}
         bookListStyle={listStyle}
         onBookListStyleToggle={() =>
           this.setState({
-            listStyle: listStyle === 'list' ? 'grid' : 'list',
-          })}
+            listStyle: listStyle === 'list' ? 'grid' : 'list'
+          })
+        }
         columnClassNames={{
-          'client-height': true,
+          'client-height': true
         }}
       />
-    );
+    )
   }
 }
