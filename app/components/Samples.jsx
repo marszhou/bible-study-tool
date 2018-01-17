@@ -2,34 +2,34 @@ import { React, PropTypes, cx, Component, Route, Link } from 'app/bootstrap' // 
 
 const sampleRoutes = [
   {
-    path: '/bible-selector-demo',
+    path: '/samples/bible-selector-demo',
     exact: true,
     name: 'bible-selector-demo',
-    component: require('../pages/BibleSelectorPage')
+    component: require('../pages/samples/BibleSelectorPage')
   },
   {
-    path: '/read-demo',
+    path: '/samples/read-demo',
     exact: true,
     name: 'read-demo',
-    component: require('../pages/ReadPage')
+    component: require('../pages/samples/ReadPage')
   },
   {
-    path: '/icon-page',
+    path: '/samples/icon-page',
     exact: true,
     name: 'icon-page',
-    component: require('../pages/IconPage')
+    component: require('../pages/samples/IconPage')
   },
   {
-    path: '/split-pane-page',
+    path: '/samples/split-pane-page',
     exact: true,
     name: 'split-pane-page',
-    component: require('../pages/SplitPanePage')
+    component: require('../pages/samples/SplitPanePage')
   },
   {
-    path: '/sqlite-page',
+    path: '/samples/sqlite-page',
     exact: true,
     name: 'sqlite-page',
-    component: require('../pages/SqliteDemoPage')
+    component: require('../pages/samples/SqliteDemoPage')
   },
   {
     path: '/samples/common-components-page',

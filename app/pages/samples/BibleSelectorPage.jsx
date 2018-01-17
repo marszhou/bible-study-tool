@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import BibleSelector from '../components/bible-selector/BibleSelector'
+import BibleSelector from '../../components/bible-selector/BibleSelector'
 
 export default class BibleSelectorPage extends Component {
   props: {}

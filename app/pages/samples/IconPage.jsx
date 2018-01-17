@@ -1,5 +1,5 @@
 import { React, PropTypes, cx } from "app/bootstrap"; // eslint-disable-line
-import Md3dRotation from '../vendors/react-icons/lib/md/3d-rotation';
+import Md3dRotation from '../../vendors/react-icons/lib/md/3d-rotation';
 
 class IconPage extends React.Component {
   constructor(props) {
