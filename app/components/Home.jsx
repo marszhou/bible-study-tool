@@ -53,7 +53,7 @@ export default class Home extends Component {
       <div>
         <div className={styles.container} data-tid="container">
           {this.renderSideBar()}
-          <div className="content">
+          <div className="bst-content">
             <Samples />
           </div>
           <GlobalComputedCss />
