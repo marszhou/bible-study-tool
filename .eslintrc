@@ -59,7 +59,8 @@
         "Object": true,
         "Function": true
       }
-    ]
+    ],
+    "react/prop-types": [2, { "ignore": ["children"]}]
   },
   "plugins": [
     "flowtype",
