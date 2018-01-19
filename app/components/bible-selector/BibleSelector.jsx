@@ -2,8 +2,11 @@ import { React, PropTypes, cx } from 'app/bootstrap' // eslint-disable-line
 import BookSelector from './BookSelector'
 import ChapterSelector from './ChapterSelector'
 import VerseSelector from './VerseSelector'
-import { filterBooks } from './BookGroup'
-import { getSelectorBookGroups, getVerseCoutOf } from '../../consts/bible'
+import {
+  getSelectorBookGroups,
+  getVerseCoutOf,
+  filterBooks
+} from '../../consts/bible'
 
 class BibleSelector extends React.Component {
   static propTypes = {
@@ -115,8 +118,8 @@ class BibleSelector extends React.Component {
       filterBooks(this.state.bookFilter, this.getAllBooks())
     )
 
-    const showBook = book && book.chapterCount>1;
-    const showVerse = book && chapter;
+    const showBook = book && book.chapterCount > 1
+    const showVerse = book && chapter
 
     return (
       <div style={{ display: 'flex' }}>

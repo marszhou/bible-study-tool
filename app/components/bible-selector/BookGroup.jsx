@@ -1,15 +1,7 @@
 import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
-import escapeStringRegexp from 'escape-string-regexp';
 import BookItem, { PropType_BookItem } from './BookItem';
+import {filterBooks} from '../../consts/bible'
 import styles from './BibleSelector.css';
-
-export const filterBooks = (filter, books) => {
-  if (!filter) return books;
-
-  return books.filter(book => {
-    return book.name.match(new RegExp(escapeStringRegexp(filter)));
-  });
-}
 
 const BookGroup = ({ group, currentBookId, listStyle, filter, onSelect }) => {
   const books = filterBooks(filter, group.books);

@@ -1,16 +1,34 @@
 // @flow
+import escapeStringRegexp from 'escape-string-regexp'
+
+export const filterBooks = (filter: string, books: Array<any>) => {
+  if (!filter) return books
+
+  return books.filter(book => {
+    const regex = new RegExp(escapeStringRegexp(filter), 'i')
+    return (
+      book.name.match(regex) ||
+      book.nameEn.match(regex) ||
+      book.namePy.match(regex) ||
+      book.namePyInitial.match(regex)
+    )
+  })
+}
 
 export const getSelectorBookGroups = () => {
   return ['1', '2'].map(groupId => {
-    const group = groupsById[groupId];
+    const group = groupsById[groupId]
     return {
-      id:  +group.id,
+      id: +group.id,
       name: group.name_cn,
       books: group.books.map(bookId => {
         const book = booksById[bookId]
         return {
           id: +book.id,
           name: book.name_cn,
+          nameEn: book.name_en,
+          namePy: book.pinyin,
+          namePyInitial: book.pinyin_initial,
           chapterCount: +book.chapter_count
         }
       })
