@@ -62,10 +62,20 @@ class BibleSelector extends React.Component {
   }
 
   handleBookSelect = book => {
-    this.handleChange({ bookId: book.id, chapter: 0, verse: 0 })
+    if (book.id === this.props.value.bookId) return
+    const newState = {
+      bookId: book.id,
+      chapter: 0,
+      verse: 0
+    }
+    if (book.chapterCount === 1) {
+      newState.chapter = 1
+    }
+    this.handleChange(newState)
   }
 
   handleChapterSelect = chapter => {
+    if (chapter === this.props.value.chapter) return
     this.handleChange({ chapter, verse: 0 })
   }
 
@@ -104,6 +114,10 @@ class BibleSelector extends React.Component {
       bookId,
       filterBooks(this.state.bookFilter, this.getAllBooks())
     )
+
+    const showBook = book && book.chapterCount>1;
+    const showVerse = book && chapter;
+
     return (
       <div style={{ display: 'flex' }}>
         <BookSelector
@@ -115,7 +129,7 @@ class BibleSelector extends React.Component {
           onListStyleToggle={onBookListStyleToggle}
           onFilterChange={this.handleBookFilterChange}
         />
-        {book ? (
+        {showBook ? (
           <ChapterSelector
             count={book.chapterCount}
             selected={chapter}
@@ -123,7 +137,7 @@ class BibleSelector extends React.Component {
             onSelect={this.handleChapterSelect}
           />
         ) : null}
-        {book && chapter ? (
+        {showVerse ? (
           <VerseSelector
             count={getVerseCoutOf(bookId, chapter)}
             selected={verse}
