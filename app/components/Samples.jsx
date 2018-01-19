@@ -36,6 +36,12 @@ const sampleRoutes = [
     exact: true,
     name: 'common-components',
     component: require('../pages/samples/CommomComponentPage')
+  },
+  {
+    path: '/samples/dialog-page',
+    exact: true,
+    name: 'dialog',
+    component: require('../pages/samples/DialogPage')
   }
 ]
 const Samples = () => {
