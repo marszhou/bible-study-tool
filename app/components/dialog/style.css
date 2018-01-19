@@ -1,15 +1,19 @@
 .dialog {
+  visibility: hidden;
+  transform: scale(0.1);
+  transition: transform 200ms;
+}
 
+.dialog.dialogScale {
+  visibility: visible;
+  transform: scale(1);
 }
 
 .title {
-
 }
 
 .content {
-
 }
 
 .buttons {
-
 }

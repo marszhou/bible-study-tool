@@ -12,10 +12,12 @@ const toStyleString = style => {
 
 class MessageDialog extends Component {
   static propTypes = {
+    transition: PropTypes.bool,
     modal: PropTypes.bool,
     open: PropTypes.bool,
     title: PropTypes.string,
     content: PropTypes.string,
+    closeWhenClickOutside: PropTypes.bool,
     closeButtons: PropTypes.array,
     cancelButtons: PropTypes.array,
     x: PropTypes.number,
@@ -25,6 +27,7 @@ class MessageDialog extends Component {
   }
 
   static defaultProps = {
+    transition: true,
     title: null,
     content: null,
     modal: true,
@@ -32,6 +35,7 @@ class MessageDialog extends Component {
     x: null,
     y: null,
     backgroundColor: null,
+    closeWhenClickOutside: true,
     closeButtons: ['OK'],
     cancelButtons: ['Cancel'],
     onClose: () => {},
@@ -57,9 +61,32 @@ class MessageDialog extends Component {
   }
 
   handleClose = (isCancel, btn) => {
+    this.el.close(JSON.stringify({ isCancel, btn }))
+  }
+
+  _handleClose = e => {
+    e.stopPropagation()
     const { onClose } = this.props
-    this.el.close(btn)
-    onClose(isCancel, btn)
+    let ret
+    try {
+      ret = JSON.parse(this.el.returnValue)
+    } catch (e) {
+      ret = { isCancel: true }
+    }
+    onClose(ret)
+  }
+
+  handleClick = e => {
+    if (!(this.props.modal && this.props.closeWhenClickOutside)) {
+      return
+    }
+    if (e.target === this.el) {
+      const {pageX: x, pageY: y} = e
+      const bound = this.el.getBoundingClientRect()
+      if ((x < bound.left || x > bound.left + bound.width) || (y < bound.top || y > bound.bottom)) {
+        this.el.close()
+      }
+    }
   }
 
   _open(modal) {
@@ -79,7 +106,9 @@ class MessageDialog extends Component {
       cancelButtons,
       x,
       y,
-      backgroundColor
+      backgroundColor,
+      open,
+      transition
     } = this.props
 
     const style = {}
@@ -92,19 +121,28 @@ class MessageDialog extends Component {
     if (style.left) {
       style.margin = 0
     }
+
     const pesudo = {}
     if (backgroundColor) {
       pesudo.background = backgroundColor
     }
+
     const dialogContent = content && content.length > 0 ? content : children
+    const classNames = cx({
+      [styles.dialog]: true,
+      [styles.dialogScale]: transition && open
+    })
     return (
       <div>
         <style>{`dialog#${this.id}::backdrop ${toStyleString(pesudo)}`}</style>
         <dialog
           id={this.id}
-          className={styles.dialog}
+          role='button'
+          className={classNames}
           style={style}
           ref={el => (this.el = el)}
+          onClose={this._handleClose}
+          onClick={this.handleClick}
         >
           {title && <div className={styles.title}>{title}</div>}
           {dialogContent && (
