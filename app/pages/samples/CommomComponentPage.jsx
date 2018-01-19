@@ -4,7 +4,6 @@ import {
   Dimmer,
   Header,
   Icon,
-  Image,
   Segment,
   Divider,
   Loader,

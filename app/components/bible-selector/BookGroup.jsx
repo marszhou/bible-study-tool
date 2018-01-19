@@ -1,6 +1,6 @@
 import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
 import escapeStringRegexp from 'escape-string-regexp';
-import Book, { PropType_Book } from './Book';
+import BookItem, { PropType_BookItem } from './BookItem';
 import styles from './BibleSelector.css';
 
 export const filterBooks = (filter, books) => {
@@ -19,7 +19,7 @@ const BookGroup = ({ group, currentBookId, listStyle, filter, onSelect }) => {
       {
         <ul className={styles[listStyle]}>
           {books.map(book => (
-            <Book
+            <BookItem
               key={book.id}
               book={book}
               highlighted={currentBookId === book.id}
@@ -35,7 +35,7 @@ const BookGroup = ({ group, currentBookId, listStyle, filter, onSelect }) => {
 export const PropType_BookGroup = PropTypes.shape({
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   name: PropTypes.string,
-  books: PropTypes.arrayOf(PropType_Book),
+  books: PropTypes.arrayOf(PropType_BookItem),
 });
 
 BookGroup.propTypes = {

@@ -1,12 +1,12 @@
 import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
 
-export const PropType_Book = PropTypes.shape({
+export const PropType_BookItem = PropTypes.shape({
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   name: PropTypes.string,
   chapterCount: PropTypes.number,
 });
 
-const Book = ({ book, highlighted, onClick }) => {
+const BookItem = ({ book, highlighted, onClick }) => {
   return (
     <li className={cx({ highlighted })} onClick={onClick} role="button" tabIndex="0">
       <span>
@@ -16,15 +16,15 @@ const Book = ({ book, highlighted, onClick }) => {
   );
 };
 
-Book.propTypes = {
-  book: PropType_Book.isRequired,
+BookItem.propTypes = {
+  book: PropType_BookItem.isRequired,
   highlighted: PropTypes.bool,
   onClick: PropTypes.func,
 };
 
-Book.defaultProps = {
+BookItem.defaultProps = {
   highlighted: false,
   onClick: () => {},
 };
 
-export default Book;
+export default BookItem;
