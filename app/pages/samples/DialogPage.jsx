@@ -44,6 +44,8 @@ class DialogPage extends Component {
           title="Light or darkness"
           content="Which side you will choose?"
           open={this.state.openDialog2}
+          width={600}
+          height={600}
           onClose={()=> this.setState({openDialog2: false})}
         />
         <button

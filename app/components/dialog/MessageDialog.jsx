@@ -22,6 +22,8 @@ class MessageDialog extends Component {
     cancelButtons: PropTypes.array,
     x: PropTypes.number,
     y: PropTypes.number,
+    width: PropTypes.number,
+    height: PropTypes.number,
     backgroundColor: PropTypes.string,
     onClose: PropTypes.func
   }
@@ -34,6 +36,8 @@ class MessageDialog extends Component {
     open: false,
     x: null,
     y: null,
+    width: null,
+    height: null,
     backgroundColor: null,
     closeWhenClickOutside: true,
     closeButtons: ['OK'],
@@ -81,9 +85,14 @@ class MessageDialog extends Component {
       return
     }
     if (e.target === this.el) {
-      const {pageX: x, pageY: y} = e
+      const { pageX: x, pageY: y } = e
       const bound = this.el.getBoundingClientRect()
-      if ((x < bound.left || x > bound.left + bound.width) || (y < bound.top || y > bound.bottom)) {
+      if (
+        x < bound.left ||
+        x > bound.right ||
+        y < bound.top ||
+        y > bound.bottom
+      ) {
         this.el.close()
       }
     }
@@ -106,6 +115,8 @@ class MessageDialog extends Component {
       cancelButtons,
       x,
       y,
+      width,
+      height,
       backgroundColor,
       open,
       transition
@@ -121,7 +132,12 @@ class MessageDialog extends Component {
     if (style.left) {
       style.margin = 0
     }
-
+    if (width !== null) {
+      style.width = width
+    }
+    if (height !== null) {
+      style.height = height
+    }
     const pesudo = {}
     if (backgroundColor) {
       pesudo.background = backgroundColor
@@ -137,7 +153,7 @@ class MessageDialog extends Component {
         <style>{`dialog#${this.id}::backdrop ${toStyleString(pesudo)}`}</style>
         <dialog
           id={this.id}
-          role='button'
+          role="button"
           className={classNames}
           style={style}
           ref={el => (this.el = el)}
