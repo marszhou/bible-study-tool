@@ -1,5 +1,6 @@
 import { React, PropTypes, cx, Component, Route, Link } from 'app/bootstrap' // eslint-disable-line
 import uuid from 'uuid/v1'
+import { Icon, Button } from 'semantic-ui-react'
 import styles from './style.css'
 
 const toStyleString = style => {
@@ -146,8 +147,36 @@ class MessageDialog extends Component {
     const dialogContent = content && content.length > 0 ? content : children
     const classNames = cx({
       [styles.dialog]: true,
-      [styles.dialogScale]: transition && open
+      [styles.dialogOpacity]: transition && open
     })
+    const buttons =
+      closeButtons.length || cancelButtons.length
+        ? [
+          <div className={styles.buttonsPlaceholder} key="placeholder" />,
+          <div className={styles.buttons} key="buttons">
+            {closeButtons.map(btn => (
+              <Button
+                key={btn}
+                positive
+                compact
+                onClick={() => this.handleClose(false, btn)}
+              >
+                {btn}
+              </Button>
+              ))}
+            {cancelButtons.map(btn => (
+              <Button
+                key={btn}
+                negative
+                compact
+                onClick={() => this.handleClose(true, btn)}
+              >
+                {btn}
+              </Button>
+              ))}
+          </div>
+          ]
+        : null
     return (
       <div>
         <style>{`dialog#${this.id}::backdrop ${toStyleString(pesudo)}`}</style>
@@ -160,30 +189,21 @@ class MessageDialog extends Component {
           onClose={this._handleClose}
           onClick={this.handleClick}
         >
-          {title && <div className={styles.title}>{title}</div>}
+          <a
+            className={styles.close}
+            href=""
+            onClick={e => {
+              e.preventDefault()
+              this.handleClose(true)
+            }}
+          >
+            <Icon name="window close" size="large" />
+          </a>
+          {title && <h2 className={styles.title}>{title}</h2>}
           {dialogContent && (
             <div className={styles.content}>{dialogContent}</div>
           )}
-          <div className={styles.buttons}>
-            {closeButtons.map(btn => (
-              <button
-                key={btn}
-                type="button"
-                onClick={() => this.handleClose(false, btn)}
-              >
-                {btn}
-              </button>
-            ))}
-            {cancelButtons.map(btn => (
-              <button
-                key={btn}
-                type="button"
-                onClick={() => this.handleClose(true, btn)}
-              >
-                {btn}
-              </button>
-            ))}
-          </div>
+          {buttons}
         </dialog>
       </div>
     )

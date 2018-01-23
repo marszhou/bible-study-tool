@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import MessageDialog from '../../components/dialog/MessageDialog'
+import Dialog from '../../components/dialog/Dialog'
 
 class DialogPage extends Component {
   state = {
@@ -21,7 +21,7 @@ class DialogPage extends Component {
         </dialog>
         <button onClick={() => this.dialog.showModal()}>open</button>
 
-        <MessageDialog
+        <Dialog
           title="Light or darkness"
           content="Which side you will choose?"
           open={this.state.openDialog1}
@@ -39,7 +39,7 @@ class DialogPage extends Component {
           show modal message dialog
         </button>
 
-        <MessageDialog
+        <Dialog
           modal={false}
           title="Light or darkness"
           content="Which side you will choose?"
@@ -58,13 +58,13 @@ class DialogPage extends Component {
           show message dialog
         </button>
 
-        <MessageDialog
+        <Dialog
           modal
           title='对话框嵌套'
           open={this.state.openDialog3}
           onClose={()=> this.setState({openDialog3: false})}
         >
-          <MessageDialog
+          <Dialog
             modal
             y={400}
             title="Light or darkness"
@@ -81,7 +81,7 @@ class DialogPage extends Component {
           >
             show message dialog
           </button>
-        </MessageDialog>
+        </Dialog>
         <button
           onClick={() =>
             this.setState({
