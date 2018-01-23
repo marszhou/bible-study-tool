@@ -26,6 +26,8 @@ class MessageDialog extends Component {
     width: PropTypes.number,
     height: PropTypes.number,
     backgroundColor: PropTypes.string,
+    noButton: PropTypes.bool,
+    noClose: PropTypes.bool,
     onClose: PropTypes.func
   }
 
@@ -43,8 +45,9 @@ class MessageDialog extends Component {
     closeWhenClickOutside: true,
     closeButtons: ['OK'],
     cancelButtons: ['Cancel'],
-    onClose: () => {},
-    onCancel: () => {}
+    noButton: false,
+    noClose: false,
+    onClose: () => {}
   }
 
   constructor(props) {
@@ -120,7 +123,9 @@ class MessageDialog extends Component {
       height,
       backgroundColor,
       open,
-      transition
+      transition,
+      noButton,
+      noClose
     } = this.props
 
     const style = {}
@@ -144,13 +149,26 @@ class MessageDialog extends Component {
       pesudo.background = backgroundColor
     }
 
+    const close = !noClose ? (
+      <a
+        className={styles.close}
+        href=""
+        onClick={e => {
+          e.preventDefault()
+          this.handleClose(true)
+        }}
+      >
+        <Icon name="window close" size="large" />
+      </a>
+    ) : null
+
     const dialogContent = content && content.length > 0 ? content : children
     const classNames = cx({
       [styles.dialog]: true,
       [styles.dialogOpacity]: transition && open
     })
     const buttons =
-      closeButtons.length || cancelButtons.length
+      !noButton && (closeButtons.length || cancelButtons.length)
         ? [
           <div className={styles.buttonsPlaceholder} key="placeholder" />,
           <div className={styles.buttons} key="buttons">
@@ -189,16 +207,7 @@ class MessageDialog extends Component {
           onClose={this._handleClose}
           onClick={this.handleClick}
         >
-          <a
-            className={styles.close}
-            href=""
-            onClick={e => {
-              e.preventDefault()
-              this.handleClose(true)
-            }}
-          >
-            <Icon name="window close" size="large" />
-          </a>
+          {close}
           {title && <h2 className={styles.title}>{title}</h2>}
           {dialogContent && (
             <div className={styles.content}>{dialogContent}</div>

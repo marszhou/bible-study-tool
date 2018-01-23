@@ -91,6 +91,58 @@ class DialogPage extends Component {
         >
           show message dialog3
         </button>
+
+        <Dialog
+          content="Which side you will choose?"
+          open={this.state.openDialog5}
+          onClose={()=> this.setState({openDialog5: false})}
+          backgroundColor={"rgba(255, 0, 0, 0.2)"}
+        />
+        <button
+          onClick={() =>
+            this.setState({
+              openDialog5: true
+            })
+          }
+        >
+          dialog without title
+        </button>
+
+        <Dialog
+          title="Light or darkness"
+          content="Which side you will choose?"
+          open={this.state.openDialog6}
+          onClose={()=> this.setState({openDialog6: false})}
+          backgroundColor={"rgba(255, 0, 0, 0.2)"}
+          noButton
+        />
+        <button
+          onClick={() =>
+            this.setState({
+              openDialog6: true
+            })
+          }
+        >
+          dialog without button
+        </button>
+
+        <Dialog
+          title="Light or darkness"
+          content="Which side you will choose?"
+          open={this.state.openDialog7}
+          onClose={()=> this.setState({openDialog7: false})}
+          backgroundColor={"rgba(255, 0, 0, 0.2)"}
+          noClose
+        />
+        <button
+          onClick={() =>
+            this.setState({
+              openDialog7: true
+            })
+          }
+        >
+          dialog without close
+        </button>
       </div>
     )
   }
