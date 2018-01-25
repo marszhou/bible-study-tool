@@ -16,9 +16,7 @@ class BibleSelector extends React.Component {
       verse: PropTypes.number
     }),
     columnClassNames: PropTypes.object,
-    bookListStyle: PropTypes.oneOf(['list', 'grid']),
     onChange: PropTypes.func,
-    onBookListStyleToggle: PropTypes.func
   }
 
   static defaultProps = {
@@ -29,15 +27,14 @@ class BibleSelector extends React.Component {
     },
     bookGroups: [],
     columnClassNames: {},
-    bookListStyle: 'list',
     onChange: () => {},
-    onBookListStyleToggle: () => {}
   }
 
   constructor(props) {
     super(props)
     this.state = {
       bookFilter: '',
+      bookListStyle: 'list', // or grid
       ...this.getStateFromProps(props)
     }
     this.bookGroups = getSelectorBookGroups()
@@ -105,13 +102,16 @@ class BibleSelector extends React.Component {
     this.setState({ bookFilter })
   }
 
+  hanldeListStyleToggle = () => {
+    const bookListStyle = this.state.bookListStyle === 'list' ? 'grid' : 'list'
+    this.setState({bookListStyle})
+  }
+
   render() {
     const {
       columnClassNames,
-      bookListStyle,
-      onBookListStyleToggle
     } = this.props
-    const { bookId, chapter, verse } = this.state
+    const { bookId, chapter, verse, bookListStyle } = this.state
 
     const book = this.getBookFromID(
       bookId,
@@ -129,7 +129,7 @@ class BibleSelector extends React.Component {
           classNames={columnClassNames}
           listStyle={bookListStyle}
           onSelect={this.handleBookSelect}
-          onListStyleToggle={onBookListStyleToggle}
+          onListStyleToggle={this.hanldeListStyleToggle}
           onFilterChange={this.handleBookFilterChange}
         />
         {showBook ? (

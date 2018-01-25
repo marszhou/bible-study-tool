@@ -9,35 +9,27 @@ export default class BibleSelectorPage extends Component {
       bookId: -1,
       chapter: 0,
       verse: 0
-    },
-    listStyle: string
+    }
   }
   constructor(props: {}) {
     super(props)
     this.state = {
       visible: false,
-      bookId: 0,
-      listStyle: 'list'
+      bookId: 0
     }
   }
 
-  handleBibleSelectorChange = (value) => {
+  handleBibleSelectorChange = value => {
     console.log('select', value)
-    this.setState({value})
+    this.setState({ value })
   }
 
   render() {
-    const { value, listStyle } = this.state
+    const { value } = this.state
     return (
       <BibleSelector
         value={value}
         onChange={this.handleBibleSelectorChange}
-        bookListStyle={listStyle}
-        onBookListStyleToggle={() =>
-          this.setState({
-            listStyle: listStyle === 'list' ? 'grid' : 'list'
-          })
-        }
         columnClassNames={{
           'client-height': true
         }}
