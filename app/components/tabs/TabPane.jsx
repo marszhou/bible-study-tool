@@ -105,7 +105,7 @@ class TabPane extends React.Component {
     this.props.onTabClose(id);
   }
 
-  renderItemContent(item, index) {
+  renderItemContent(item) {
     const { bodyRendererComponent: Body } = this.props;
     return <Body {...item.props} />;
   }

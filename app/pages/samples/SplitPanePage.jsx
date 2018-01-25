@@ -103,7 +103,7 @@ class SplitPanePage extends React.Component {
         primary="second"
         onChange={() => this.tabPane.handleResize()}
       >
-        <div>
+        <div style={{marginTop: 10}}>
           <TabPane
             ref={tabPane => (this.tabPane = tabPane)}
             items={items}

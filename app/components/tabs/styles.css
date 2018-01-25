@@ -2,7 +2,6 @@
   /* border: 1px solid black; */
 }
 .tabPanel {
-
 }
 .tabHead {
   display: flex;
@@ -10,33 +9,34 @@
 }
 .tabLine {
   position: absolute;
-  border: 1px solid black;
+  border: 1px solid #d4d4d5;
   left: 0;
   right: 0;
   bottom: 0px;
-  z-index:1;
+  z-index: 1;
 }
 .tabBody {
-
 }
 .tabControl {
-
 }
 
 .tabControl > * + * {
   margin-left: 3px;
-  }
+}
 .tabControl button {
   padding: 0 3px;
 }
-.tabControlList{
+.tabControlList {
   display: flex;
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  /* position: absolute;
+  right: 0; */
 }
-.tabControlList_front{
-
+.tabControlList_front {
 }
-.tabControlList_rear{
-
+.tabControlList_rear {
 }
 .tabTitleList {
   /* flex item props */
@@ -51,37 +51,51 @@
   overflow: hidden;
   /* overflow-y: visible; */
   /* overflow-y: initial; */
-  margin: 0 16px;
+  margin-left : 10px;
 }
-.tabTitle{
+.tabTitle {
   display: table;
-  border: 1px solid black;
-  border-bottom: none;
-  padding: 0 8px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
   position: relative;
   cursor: default;
-  opacity: 0.75;
+
+  background: 0 0;
+  border-bottom: none;
+  border-left: 1px solid rgba(212, 212, 212, 0.4);
+  border-right: 1px solid rgba(212, 212, 212, 0.4);
+  border-top: 1px solid rgba(212, 212, 212, 0.4);
+  padding: 0.92857143em 1.42857143em;
+  color: rgba(0, 0, 0, 0.87);
 }
 .tabTitle:hover {
-  opacity: 1.0;
+  opacity: 1;
 }
 .tabTitle + .tabTitle {
   margin-left: 3px;
   white-space: nowrap;
 }
 .tabTitleSelected {
-  color: rgb(114, 114, 114);
-  border-width: 2px;
-  font-weight: bold;
-  opacity: 1.0;
+  background: none #fff;
+  color: rgba(0, 0, 0, 0.95);
+  border-top-width: 1px;
+  border-color: #d4d4d5;
+  font-weight: 700;
+  margin-bottom: -1px;
+  box-shadow: none;
+  border-radius: 0.28571429rem 0.28571429rem 0 0 !important;
 }
 .tabTitle .close {
   visibility: hidden;
+  color: rgba(0,0,0,0.37);
+  position: absolute;
+  right: 3px;
+  top: 1px;
 }
-.tabTitle:hover .close, .tabTitleSelected .close {
+.tabTitle:hover .close,
+.tabTitleSelected .close {
   visibility: visible;
+}
+.close:hover {
+  color: rgba(0,0,0,0.87);
 }
 .tabTitleSelected::after {
   content: '';
