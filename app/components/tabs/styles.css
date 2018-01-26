@@ -9,7 +9,7 @@
 }
 .tabLine {
   position: absolute;
-  border: 1px solid #d4d4d5;
+  border-top: 1px solid #d4d4d5;
   left: 0;
   right: 0;
   bottom: 0px;
@@ -57,14 +57,14 @@
   display: table;
   position: relative;
   cursor: default;
-
-  background: 0 0;
   border-bottom: none;
   border-left: 1px solid rgba(212, 212, 212, 0.4);
   border-right: 1px solid rgba(212, 212, 212, 0.4);
   border-top: 1px solid rgba(212, 212, 212, 0.4);
-  padding: 0.92857143em 1.42857143em;
+  padding: 0.52857143em 1.42857143em;
   color: rgba(0, 0, 0, 0.87);
+  border-radius: 0.28571429rem 0.28571429rem 0 0 !important;
+  font-size: 14px;
 }
 .tabTitle:hover {
   opacity: 1;
@@ -74,12 +74,11 @@
   white-space: nowrap;
 }
 .tabTitleSelected {
-  background: none #fff;
+  background: linear-gradient(rgb(238,238,238), white);
   color: rgba(0, 0, 0, 0.95);
   border-top-width: 1px;
   border-color: #d4d4d5;
   font-weight: 700;
-  margin-bottom: -1px;
   box-shadow: none;
   border-radius: 0.28571429rem 0.28571429rem 0 0 !important;
 }
