@@ -6,16 +6,21 @@ export default class BibleSelectorPage extends Component {
   state: {
     visible: boolean,
     value: {
-      bookId: -1,
-      chapter: 0,
-      verse: 0
+      bookId: number,
+      chapter: number,
+      verse: number
     }
   }
   constructor(props: {}) {
     super(props)
     this.state = {
       visible: false,
-      bookId: 0
+      bookId: 0,
+      value: {
+        bookId: -1,
+        chapter: 0,
+        verse: 0
+      }
     }
   }
 
