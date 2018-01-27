@@ -109,3 +109,12 @@
 .isDragging {
   display: none;
 }
+.isOver {
+  background: linear-gradient(rgba(143, 233, 255, 0.5), white);
+}
+.overBefore {
+  border-left: 3px solid rgba(123, 123, 123, 1.0);
+}
+.overAfter {
+  border-right: 3px solid rgba(123, 123, 123, 1.0);
+}

@@ -47,28 +47,34 @@ const target = {
   }
 }
 
-let TabTitle = class extends React.Component {
+@DragSource('item', source, (connect, monitor) => ({
+  connectDragSource: connect.dragSource(),
+  isDragging: monitor.isDragging()
+}))
+@DropTarget('item', target, (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget(),
+  isOver: monitor.isOver(),
+  isOverCurrent: monitor.isOver({ shallow: true }),
+  canDrop: monitor.canDrop(),
+  itemType: monitor.getItemType()
+}))
+export default class TabTitle extends React.Component {
   static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
-    ]),
     classNames: PropTypes.object,
     style: PropTypes.object,
     id: PropTypes.string.isRequired,
     onClick: PropTypes.func,
-    connectDragSource: PropTypes.func,
-    connectDropTarget: PropTypes.func,
+    // connectDragSource: PropTypes.func,
+    // connectDropTarget: PropTypes.func,
     onSort: PropTypes.func
   }
 
   static defaultProps = {
-    children: null,
     classNames: {},
     style: {},
     onClick: () => {},
-    connectDragSource: a => a,
-    connectDropTarget: a => a,
+    // connectDragSource: a => a,
+    // connectDropTarget: a => a,
     onSort: () => {}
   }
 
@@ -99,7 +105,7 @@ let TabTitle = class extends React.Component {
     } = this.props
     const { selectedId } = this.context
     const { overInfo } = this.state
-    console.log(this.state)
+    const overPart = (overInfo && overInfo.before) ? 'overBefore':'overAfter'
 
     return connectDropTarget(
       connectDragSource(
@@ -108,6 +114,8 @@ let TabTitle = class extends React.Component {
             [styles.tabTitle]: true,
             [styles.tabTitleSelected]: id === selectedId,
             [styles.isDragging]: isDragging,
+            [styles.isOver]: isOver,
+            [styles[overPart]]: isOver,
             ...classNames
           })}
           style={style}
@@ -120,18 +128,3 @@ let TabTitle = class extends React.Component {
     )
   }
 }
-
-TabTitle = DragSource('item', source, (connect, monitor) => ({
-  connectDragSource: connect.dragSource(),
-  isDragging: monitor.isDragging()
-}))(TabTitle)
-
-TabTitle = DropTarget('item', target, (connect, monitor) => ({
-  connectDropTarget: connect.dropTarget(),
-  isOver: monitor.isOver(),
-  isOverCurrent: monitor.isOver({ shallow: true }),
-  canDrop: monitor.canDrop(),
-  itemType: monitor.getItemType()
-}))(TabTitle)
-
-export default TabTitle
