@@ -26,8 +26,8 @@ class MessageDialog extends Component {
     width: PropTypes.number,
     height: PropTypes.number,
     backgroundColor: PropTypes.string,
-    noButton: PropTypes.bool,
-    noClose: PropTypes.bool,
+    noButton: PropTypes.bool, // 不显示button
+    noClose: PropTypes.bool,  // 不显示close
     onClose: PropTypes.func
   }
 
@@ -97,7 +97,7 @@ class MessageDialog extends Component {
         y < bound.top ||
         y > bound.bottom
       ) {
-        this.el.close()
+        this.handleClose(true)
       }
     }
   }
@@ -201,6 +201,7 @@ class MessageDialog extends Component {
         <dialog
           id={this.id}
           role="button"
+          open={open}
           className={classNames}
           style={style}
           ref={el => (this.el = el)}
