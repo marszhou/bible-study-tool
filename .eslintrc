@@ -47,7 +47,7 @@
     "react/no-unused-prop-types": 1,
     "react/no-array-index-key": 0,
     "jsx-a11y/label-has-for": 0,
-    "no-unused-vars": 1,
+    "no-unused-vars": [1, {"vars": "all", "args": "none"}],
     "jsx-a11y/no-noninteractive-element-to-interactive-role": 0,
     "import/no-mutable-exports": 0,
     "react/no-find-dom-node": 0,
@@ -60,7 +60,7 @@
         "Function": true
       }
     ],
-    "react/prop-types": [2, { "ignore": ["children"]}]
+    "react/prop-types": [2, { "ignore": ["children"]}],
   },
   "plugins": [
     "flowtype",
