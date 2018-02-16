@@ -42,6 +42,12 @@ const sampleRoutes = [
     exact: true,
     name: 'dialog',
     component: require('../pages/samples/DialogPage')
+  },
+  {
+    path: '/samples/read',
+    exact: true,
+    name: 'read',
+    component: require('../pages/samples/Read')
   }
 ]
 const Samples = () => {
