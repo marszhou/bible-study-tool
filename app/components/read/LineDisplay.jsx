@@ -1,6 +1,6 @@
 import { React, PropTypes, cx } from 'app/bootstrap' // eslint-disable-line
 import styles from './styles.css'
-import { stripCode } from './utils'
+import { stripCode, splitCode } from './utils'
 
 export const Line_PropType = PropTypes.shape({
   index: PropTypes.number,
@@ -10,7 +10,11 @@ export const Line_PropType = PropTypes.shape({
 
 function NormalDisplay({ line, onClick }) {
   return (
-    <li className={styles.line} onClick={() => onClick(line.index)} role='button'>
+    <li
+      className={styles.line}
+      onClick={e => onClick(e, line.index)}
+      role="button"
+    >
       <span
         className={cx({ [styles.verseVersion]: true, show: true })}
         data-version={line.version}
@@ -26,19 +30,49 @@ NormalDisplay.propTypes = {
   onClick: PropTypes.func.isRequired
 }
 
-function WithCodeDisplay({ line }) {
-  return <li className={styles.lineWithCode}>{line.content}</li>
+const Code = ({ data }) => (
+  <span className={styles.code} data-value={data.value} data-lang={data.lang} />
+)
+Code.propTypes = {
+  data: PropTypes.any.isRequired
+}
+
+const Word = ({ data }) => <span className={styles.word}>{data.value}</span>
+Word.propTypes = {
+  data: PropTypes.any.isRequired
+}
+
+function WithCodeDisplay({ line, onClick }) {
+  const codes = splitCode(line.content)
+  return (
+    <li
+      className={styles.lineWithCode}
+      onClick={e => onClick(e, line.index)}
+      role="button"
+    >
+      <span className={styles.verseIndex} data-index={line.index} />
+      {codes.map(
+        (code, index) =>
+          code.type === 'word' ? (
+            <Word data={code} key={index} />
+          ) : (
+            <Code data={code} key={index} />
+          )
+      )}
+    </li>
+  )
 }
 
 WithCodeDisplay.propTypes = {
-  line: Line_PropType.isRequired
+  line: Line_PropType.isRequired,
+  onClick: PropTypes.func.isRequired
 }
 
 const Line = ({ line, displayCode = false, onClick }) => {
   return !displayCode ? (
     <NormalDisplay line={line} onClick={onClick} />
   ) : (
-    <WithCodeDisplay line={line} />
+    <WithCodeDisplay line={line} onClick={onClick} />
   )
 }
 

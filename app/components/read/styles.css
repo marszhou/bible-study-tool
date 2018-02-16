@@ -1,9 +1,7 @@
 .chapter {
-
 }
 
 .verse {
-
 }
 
 .line {
@@ -12,13 +10,23 @@
 }
 
 .lineWithCode {
-
+  user-select: none;
+  cursor: default;
 }
 
 .verseIndex:before {
-  content: attr(data-index) "."
+  content: attr(data-index) '.';
 }
 
 :global(.show).verseVersion:before {
-  content: "["attr(data-version)"]\00a0"
+  content: '['attr(data-version)']\00a0';
+}
+.word {
+
+}
+.code {
+  color: navy;
+}
+.code:before {
+  content: '\003c'attr(data-lang) attr(data-value) '\003e';
 }

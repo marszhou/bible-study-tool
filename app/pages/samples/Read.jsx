@@ -355,7 +355,7 @@ class Read extends Component {
   render() {
     return (
       <div>
-        <ChapterDisplay book={book} chapterIndex={1} verses={verses} />
+        <ChapterDisplay book={book} chapterIndex={1} verses={verses} displayCode />
       </div>
     )
   }
