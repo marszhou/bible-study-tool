@@ -1,10 +1,10 @@
 import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
 import VerseDisplay from './VerseDisplay';
-import { PropType_Book } from '../bible-selector/Book';
+import { PropType_BookItem } from '../bible-selector/BookItem';
 
 class ChapterDisplay extends React.Component {
   static propTypes = {
-    book: PropType_Book.isRequired,
+    book: PropType_BookItem.isRequired,
     chapterIndex: PropTypes.number.isRequired,
     verses: PropTypes.array,
     selectedVerseIndexes: PropTypes.array,
