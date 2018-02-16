@@ -51,7 +51,7 @@
   overflow: hidden;
   /* overflow-y: visible; */
   /* overflow-y: initial; */
-  margin-left : 10px;
+  margin-left: 10px;
 }
 .tabTitle {
   display: table;
@@ -74,7 +74,7 @@
   white-space: nowrap;
 }
 .tabTitleSelected {
-  background: linear-gradient(rgb(238,238,238), white);
+  background: linear-gradient(rgb(238, 238, 238), white);
   color: rgba(0, 0, 0, 0.95);
   border-top-width: 1px;
   border-color: #d4d4d5;
@@ -84,17 +84,16 @@
 }
 .tabTitle .close {
   visibility: hidden;
-  color: rgba(0,0,0,0.37);
+  color: rgba(0, 0, 0, 0.37);
   position: absolute;
   right: 3px;
   top: 1px;
 }
-.tabTitle:hover .close,
-.tabTitleSelected .close {
+.tabTitle:hover .close {
   visibility: visible;
 }
 .close:hover {
-  color: rgba(0,0,0,0.87);
+  color: rgba(0, 0, 0, 0.87);
 }
 .tabTitleSelected::after {
   content: '';
@@ -113,8 +112,8 @@
   background: linear-gradient(rgba(143, 233, 255, 0.5), white);
 }
 .overBefore {
-  border-left: 3px solid rgba(123, 123, 123, 1.0);
+  border-left: 3px solid rgba(123, 123, 123, 1);
 }
 .overAfter {
-  border-right: 3px solid rgba(123, 123, 123, 1.0);
+  border-right: 3px solid rgba(123, 123, 123, 1);
 }

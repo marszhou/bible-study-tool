@@ -3,7 +3,7 @@ import { remote } from 'electron';
 
 // const sqlite = remote.require('sqlite3').verbose();
 const Database = remote.require('better-sqlite3');
-const db = new Database('/Users/User1/Documents/git/_working/bible-study-tool/resources/databases/bible_YHWH.sqlite');
+const db = new Database('/Users/mattzhou/Documents/git/_working/bible-study-tool/resources/databases/bible_YHWH.sqlite');
 const rows = db.prepare('SELECT * FROM books').all();
 console.log(rows);
 
