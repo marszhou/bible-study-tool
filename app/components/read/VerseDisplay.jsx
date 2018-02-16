@@ -1,11 +1,12 @@
 import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
-import LineDisplay from './LineDisplay';
+import LineDisplay, {Line_PropType} from './LineDisplay';
+import styles from './styles.css'
 
 class VerseDisplay extends React.Component {
   static propTypes = {
     verse: PropTypes.shape({
-      versions: PropTypes.array,
-      lines: PropTypes.array,
+      index: PropTypes.number,
+      versions: PropTypes.arrayOf(Line_PropType)
     }),
     selected: PropTypes.bool,
     displayCode: PropTypes.bool,
@@ -22,21 +23,20 @@ class VerseDisplay extends React.Component {
     this.state = {};
   }
 
-  renderer() {
+  render() {
     const { verse, selected, displayCode } = this.props;
     if (!verse) return null;
-    const { versions, lines } = verse;
+    const { versions } = verse;
 
     return React.createElement(
       'ul',
       {
-        className: cx({ selected }),
+        className: cx({ selected, [styles.verse]: true }),
       },
-      [...Array(versions.length)].map((_, index) => (
+      versions.map((line, index) => (
         <LineDisplay
           key={index}
-          content={lines[index]}
-          version={versions[index]}
+          line={line}
           displayCode={displayCode}
         />
       )),

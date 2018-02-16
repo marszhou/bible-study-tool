@@ -1,19 +1,20 @@
 import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
 import VerseDisplay from './VerseDisplay';
 import { PropType_BookItem } from '../bible-selector/BookItem';
+import styles from './styles.css'
 
 class ChapterDisplay extends React.Component {
   static propTypes = {
     book: PropType_BookItem.isRequired,
     chapterIndex: PropTypes.number.isRequired,
     verses: PropTypes.array,
-    selectedVerseIndexes: PropTypes.array,
+    selectedVerses: PropTypes.array,
     displayCode: PropTypes.bool,
   };
 
   static defaultProps = {
     verses: [],
-    selectedVerseIndexes: [],
+    selectedVerses: [],
     displayCode: false,
   };
 
@@ -23,16 +24,16 @@ class ChapterDisplay extends React.Component {
   }
 
   render() {
-    const { displayCode, selectedVerseIndexes, verses } = this.props;
+    const { displayCode, selectedVerses, verses } = this.props;
 
     return (
-      <div>
-        {verses.map((verse, index) => (
+      <div className={styles.chapter}>
+        {verses.map((verse) => (
           <VerseDisplay
-            key={index}
+            key={verse.index}
             verse={verse}
             displayCode={displayCode}
-            selected={selectedVerseIndexes.indexOf(index) > -1}
+            selected={selectedVerses.indexOf(verse.index) > -1}
           />
         ))}
       </div>

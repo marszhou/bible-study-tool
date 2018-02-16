@@ -1,0 +1,24 @@
+.chapter {
+
+}
+
+.verse {
+
+}
+
+.line {
+  user-select: none;
+  cursor: default;
+}
+
+.lineWithCode {
+
+}
+
+.verseIndex:before {
+  content: attr(data-index) "."
+}
+
+:global(.show).verseVersion:before {
+  content: "["attr(data-version)"]\00a0"
+}
