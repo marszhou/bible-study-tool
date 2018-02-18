@@ -31,7 +31,7 @@ class VerseDisplay extends React.Component {
     return React.createElement(
       'ul',
       {
-        className: cx({ selected, [styles.verse]: true }),
+        className: cx({ [styles.selected]: selected, [styles.verse]: true }),
       },
       versions.map((line, index) => (
         <LineDisplay

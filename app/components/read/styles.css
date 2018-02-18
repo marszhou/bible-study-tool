@@ -30,3 +30,6 @@
 .code:before {
   content: '\003c'attr(data-lang) attr(data-value) '\003e';
 }
+.selected .lineContent{
+  border-bottom: 1px dashed blue;
+}

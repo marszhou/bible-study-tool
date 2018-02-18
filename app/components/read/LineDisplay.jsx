@@ -20,7 +20,7 @@ const NormalDisplay = ({ line, onClick }) => {
         data-version={line.version}
       />
       <span className={styles.verseIndex} data-index={line.index} />
-      {stripCode(line.content)}
+      <span className={styles.lineContent}>{stripCode(line.content)}</span>
     </li>
   )
 }
@@ -67,14 +67,21 @@ const WithCodeDisplay = ({ line, onClick, onCodeClick, onCodeHover }) => {
       role="button"
     >
       <span className={styles.verseIndex} data-index={line.index} />
-      {codes.map(
-        (code, index) =>
-          code.type === 'word' ? (
-            <Word data={code} key={index} />
-          ) : (
-            <Code data={code} key={index} onClick={onCodeClick} />
-          )
-      )}
+      <span className={styles.lineContent}>
+        {codes.map(
+          (code, index) =>
+            code.type === 'word' ? (
+              <Word data={code} key={index} />
+            ) : (
+              <Code
+                data={code}
+                key={index}
+                onClick={onCodeClick}
+                onHover={onCodeHover}
+              />
+            )
+        )}
+      </span>
     </li>
   )
 }
