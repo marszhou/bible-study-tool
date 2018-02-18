@@ -61,6 +61,7 @@
       }
     ],
     "react/prop-types": [2, { "ignore": ["children"]}],
+    "jsx-a11y/anchor-has-content": 0
   },
   "plugins": [
     "flowtype",
