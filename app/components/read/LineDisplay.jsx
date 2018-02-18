@@ -8,7 +8,7 @@ export const Line_PropType = PropTypes.shape({
   version: PropTypes.string
 })
 
-function NormalDisplay({ line, onClick }) {
+const NormalDisplay = ({ line, onClick }) => {
   return (
     <li
       className={styles.line}
@@ -30,11 +30,27 @@ NormalDisplay.propTypes = {
   onClick: PropTypes.func.isRequired
 }
 
-const Code = ({ data }) => (
-  <span className={styles.code} data-value={data.value} data-lang={data.lang} />
+// --
+const Code = ({ data, onClick, onHover }) => (
+  <a
+    role="button"
+    href="###"
+    onClick={e => {
+      e.preventDefault()
+      onClick(e, data)
+    }}
+    onMouseOver={e => {
+      onHover(e, data)
+    }}
+    className={styles.code}
+    data-value={data.value}
+    data-lang={data.lang}
+  />
 )
 Code.propTypes = {
-  data: PropTypes.any.isRequired
+  data: PropTypes.any.isRequired,
+  onClick: PropTypes.func.isRequired,
+  onHover: PropTypes.func.isRequired
 }
 
 const Word = ({ data }) => <span className={styles.word}>{data.value}</span>
@@ -42,7 +58,7 @@ Word.propTypes = {
   data: PropTypes.any.isRequired
 }
 
-function WithCodeDisplay({ line, onClick }) {
+const WithCodeDisplay = ({ line, onClick, onCodeClick, onCodeHover }) => {
   const codes = splitCode(line.content)
   return (
     <li
@@ -56,7 +72,7 @@ function WithCodeDisplay({ line, onClick }) {
           code.type === 'word' ? (
             <Word data={code} key={index} />
           ) : (
-            <Code data={code} key={index} />
+            <Code data={code} key={index} onClick={onCodeClick} />
           )
       )}
     </li>
@@ -65,25 +81,48 @@ function WithCodeDisplay({ line, onClick }) {
 
 WithCodeDisplay.propTypes = {
   line: Line_PropType.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  onCodeClick: PropTypes.func,
+  onCodeHover: PropTypes.func
 }
 
-const Line = ({ line, displayCode = false, onClick }) => {
+WithCodeDisplay.defaultProps = {
+  onCodeClick: (e, data) => {},
+  onCodeHover: (e, data) => {}
+}
+
+// --
+const Line = ({
+  line,
+  displayCode = false,
+  onClick,
+  onCodeClick,
+  onCodeHover
+}) => {
   return !displayCode ? (
     <NormalDisplay line={line} onClick={onClick} />
   ) : (
-    <WithCodeDisplay line={line} onClick={onClick} />
+    <WithCodeDisplay
+      line={line}
+      onClick={onClick}
+      onCodeClick={onCodeClick}
+      onCodeHover={onCodeHover}
+    />
   )
 }
 
 Line.propTypes = {
   onClick: PropTypes.func,
   line: Line_PropType.isRequired,
-  displayCode: PropTypes.bool.isRequired // 是否显示原文编号
+  displayCode: PropTypes.bool.isRequired, // 是否显示原文编号
+  onCodeClick: PropTypes.func,
+  onCodeHover: PropTypes.func
 }
 
 Line.defaultProps = {
-  onClick: verseIndex => {}
+  onClick: verseIndex => {},
+  onCodeClick: (e, data) => {},
+  onCodeHover: (e, data) => {}
 }
 
 export default Line
