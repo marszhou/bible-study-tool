@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ChapterDisplay from '../../components/read/ChapterDisplay'
+import ChapterDisplay from '../../components/bible-display/ChapterDisplay'
 
 const book = {
   id: 1153072783907,
