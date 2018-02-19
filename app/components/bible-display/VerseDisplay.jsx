@@ -11,6 +11,9 @@ class VerseDisplay extends React.Component {
     versions: PropTypes.arrayOf(PropTypes.string),
     selected: PropTypes.bool,
     displayCode: PropTypes.bool,
+    onVerseClick: PropTypes.func,
+    onCodeClick: PropTypes.func,
+    onCodeHover: PropTypes.func
   };
 
   static defaultProps = {
@@ -18,6 +21,9 @@ class VerseDisplay extends React.Component {
     versions: [],
     selected: false,
     displayCode: false,
+    onVerseClick: (e, verseIndex) => {},
+    onCodeClick: (e, data) => {},
+    onCodeHover: (e, data) => {},
   };
 
   constructor(props) {
@@ -26,7 +32,7 @@ class VerseDisplay extends React.Component {
   }
 
   render() {
-    const { verse, selected, displayCode } = this.props;
+    const { verse, selected, displayCode, versions, onVerseClick } = this.props;
     if (!verse) return null;
     const { versions: lines } = verse;
 
@@ -39,9 +45,10 @@ class VerseDisplay extends React.Component {
         <LineDisplay
           key={index}
           index={verse.index}
-          version={this.props.versions[index]}
+          version={versions.length === 1 ? null : versions[index]}
           line={line}
           displayCode={displayCode}
+          onClick={onVerseClick}
         />
       )),
     );

@@ -93,11 +93,11 @@ const Line = ({
 }
 
 Line.propTypes = {
-  onClick: PropTypes.func,
   index: PropTypes.number.isRequired,
   line: PropTypes.string.isRequired,
   version: PropTypes.string,
   displayCode: PropTypes.bool.isRequired, // 是否显示原文编号
+  onClick: PropTypes.func,
   onCodeClick: PropTypes.func,
   onCodeHover: PropTypes.func
 }

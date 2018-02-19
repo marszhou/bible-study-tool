@@ -14,7 +14,7 @@ class BibleDisplayContainer extends React.PureComponent {
     super(props)
     this.state = {
       verses: [],
-      selectedVersions: ['cuvs'],
+      selectedVersions: ['cuvs', 'lzz'],
       selectedVerses: [],
       displayCode: false
     }
@@ -46,6 +46,18 @@ class BibleDisplayContainer extends React.PureComponent {
 
   handleDisplayCode = () => this.setState({displayCode: !this.state.displayCode})
 
+  handleVerseClick = (e, verseIndex) => {
+    console.log(verseIndex, e)
+  }
+
+  handleCodeClick = (e, data) => {
+
+  }
+
+  handleCodeOver = (e, data) => {
+
+  }
+
   render() {
     const { book, chapterIndex, versions } = this.props
     const { verses, displayCode, selectedVersions, selectedVerses } = this.state
@@ -64,6 +76,9 @@ class BibleDisplayContainer extends React.PureComponent {
           versions={selectedVersions.map(
             versionId => versions.find(v => v.id === versionId).name
           )}
+          onVerseClick={this.handleVerseClick}
+          onCodeHover={this.handleCodeOver}
+          onCodeClick={this.handleCodeClick}
         />
       </div>
     )
