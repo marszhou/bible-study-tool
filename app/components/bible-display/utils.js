@@ -29,3 +29,8 @@ export const splitCode = code => {
   }
   return ret
 }
+
+export const formatChapterVerses = (byVersions) =>
+  Object.keys(byVersions).reduce((ret, versionId) => {
+
+  }, [])

@@ -2,34 +2,6 @@ import { React, PropTypes, cx } from 'app/bootstrap' // eslint-disable-line
 import styles from './styles.css'
 import { stripCode, splitCode } from './utils'
 
-export const Line_PropType = PropTypes.shape({
-  index: PropTypes.number,
-  content: PropTypes.string,
-  version: PropTypes.string
-})
-
-const NormalDisplay = ({ line, onClick }) => {
-  return (
-    <li
-      className={styles.line}
-      onClick={e => onClick(e, line.index)}
-      role="button"
-    >
-      <span
-        className={cx({ [styles.verseVersion]: true, show: true })}
-        data-version={line.version}
-      />
-      <span className={styles.verseIndex} data-index={line.index} />
-      <span className={styles.lineContent}>{stripCode(line.content)}</span>
-    </li>
-  )
-}
-
-NormalDisplay.propTypes = {
-  line: Line_PropType.isRequired,
-  onClick: PropTypes.func.isRequired
-}
-
 // --
 const Code = ({ data, onClick, onHover }) => (
   <a
@@ -59,36 +31,24 @@ Word.propTypes = {
 }
 
 const WithCodeDisplay = ({ line, onClick, onCodeClick, onCodeHover }) => {
-  const codes = splitCode(line.content)
-  return (
-    <li
-      className={styles.lineWithCode}
-      onClick={e => onClick(e, line.index)}
-      role="button"
-    >
-      <span className={styles.verseIndex} data-index={line.index} />
-      <span className={styles.lineContent}>
-        {codes.map(
-          (code, index) =>
-            code.type === 'word' ? (
-              <Word data={code} key={index} />
-            ) : (
-              <Code
-                data={code}
-                key={index}
-                onClick={onCodeClick}
-                onHover={onCodeHover}
-              />
-            )
-        )}
-      </span>
-    </li>
+  const codes = splitCode(line)
+  return codes.map(
+    (code, index) =>
+      code.type === 'word' ? (
+        <Word data={code} key={index} />
+      ) : (
+        <Code
+          data={code}
+          key={index}
+          onClick={onCodeClick}
+          onHover={onCodeHover}
+        />
+      )
   )
 }
 
 WithCodeDisplay.propTypes = {
-  line: Line_PropType.isRequired,
-  onClick: PropTypes.func.isRequired,
+  line: PropTypes.string.isRequired,
   onCodeClick: PropTypes.func,
   onCodeHover: PropTypes.func
 }
@@ -100,27 +60,43 @@ WithCodeDisplay.defaultProps = {
 
 // --
 const Line = ({
+  index,
   line,
+  version,
   displayCode = false,
   onClick,
   onCodeClick,
   onCodeHover
 }) => {
-  return !displayCode ? (
-    <NormalDisplay line={line} onClick={onClick} />
-  ) : (
-    <WithCodeDisplay
-      line={line}
-      onClick={onClick}
-      onCodeClick={onCodeClick}
-      onCodeHover={onCodeHover}
-    />
+  return (
+    <li className={styles.line} onClick={e => onClick(e, index)} role="button">
+      {version ? (
+        <span
+          className={cx({ [styles.verseVersion]: true, show: true })}
+          data-version={version}
+        />
+      ) : null}
+      <span className={styles.verseIndex} data-index={index} />
+      <span className={styles.lineContent}>
+        {!displayCode ? (
+          stripCode(line)
+        ) : (
+          <WithCodeDisplay
+            line={line}
+            onCodeClick={onCodeClick}
+            onCodeHover={onCodeHover}
+          />
+        )}
+      </span>
+    </li>
   )
 }
 
 Line.propTypes = {
   onClick: PropTypes.func,
-  line: Line_PropType.isRequired,
+  index: PropTypes.number.isRequired,
+  line: PropTypes.string.isRequired,
+  version: PropTypes.string,
   displayCode: PropTypes.bool.isRequired, // 是否显示原文编号
   onCodeClick: PropTypes.func,
   onCodeHover: PropTypes.func
@@ -129,7 +105,8 @@ Line.propTypes = {
 Line.defaultProps = {
   onClick: verseIndex => {},
   onCodeClick: (e, data) => {},
-  onCodeHover: (e, data) => {}
+  onCodeHover: (e, data) => {},
+  version: null
 }
 
 export default Line

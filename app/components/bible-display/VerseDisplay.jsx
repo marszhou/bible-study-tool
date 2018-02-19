@@ -6,14 +6,16 @@ class VerseDisplay extends React.Component {
   static propTypes = {
     verse: PropTypes.shape({
       index: PropTypes.number,
-      versions: PropTypes.arrayOf(Line_PropType)
+      versions: PropTypes.arrayOf(PropTypes.string)
     }),
+    versions: PropTypes.arrayOf(PropTypes.string),
     selected: PropTypes.bool,
     displayCode: PropTypes.bool,
   };
 
   static defaultProps = {
     verse: null,
+    versions: [],
     selected: false,
     displayCode: false,
   };
@@ -26,16 +28,18 @@ class VerseDisplay extends React.Component {
   render() {
     const { verse, selected, displayCode } = this.props;
     if (!verse) return null;
-    const { versions } = verse;
+    const { versions: lines } = verse;
 
     return React.createElement(
       'ul',
       {
         className: cx({ [styles.selected]: selected, [styles.verse]: true }),
       },
-      versions.map((line, index) => (
+      lines.map((line, index) => (
         <LineDisplay
           key={index}
+          index={verse.index}
+          version={this.props.versions[index]}
           line={line}
           displayCode={displayCode}
         />

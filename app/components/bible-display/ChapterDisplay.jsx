@@ -7,6 +7,7 @@ class ChapterDisplay extends React.Component {
   static propTypes = {
     // book: PropType_BookItem.isRequired,
     // chapterIndex: PropTypes.number.isRequired,
+    versions: PropTypes.arrayOf(PropTypes.string).isRequired,
     verses: PropTypes.array,
     selectedVerses: PropTypes.array,
     displayCode: PropTypes.bool,
@@ -24,14 +25,14 @@ class ChapterDisplay extends React.Component {
   }
 
   render() {
-    const { displayCode, selectedVerses, verses } = this.props;
-
+    const { displayCode, selectedVerses, verses, versions } = this.props;
     return (
       <div className={styles.chapter}>
         {verses.map((verse) => (
           <VerseDisplay
             key={verse.index}
             verse={verse}
+            versions={versions}
             displayCode={displayCode}
             selected={selectedVerses.indexOf(verse.index) > -1}
           />

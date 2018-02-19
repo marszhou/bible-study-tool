@@ -1,5 +1,7 @@
-import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
-import { PropType_BookItem } from '../bible-selector/BookItem';
+import { React, PropTypes, cx } from 'app/bootstrap' // eslint-disable-line
+import { PropType_BookItem } from '../bible-selector/BookItem'
+import * as db from '../../utils/db'
+import ChapterDisplay from 'app/components/bible-display/ChapterDisplay'
 
 class BibleDisplayContainer extends React.PureComponent {
   static propTypes = {
@@ -12,19 +14,60 @@ class BibleDisplayContainer extends React.PureComponent {
     super(props)
     this.state = {
       verses: [],
-      selectedVersions: [],
+      selectedVersions: ['cuvs'],
       selectedVerses: [],
       displayCode: false
     }
   }
 
+  componentWillMount() {
+    this.fetchVerses(this.props)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.fetchVerses(nextProps)
+  }
+
+  fetchVerses(props) {
+    const { book, chapterIndex } = props
+    const { selectedVersions } = this.state
+    const verses = db.fetchVersesForChapterByVersions(
+      book.id,
+      chapterIndex,
+      selectedVersions
+    )
+    this.setState({
+      verses: verses.map(verse => ({
+        index: verse[0].verse,
+        versions: verse.map(version => version.org_text)
+      }))
+    })
+  }
+
+  handleDisplayCode = () => this.setState({displayCode: !this.state.displayCode})
+
   render() {
+    const { book, chapterIndex, versions } = this.props
+    const { verses, displayCode, selectedVersions, selectedVerses } = this.state
+
     return (
       <div>
-
+        <button onClick={this.handleDisplayCode}>
+          display code = {displayCode ? 'on' : 'off'}
+        </button>
+        <ChapterDisplay
+          book={book}
+          chapterIndex={chapterIndex}
+          displayCode={displayCode}
+          verses={verses}
+          selectedVerses={selectedVerses}
+          versions={selectedVersions.map(
+            versionId => versions.find(v => v.id === versionId).name
+          )}
+        />
       </div>
-    );
+    )
   }
 }
 
-export default BibleDisplayContainer;
+export default BibleDisplayContainer
