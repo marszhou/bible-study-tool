@@ -1,5 +1,5 @@
-import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
-import LineDisplay, {Line_PropType} from './LineDisplay';
+import { React, PropTypes, cx } from 'app/bootstrap' // eslint-disable-line
+import LineDisplay, { Line_PropType } from './LineDisplay'
 import styles from './styles.css'
 
 class VerseDisplay extends React.Component {
@@ -14,7 +14,7 @@ class VerseDisplay extends React.Component {
     onVerseClick: PropTypes.func,
     onCodeClick: PropTypes.func,
     onCodeHover: PropTypes.func
-  };
+  }
 
   static defaultProps = {
     verse: null,
@@ -23,23 +23,31 @@ class VerseDisplay extends React.Component {
     displayCode: false,
     onVerseClick: (e, verseIndex) => {},
     onCodeClick: (e, data) => {},
-    onCodeHover: (e, data) => {},
-  };
+    onCodeHover: (e, data) => {}
+  }
 
   constructor(props) {
-    super(props);
-    this.state = {};
+    super(props)
+    this.state = {}
   }
 
   render() {
-    const { verse, selected, displayCode, versions, onVerseClick } = this.props;
-    if (!verse) return null;
-    const { versions: lines } = verse;
+    const {
+      verse,
+      selected,
+      displayCode,
+      versions,
+      onVerseClick,
+      onCodeClick,
+      onCodeHover
+    } = this.props
+    if (!verse) return null
+    const { versions: lines } = verse
 
     return React.createElement(
       'ul',
       {
-        className: cx({ [styles.selected]: selected, [styles.verse]: true }),
+        className: cx({ [styles.selected]: selected, [styles.verse]: true })
       },
       lines.map((line, index) => (
         <LineDisplay
@@ -49,10 +57,12 @@ class VerseDisplay extends React.Component {
           line={line}
           displayCode={displayCode}
           onClick={onVerseClick}
+          onCodeClick={onCodeClick}
+          onCodeHover={onCodeHover}
         />
-      )),
-    );
+      ))
+    )
   }
 }
 
-export default VerseDisplay;
+export default VerseDisplay

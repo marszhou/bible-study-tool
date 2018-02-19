@@ -14,18 +14,24 @@ class BibleDisplayContainer extends React.PureComponent {
     super(props)
     this.state = {
       verses: [],
-      selectedVersions: ['cuvs', 'lzz'],
+      selectedVersions: ['cuvs',],
       selectedVerses: [],
       displayCode: false
     }
   }
 
   componentWillMount() {
-    this.fetchVerses(this.props)
+    this.setState({
+      verses: this.fetchVerses(this.props),
+    })
+
   }
 
   componentWillReceiveProps(nextProps) {
-    this.fetchVerses(nextProps)
+    this.setState({
+      verses: this.fetchVerses(nextProps),
+      selectedVerses: []
+    })
   }
 
   fetchVerses(props) {
@@ -36,32 +42,38 @@ class BibleDisplayContainer extends React.PureComponent {
       chapterIndex,
       selectedVersions
     )
+    return verses.map(verse => ({
+      index: verse[0].verse,
+      versions: verse.map(version => version.org_text)
+    }))
+  }
+
+  toggleSelectedVerse(verseIndex) {
+    const { selectedVerses } = this.state
+    return selectedVerses.indexOf(verseIndex) > -1
+      ? selectedVerses.filter(v => v !== verseIndex)
+      : [...selectedVerses, verseIndex]
+  }
+
+  handleDisplayCode = () =>
+    this.setState({ displayCode: !this.state.displayCode })
+
+  handleVerseClick = (e, verseIndex) => {
     this.setState({
-      verses: verses.map(verse => ({
-        index: verse[0].verse,
-        versions: verse.map(version => version.org_text)
-      }))
+      selectedVerses: this.toggleSelectedVerse(verseIndex)
     })
   }
 
-  handleDisplayCode = () => this.setState({displayCode: !this.state.displayCode})
-
-  handleVerseClick = (e, verseIndex) => {
-    console.log(verseIndex, e)
-  }
-
-  handleCodeClick = (e, data) => {
-
-  }
+  handleCodeClick = (e, data) => {}
 
   handleCodeOver = (e, data) => {
-
+    console.log('hover', data)
   }
 
   render() {
     const { book, chapterIndex, versions } = this.props
     const { verses, displayCode, selectedVersions, selectedVerses } = this.state
-
+    console.log(selectedVerses)
     return (
       <div>
         <button onClick={this.handleDisplayCode}>
@@ -77,8 +89,8 @@ class BibleDisplayContainer extends React.PureComponent {
             versionId => versions.find(v => v.id === versionId).name
           )}
           onVerseClick={this.handleVerseClick}
-          onCodeHover={this.handleCodeOver}
           onCodeClick={this.handleCodeClick}
+          onCodeHover={this.handleCodeOver}
         />
       </div>
     )

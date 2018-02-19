@@ -36,7 +36,9 @@ class ChapterDisplay extends React.Component {
       selectedVerses,
       verses,
       versions,
-      onVerseClick
+      onVerseClick,
+      onCodeClick,
+      onCodeHover
     } = this.props
     return (
       <div className={styles.chapter}>
@@ -48,6 +50,8 @@ class ChapterDisplay extends React.Component {
             displayCode={displayCode}
             selected={selectedVerses.indexOf(verse.index) > -1}
             onVerseClick={onVerseClick}
+            onCodeClick={onCodeClick}
+            onCodeHover={onCodeHover}
           />
         ))}
       </div>

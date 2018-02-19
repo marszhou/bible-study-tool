@@ -9,9 +9,11 @@ const Code = ({ data, onClick, onHover }) => (
     href="###"
     onClick={e => {
       e.preventDefault()
+      e.stopPropagation()
       onClick(e, data)
     }}
     onMouseOver={e => {
+      e.stopPropagation()
       onHover(e, data)
     }}
     className={styles.code}
