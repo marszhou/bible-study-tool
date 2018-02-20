@@ -63,7 +63,7 @@ class BibleDisplayContainer extends React.PureComponent {
     )
     return verses.map(verse => ({
       index: verse[0].verse,
-      versions: verse.map(version => version.org_text)
+      versions: verse.map(version => version.org_text || version.scripture)
     }))
   }
 
@@ -134,7 +134,7 @@ class BibleDisplayContainer extends React.PureComponent {
         verses={verses}
         selectedVerses={selectedVerses}
         versions={selectedVersions.map(
-          versionId => versions.find(v => v.id === versionId).name
+          versionId => versions.find(v => v.id === versionId).abbr
         )}
         onVerseClick={this.handleVerseClick}
         onCodeClick={this.handleCodeClick}
