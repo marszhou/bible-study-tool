@@ -10,7 +10,8 @@ import {
   Rail,
   Image,
   Dropdown,
-  Label
+  Label,
+  Button
 } from 'semantic-ui-react'
 import { PropType_BookItem } from '../bible-selector/BookItem'
 import * as db from '../../utils/db'
@@ -105,16 +106,22 @@ class BibleDisplayContainer extends React.PureComponent {
     this.props.onStep(direction)
   }
 
-  handleVersionChoose = (version) => {
+  handleVersionChoose = (e, version) => {
+    e.preventDefault()
+    e.stopPropagation()
     const selectedVersions = this.toggleSelectedVersion(version)
     if (selectedVersions.length === 0) {
       return
     }
-    this.setState({
-      selectedVersions: this.toggleSelectedVersion(version)
-    }, () => this.setState({
-      verses: this.fetchVerses(this.props)
-    }))
+    this.setState(
+      {
+        selectedVersions: this.toggleSelectedVersion(version)
+      },
+      () =>
+        this.setState({
+          verses: this.fetchVerses(this.props)
+        })
+    )
   }
 
   renderChapter() {
@@ -144,15 +151,27 @@ class BibleDisplayContainer extends React.PureComponent {
   }
 
   renderVersionDropdown(versions, selectedVersions) {
+    let description = ''
+    if (selectedVersions.length === 1) {
+      description = versions.find(version => version.id === selectedVersions[0]).name
+    } else if (selectedVersions.length >1) {
+      description = `${selectedVersions.length}个版本`
+    }
     return (
       <Dropdown
+        icon={null}
+        closeOnChange={false}
         floating
-        labeled
-        button
-        compact
-        icon="book"
-        text="选择版本"
-        className="small icon"
+        trigger={
+          <Button
+            basic
+            color="black"
+            content="选择版本"
+            size="small"
+            icon="book"
+            label={{ as: 'a', basic: true, color:'black', pointing: 'left', content: description }}
+          />
+        }
       >
         <Dropdown.Menu>
           <Dropdown.Header>
@@ -166,7 +185,7 @@ class BibleDisplayContainer extends React.PureComponent {
                 key={version.id}
                 className="small"
                 selected={selectedVersions.indexOf(version.id) > -1}
-                onClick={() => this.handleVersionChoose(version)}
+                onClick={e => this.handleVersionChoose(e, version)}
               >
                 {selectedVersions.indexOf(version.id) > -1 ? (
                   <Icon name="checkmark" className="right floated" />
@@ -217,11 +236,14 @@ class BibleDisplayContainer extends React.PureComponent {
           </div>
         </div>
         <Segment>
+
           <a href="###" onClick={this.handleDisplayCode}>
             <Icon name={`toggle ${displayCode ? 'on' : 'off'}`} />
             {displayCode ? '不显示原文' : '显示原文'}
-          </a>{' '}
+          </a>
+          {' '}
           {this.renderVersionDropdown(versions, selectedVersions)}
+
         </Segment>
       </div>
     )
