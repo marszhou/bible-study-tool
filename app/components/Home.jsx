@@ -5,6 +5,27 @@ import SideBar from './side-bar/SideBar'
 import Samples from './Samples'
 
 export default class Home extends Component {
+  state = {}
+
+  componentDidMount() {
+    const cssLoaded = e => this.setState({cssLoaded: true})
+
+    Promise.all(
+      Array.prototype.slice
+        .call(document.querySelectorAll('link[rel="stylesheet"]'))
+        .map(
+          el =>
+            new Promise((resolve, reject) => {
+              el.addEventListener('load', () => {
+                resolve()
+              })
+            })
+        )
+    )
+      .then(cssLoaded)
+      .catch(cssLoaded)
+  }
+
   renderSideBar() {
     return (
       <SideBar
@@ -49,7 +70,8 @@ export default class Home extends Component {
   }
 
   render() {
-    return (
+    const { cssLoaded } = this.state
+    return cssLoaded ? (
       <div>
         <div className={styles.container} data-tid="container">
           {this.renderSideBar()}
@@ -59,6 +81,6 @@ export default class Home extends Component {
           <GlobalComputedCss />
         </div>
       </div>
-    )
+    ) : null
   }
 }
