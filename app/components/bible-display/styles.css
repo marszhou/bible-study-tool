@@ -13,7 +13,14 @@
   line-height: 1.6em;
 }
 
-.verse {
+.selected.verse,
+.verse:hover {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-color: darkgray;
+}
+.selected.verse{
+  text-decoration-color: darkgreen;
 }
 
 .line {
@@ -40,9 +47,6 @@
 }
 .code:before {
   content: '\003c'attr(data-lang) attr(data-value) '\003e';
-}
-.selected .lineContent {
-  border-bottom: 1px dashed blue;
 }
 
 .versionItem {

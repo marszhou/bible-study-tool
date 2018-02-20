@@ -71,24 +71,31 @@ const Line = ({
   onCodeHover
 }) => {
   return (
-    <li className={styles.line} onClick={e => onClick(e, index)} role="button">
-      {version ? (
-        <span
-          className={cx({ [styles.verseVersion]: true, show: true })}
-          data-version={version}
-        />
-      ) : null}
-      <span className={styles.verseIndex} data-index={index} />
-      <span className={styles.lineContent}>
-        {!displayCode ? (
-          stripCode(line)
-        ) : (
-          <WithCodeDisplay
-            line={line}
-            onCodeClick={onCodeClick}
-            onCodeHover={onCodeHover}
+    <li className={styles.line} role="button">
+      <span
+        className={styles.lineContent}
+        onClick={e => onClick(e, index)}
+        role="link"
+        tabIndex="0"
+      >
+        {version ? (
+          <span
+            className={cx({ [styles.verseVersion]: true, show: true })}
+            data-version={version}
           />
-        )}
+        ) : null}
+        <span className={styles.verseIndex} data-index={index} />
+        <span className={styles.content}>
+          {!displayCode ? (
+            stripCode(line)
+          ) : (
+            <WithCodeDisplay
+              line={line}
+              onCodeClick={onCodeClick}
+              onCodeHover={onCodeHover}
+            />
+          )}
+        </span>
       </span>
     </li>
   )
