@@ -22,6 +22,9 @@
 .selected.verse{
   text-decoration-color: darkgreen;
 }
+.verse + .verse {
+  margin-top: 6px;
+}
 
 .line {
   user-select: none;
