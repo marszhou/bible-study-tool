@@ -8,19 +8,26 @@ import {
   Icon,
   Grid,
   Rail,
-  Image
+  Image,
+  Dropdown,
+  Label
 } from 'semantic-ui-react'
 import { PropType_BookItem } from '../bible-selector/BookItem'
 import * as db from '../../utils/db'
 import ChapterDisplay from 'app/components/bible-display/ChapterDisplay'
-
-const Placeholder = () => <Image src="/assets/images/wireframe/paragraph.png" />
+import styles from './styles.css'
+import BookIcon from '../../vendors/react-icons/lib/go/book'
 
 class BibleDisplayContainer extends React.PureComponent {
   static propTypes = {
     book: PropType_BookItem.isRequired,
     chapterIndex: PropTypes.number.isRequired,
-    versions: PropTypes.array.isRequired
+    versions: PropTypes.array.isRequired,
+    onStep: PropTypes.func
+  }
+
+  static defaultProps = {
+    onStep: direction => {}
   }
 
   constructor(props) {
@@ -46,9 +53,9 @@ class BibleDisplayContainer extends React.PureComponent {
     })
   }
 
-  fetchVerses(props) {
-    const { book, chapterIndex } = props
-    const { selectedVersions } = this.state
+  fetchVerses(props, state) {
+    const { book, chapterIndex } = props || this.props
+    const { selectedVersions } = state || this.state
     const verses = db.fetchVersesForChapterByVersions(
       book.id,
       chapterIndex,
@@ -65,6 +72,13 @@ class BibleDisplayContainer extends React.PureComponent {
     return selectedVerses.indexOf(verseIndex) > -1
       ? selectedVerses.filter(v => v !== verseIndex)
       : [...selectedVerses, verseIndex]
+  }
+
+  toggleSelectedVersion(version) {
+    const { selectedVersions } = this.state
+    return selectedVersions.indexOf(version.id) > -1
+      ? selectedVersions.filter(vid => vid !== version.id)
+      : [...selectedVersions, version.id]
   }
 
   handleDisplayCode = e => {
@@ -84,6 +98,23 @@ class BibleDisplayContainer extends React.PureComponent {
 
   handleCodeOver = (e, data) => {
     console.log('hover', data)
+  }
+
+  handleStep = (e, direction) => {
+    e.preventDefault()
+    this.props.onStep(direction)
+  }
+
+  handleVersionChoose = (version) => {
+    const selectedVersions = this.toggleSelectedVersion(version)
+    if (selectedVersions.length === 0) {
+      return
+    }
+    this.setState({
+      selectedVersions: this.toggleSelectedVersion(version)
+    }, () => this.setState({
+      verses: this.fetchVerses(this.props)
+    }))
   }
 
   renderChapter() {
@@ -112,6 +143,51 @@ class BibleDisplayContainer extends React.PureComponent {
     )
   }
 
+  renderVersionDropdown(versions, selectedVersions) {
+    return (
+      <Dropdown
+        floating
+        labeled
+        button
+        compact
+        icon="book"
+        text="选择版本"
+        className="small icon"
+      >
+        <Dropdown.Menu>
+          <Dropdown.Header>
+            <Icon name="info circle" />
+            红色 <Label circular color="red" empty size="mini" />{' '}
+            代表该版本有原文编号
+          </Dropdown.Header>
+          <Dropdown.Menu scrolling>
+            {versions.map(version => (
+              <Dropdown.Item
+                key={version.id}
+                className="small"
+                selected={selectedVersions.indexOf(version.id) > -1}
+                onClick={() => this.handleVersionChoose(version)}
+              >
+                {selectedVersions.indexOf(version.id) > -1 ? (
+                  <Icon name="checkmark" className="right floated" />
+                ) : null}
+                <div className={styles.versionItem}>
+                  <Label
+                    circular
+                    color={version.hasCode ? 'red' : 'black'}
+                    empty
+                    size="mini"
+                  />{' '}
+                  <span>{version.name}</span>
+                </div>
+              </Dropdown.Item>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown.Menu>
+      </Dropdown>
+    )
+  }
+
   renderHeader() {
     const { book, chapterIndex, versions } = this.props
     const {
@@ -122,17 +198,32 @@ class BibleDisplayContainer extends React.PureComponent {
       contextRef
     } = this.state
     return (
-      <Sticky context={contextRef}>
-        <div style={{ background: 'white' }}>
-          <Header as="h2">
-            {book.name} {book.chapterCount > 1 ? `第${chapterIndex}章` : ''}
-          </Header>
+      <div style={{ background: 'white' }}>
+        <div className={styles.titleContainer}>
+          <div className={styles.titleItem} style={{ flexGrow: 0 }}>
+            <a href="###" onClick={e => this.handleStep(e, -1)}>
+              <Icon name="chevron left" />
+            </a>
+          </div>
+          <div className={styles.titleItem}>
+            <Header as="h2">
+              {book.name} {book.chapterCount > 1 ? `第${chapterIndex}章` : ''}
+            </Header>
+          </div>
+          <div className={styles.titleItem} style={{ flexGrow: 0 }}>
+            <a href="###" onClick={e => this.handleStep(e, 1)}>
+              <Icon name="chevron right" />
+            </a>
+          </div>
+        </div>
+        <Segment>
           <a href="###" onClick={this.handleDisplayCode}>
             <Icon name={`toggle ${displayCode ? 'on' : 'off'}`} />
             {displayCode ? '不显示原文' : '显示原文'}
-          </a>
-        </div>
-      </Sticky>
+          </a>{' '}
+          {this.renderVersionDropdown(versions, selectedVersions)}
+        </Segment>
+      </div>
     )
   }
 
@@ -146,14 +237,13 @@ class BibleDisplayContainer extends React.PureComponent {
       contextRef
     } = this.state
     return (
-      <Grid centered columns={1}>
-        <Grid.Column>
-          <div ref={contextRef => this.setState({ contextRef })}>
-            {this.renderHeader()}
-            {this.renderChapter()}
-          </div>
-        </Grid.Column>
-      </Grid>
+      <div
+        ref={contextRef => this.setState({ contextRef })}
+        className={styles.bibleDisplay}
+      >
+        {this.renderHeader()}
+        {this.renderChapter()}
+      </div>
     )
   }
 }

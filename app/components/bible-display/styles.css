@@ -1,4 +1,16 @@
+.titleContainer {
+  display: flex;
+  align-items: center;
+  padding-top: 12px;
+}
+
+.titleItem {
+  flex-grow: 1;
+}
+
 .chapter {
+  font-size: 14px;
+  line-height: 1.6em;
 }
 
 .verse {
@@ -22,7 +34,6 @@
   content: '['attr(data-version)']\00a0';
 }
 .word {
-
 }
 .code {
   color: navy;
@@ -30,6 +41,11 @@
 .code:before {
   content: '\003c'attr(data-lang) attr(data-value) '\003e';
 }
-.selected .lineContent{
+.selected .lineContent {
   border-bottom: 1px dashed blue;
+}
+
+.versionItem {
+  font-size: 12px;
+  min-width: 200px;
 }

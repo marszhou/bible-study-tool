@@ -52,7 +52,7 @@ const sampleRoutes = [
 ]
 const Samples = () => {
   return [
-    <div key="menu" style={{ position: 'fixed', top: 0, right: 0, zIndex: 1 }}>
+    <div key="menu" style={{ position: 'fixed', bottom: 0, right: 0, zIndex: 1 }}>
       <ul>
         <li>
           <Link to="/">home</Link>
