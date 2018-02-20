@@ -1,7 +1,20 @@
-import { React, PropTypes, cx } from 'app/bootstrap' // eslint-disable-line
+import { React, PropTypes, cx, _ } from 'app/bootstrap' // eslint-disable-line
+import {
+  Header,
+  Container,
+  Sticky,
+  Segment,
+  Divider,
+  Icon,
+  Grid,
+  Rail,
+  Image
+} from 'semantic-ui-react'
 import { PropType_BookItem } from '../bible-selector/BookItem'
 import * as db from '../../utils/db'
 import ChapterDisplay from 'app/components/bible-display/ChapterDisplay'
+
+const Placeholder = () => <Image src="/assets/images/wireframe/paragraph.png" />
 
 class BibleDisplayContainer extends React.PureComponent {
   static propTypes = {
@@ -14,7 +27,7 @@ class BibleDisplayContainer extends React.PureComponent {
     super(props)
     this.state = {
       verses: [],
-      selectedVersions: ['cuvs',],
+      selectedVersions: ['cuvs'],
       selectedVerses: [],
       displayCode: false
     }
@@ -22,9 +35,8 @@ class BibleDisplayContainer extends React.PureComponent {
 
   componentWillMount() {
     this.setState({
-      verses: this.fetchVerses(this.props),
+      verses: this.fetchVerses(this.props)
     })
-
   }
 
   componentWillReceiveProps(nextProps) {
@@ -55,8 +67,12 @@ class BibleDisplayContainer extends React.PureComponent {
       : [...selectedVerses, verseIndex]
   }
 
-  handleDisplayCode = () =>
+  handleDisplayCode = e => {
+    e.preventDefault()
     this.setState({ displayCode: !this.state.displayCode })
+  }
+
+  handleContextRef = contextRef => this.setState({ contextRef })
 
   handleVerseClick = (e, verseIndex) => {
     this.setState({
@@ -70,29 +86,74 @@ class BibleDisplayContainer extends React.PureComponent {
     console.log('hover', data)
   }
 
+  renderChapter() {
+    const { book, chapterIndex, versions } = this.props
+    const {
+      verses,
+      displayCode,
+      selectedVersions,
+      selectedVerses,
+      contextRef
+    } = this.state
+    return (
+      <ChapterDisplay
+        book={book}
+        chapterIndex={chapterIndex}
+        displayCode={displayCode}
+        verses={verses}
+        selectedVerses={selectedVerses}
+        versions={selectedVersions.map(
+          versionId => versions.find(v => v.id === versionId).name
+        )}
+        onVerseClick={this.handleVerseClick}
+        onCodeClick={this.handleCodeClick}
+        onCodeHover={this.handleCodeOver}
+      />
+    )
+  }
+
+  renderHeader() {
+    const { book, chapterIndex, versions } = this.props
+    const {
+      verses,
+      displayCode,
+      selectedVersions,
+      selectedVerses,
+      contextRef
+    } = this.state
+    return (
+      <Sticky context={contextRef}>
+        <div style={{ background: 'white' }}>
+          <Header as="h2">
+            {book.name} {book.chapterCount > 1 ? `第${chapterIndex}章` : ''}
+          </Header>
+          <a href="###" onClick={this.handleDisplayCode}>
+            <Icon name={`toggle ${displayCode ? 'on' : 'off'}`} />
+            {displayCode ? '不显示原文' : '显示原文'}
+          </a>
+        </div>
+      </Sticky>
+    )
+  }
+
   render() {
     const { book, chapterIndex, versions } = this.props
-    const { verses, displayCode, selectedVersions, selectedVerses } = this.state
-    console.log(selectedVerses)
+    const {
+      verses,
+      displayCode,
+      selectedVersions,
+      selectedVerses,
+      contextRef
+    } = this.state
     return (
-      <div>
-        <button onClick={this.handleDisplayCode}>
-          display code = {displayCode ? 'on' : 'off'}
-        </button>
-        <ChapterDisplay
-          book={book}
-          chapterIndex={chapterIndex}
-          displayCode={displayCode}
-          verses={verses}
-          selectedVerses={selectedVerses}
-          versions={selectedVersions.map(
-            versionId => versions.find(v => v.id === versionId).name
-          )}
-          onVerseClick={this.handleVerseClick}
-          onCodeClick={this.handleCodeClick}
-          onCodeHover={this.handleCodeOver}
-        />
-      </div>
+      <Grid centered columns={1}>
+        <Grid.Column>
+          <div ref={contextRef => this.setState({ contextRef })}>
+            {this.renderHeader()}
+            {this.renderChapter()}
+          </div>
+        </Grid.Column>
+      </Grid>
     )
   }
 }
