@@ -72,20 +72,23 @@ const Line = ({
 }) => {
   return (
     <li className={styles.line} role="button">
-      <span
-        className={styles.lineContent}
+      <div
+        className={cx({
+          [styles.lineContent]: true,
+          [styles.hasVersion]: !!version
+        })}
         onClick={e => onClick(e, index)}
         role="link"
         tabIndex="0"
       >
         {version ? (
-          <span
+          <div
             className={cx({ [styles.verseVersion]: true, show: true })}
             data-version={version}
           />
         ) : null}
-        <span className={styles.verseIndex} data-index={index} />
-        <span className={styles.content}>
+        <div className={styles.verseIndex} data-index={index} />
+        <div className={styles.content}>
           {!displayCode ? (
             stripCode(line)
           ) : (
@@ -95,8 +98,8 @@ const Line = ({
               onCodeHover={onCodeHover}
             />
           )}
-        </span>
-      </span>
+        </div>
+      </div>
     </li>
   )
 }

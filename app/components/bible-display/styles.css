@@ -13,14 +13,11 @@
   line-height: 1.6em;
 }
 
-.selected.verse,
 .verse:hover {
-  text-decoration-line: underline;
-  text-decoration-style: dashed;
-  text-decoration-color: darkgray;
+  text-decoration: underline dotted darkgray;
 }
 .selected.verse{
-  text-decoration-color: darkgreen;
+  text-decoration: underline wavy darkcyan;
 }
 .verse + .verse {
   margin-top: 6px;
@@ -30,14 +27,20 @@
   user-select: none;
   cursor: default;
 }
-
-.lineWithCode {
-  user-select: none;
-  cursor: default;
+.lineContent {
+  display:inline-grid;
+  grid-template-columns: auto auto;
+  grid-auto-flow: column;
 }
+
+.lineContent.hasVersion {
+  display:inline-grid;
+  grid-template-columns: 60px auto auto;
+  grid-auto-flow: column;
+}
+
 .verseIndex {
   display: inline-block;
-  width: 3em;
   text-align: right;
 }
 .verseIndex:before {
@@ -45,7 +48,6 @@
 }
 .verseVersion {
   display: inline-block;
-  width: 4em;
   text-align: right;
 }
 :global(.show).verseVersion:before {
