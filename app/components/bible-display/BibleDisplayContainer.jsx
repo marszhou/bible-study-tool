@@ -81,6 +81,12 @@ class BibleDisplayContainer extends React.PureComponent {
       : [...selectedVersions, version.id]
   }
 
+  getSelectVersion(index) {
+    return this.props.versions.find(
+      v => v.id === this.state.selectedVersions[index]
+    )
+  }
+
   handleDisplayCode = e => {
     e.preventDefault()
     this.setState({ displayCode: !this.state.displayCode })
@@ -152,8 +158,9 @@ class BibleDisplayContainer extends React.PureComponent {
   renderVersionDropdown(versions, selectedVersions) {
     let description = ''
     if (selectedVersions.length === 1) {
-      description = versions.find(version => version.id === selectedVersions[0]).name
-    } else if (selectedVersions.length >1) {
+      description = versions.find(version => version.id === selectedVersions[0])
+        .name
+    } else if (selectedVersions.length > 1) {
       description = `${selectedVersions.length}个版本`
     }
     return (
@@ -161,6 +168,7 @@ class BibleDisplayContainer extends React.PureComponent {
         icon={null}
         closeOnChange={false}
         floating
+        disabled={this.state.displayCode}
         trigger={
           <Button
             basic
@@ -168,7 +176,13 @@ class BibleDisplayContainer extends React.PureComponent {
             content="选择版本"
             size="small"
             icon="book"
-            label={{ as: 'a', basic: true, color:'black', pointing: 'left', content: description }}
+            label={{
+              as: 'a',
+              basic: true,
+              color: 'black',
+              pointing: 'left',
+              content: description
+            }}
           />
         }
       >
@@ -215,6 +229,9 @@ class BibleDisplayContainer extends React.PureComponent {
       selectedVerses,
       contextRef
     } = this.state
+
+    const showCodeDisabled =
+      selectedVersions.length > 1 || !this.getSelectVersion(0).hasCode
     return (
       <div style={{ background: 'white' }}>
         <div className={styles.titleContainer}>
@@ -235,14 +252,15 @@ class BibleDisplayContainer extends React.PureComponent {
           </div>
         </div>
         <Segment>
-
-          <a href="###" onClick={this.handleDisplayCode}>
+          <a
+            href="###"
+            onClick={this.handleDisplayCode}
+            disabled={showCodeDisabled}
+          >
             <Icon name={`toggle ${displayCode ? 'on' : 'off'}`} />
             {displayCode ? '不显示原文' : '显示原文'}
-          </a>
-          {' '}
+          </a>{' '}
           {this.renderVersionDropdown(versions, selectedVersions)}
-
         </Segment>
       </div>
     )
