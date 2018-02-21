@@ -1,14 +1,14 @@
 import { React, PropTypes, cx, _ } from 'app/bootstrap' // eslint-disable-line
 import {
   Header,
-  Container,
-  Sticky,
+  // Container,
+  // Sticky,
   Segment,
-  Divider,
+  // Divider,
   Icon,
-  Grid,
-  Rail,
-  Image,
+  // Grid,
+  // Rail,
+  // Image,
   Dropdown,
   Label,
   Button
@@ -17,7 +17,6 @@ import { PropType_BookItem } from '../bible-selector/BookItem'
 import * as db from '../../utils/db'
 import ChapterDisplay from 'app/components/bible-display/ChapterDisplay'
 import styles from './styles.css'
-import BookIcon from '../../vendors/react-icons/lib/go/book'
 
 class BibleDisplayContainer extends React.PureComponent {
   static propTypes = {
@@ -250,14 +249,6 @@ class BibleDisplayContainer extends React.PureComponent {
   }
 
   render() {
-    const { book, chapterIndex, versions } = this.props
-    const {
-      verses,
-      displayCode,
-      selectedVersions,
-      selectedVerses,
-      contextRef
-    } = this.state
     return (
       <div
         ref={contextRef => this.setState({ contextRef })}

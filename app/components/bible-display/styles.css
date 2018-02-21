@@ -35,11 +35,19 @@
   user-select: none;
   cursor: default;
 }
-
+.verseIndex {
+  display: inline-block;
+  width: 3em;
+  text-align: right;
+}
 .verseIndex:before {
   content: attr(data-index) '.';
 }
-
+.verseVersion {
+  display: inline-block;
+  width: 4em;
+  text-align: right;
+}
 :global(.show).verseVersion:before {
   content: '['attr(data-version)']\00a0';
 }
