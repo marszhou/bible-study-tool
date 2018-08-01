@@ -1,6 +1,9 @@
+// eslint-disable-line
+// @flow
 import { _ } from 'app/bootstrap' // eslint-disable-line
+import type { Database } from './getDatabase'
 
-const dbWrapper = db => methods => {
+const dbWrapper = (db: Database) => (methods: {}): {} => {
   return _.keys(methods).reduce((ret, methodName) => {
     ret[methodName] = (...args) =>
       new Promise((resolve, reject) => {
@@ -9,7 +12,7 @@ const dbWrapper = db => methods => {
             reject(error)
           } else {
             if (this.lastID || this.changes) {
-              resolve(_.pick({...this}, 'lastID', 'changes'))
+              resolve(_.pick({ ...this }, 'lastID', 'changes'))
             } else {
               resolve(result)
             }

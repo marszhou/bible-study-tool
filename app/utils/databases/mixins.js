@@ -1,44 +1,55 @@
+// @flow
 import updateBind from './updateBind'
+import type { Database, CallbackFunc } from './getDatabase'
 
-module.exports = TABLE => ({
-  delete: id => (db, cb) => {
-    return db
-      .prepare(`delete from ${TABLE} where id=?`)
-      .run(id, cb)
-      .finalize()
-  },
-  update: (id, props) => (db, cb) => {
-    const bind = updateBind(props)
-    return db
-      .prepare(`update ${TABLE} set ${bind[0]} where id=?`)
-      .run([...bind[1], id], cb)
-      .finalize()
-  },
-  all: () => (db, cb) => {
-    return db.all(`select * from ${TABLE}`, cb)
-  },
-  get: id => (db, cb) => {
+const mixins = (TABLE: string) => ({
+  get: (id: string | number) => (db: Database, cb: CallbackFunc) => {
     db.get(`select * from ${TABLE} where id=?`, id, cb)
   },
-  in: ids => (db, cb) => {
+  all: () => (db: Database, cb: CallbackFunc) => {
+    return db.all(`select * from ${TABLE}`, cb)
+  },
+  in: (ids: Array<string | number>) => (db: Database, cb: CallbackFunc) => {
     return db.all(
       `select * from ${TABLE} where id in (${ids.map(() => '?').join(',')})`,
       ids,
       cb
     )
   },
-  list: (offset, length) => (db, cb) => {
+  delete: (id: number | string) => (db: Database, cb: CallbackFunc) => {
+    return db
+      .prepare(`delete from ${TABLE} where id=?`)
+      .run(id, cb)
+      .finalize()
+  },
+  update: (id: number | string, props: {}) => (
+    db: Database,
+    cb: CallbackFunc
+  ) => {
+    const bind = updateBind(props)
+    return db
+      .prepare(`update ${TABLE} set ${bind[0]} where id=?`)
+      .run([...bind[1], id], cb)
+      .finalize()
+  },
+  list: (offset: number, length: number) => (
+    db: Database,
+    cb: CallbackFunc
+  ) => {
     return db.all(
       `select * from ${TABLE} \
       limit ${offset}, ${length}`,
       cb
     )
   },
-  count: () => (db, cb) => {
+  count: () => (db: Database, cb: CallbackFunc) => {
     const { rc } = db.get(`select count(*) as rc from ${TABLE} `, cb)
     return rc
   },
-  listByUser: (userId, offset, length) => (db, cb) => {
+  listByUser: (userId: number, offset: number, length: number) => (
+    db: Database,
+    cb: CallbackFunc
+  ) => {
     return db.all(
       `select * from ${TABLE} \
       where user_id=? ` +
@@ -47,7 +58,7 @@ module.exports = TABLE => ({
       cb
     )
   },
-  countByUser: userId => (db, cb) => {
+  countByUser: (userId: number) => (db: Database, cb: CallbackFunc) => {
     const { rc } = db.get(
       `select count(*) as rc from ${TABLE} where user_id=?`,
       userId,
@@ -56,3 +67,5 @@ module.exports = TABLE => ({
     return rc
   }
 })
+
+export default mixins
