@@ -1,5 +1,5 @@
 import { React, ReactDOM, PropTypes, cx, update } from 'app/bootstrap' // eslint-disable-line
-// import { remote } from 'electron'
+import { remote } from 'electron'
 
 // const sqlite = remote.require('sqlite3').verbose();
 // const Database = remote.require('better-sqlite3')

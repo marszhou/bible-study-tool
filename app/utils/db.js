@@ -1,11 +1,27 @@
 import _ from 'lodash'
 import { remote } from 'electron'
+import { resolve } from 'path'
 
+const path = remote.require('path')
+const dbPath = path.join(__dirname, '../resources/databases/bible_YHWH.sqlite')
 const Database = remote.require('better-sqlite3')
 
-const db = new Database(
-  '/Users/mattzhou/Documents/git/_working/bible-study-tool/resources/databases/bible_YHWH.sqlite'
-)
+const sqlite = remote.require('sqlite3').verbose()
+const d = new sqlite.Database(dbPath)
+function a() {
+  return new Promise((resolve, reject) => {
+    d.get('select * from books', (error, result) => resolve(result))
+  })
+}
+
+async function b () {
+  const result = await a()
+  console.log(result)
+}
+
+b()
+
+const db = new Database(dbPath)
 
 const bookTableName = id => 'b_' + id
 

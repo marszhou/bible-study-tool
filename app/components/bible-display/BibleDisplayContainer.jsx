@@ -223,11 +223,8 @@ class BibleDisplayContainer extends React.PureComponent {
   renderHeader() {
     const { book, chapterIndex, versions } = this.props
     const {
-      verses,
       displayCode,
       selectedVersions,
-      selectedVerses,
-      contextRef
     } = this.state
 
     const showCodeDisabled =
