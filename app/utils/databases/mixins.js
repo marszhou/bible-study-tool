@@ -2,30 +2,27 @@
 import updateBind from './updateBind'
 import type { Database, CallbackFunc } from './getDatabase'
 
-const mixins = (TABLE: string) => ({
-  get: (id: string | number) => (db: Database, cb: CallbackFunc) => {
+const mixins = TABLE => ({
+  get: id => (db, cb) => {
     db.get(`select * from ${TABLE} where id=?`, id, cb)
   },
-  all: () => (db: Database, cb: CallbackFunc) => {
+  all: () => (db, cb) => {
     return db.all(`select * from ${TABLE}`, cb)
   },
-  in: (ids: Array<string | number>) => (db: Database, cb: CallbackFunc) => {
+  in: ids => (db, cb) => {
     return db.all(
       `select * from ${TABLE} where id in (${ids.map(() => '?').join(',')})`,
       ids,
       cb
     )
   },
-  delete: (id: number | string) => (db: Database, cb: CallbackFunc) => {
+  delete: id => (db, cb) => {
     return db
       .prepare(`delete from ${TABLE} where id=?`)
       .run(id, cb)
       .finalize()
   },
-  update: (id: number | string, props: {}) => (
-    db: Database,
-    cb: CallbackFunc
-  ) => {
+  update: (id, props) => (db: Database, cb: CallbackFunc) => {
     const bind = updateBind(props)
     return db
       .prepare(`update ${TABLE} set ${bind[0]} where id=?`)
@@ -42,14 +39,11 @@ const mixins = (TABLE: string) => ({
       cb
     )
   },
-  count: () => (db: Database, cb: CallbackFunc) => {
+  count: () => (db, cb) => {
     const { rc } = db.get(`select count(*) as rc from ${TABLE} `, cb)
     return rc
   },
-  listByUser: (userId: number, offset: number, length: number) => (
-    db: Database,
-    cb: CallbackFunc
-  ) => {
+  listByUser: (userId, offset, length) => (db: Database, cb: CallbackFunc) => {
     return db.all(
       `select * from ${TABLE} \
       where user_id=? ` +
@@ -58,7 +52,7 @@ const mixins = (TABLE: string) => ({
       cb
     )
   },
-  countByUser: (userId: number) => (db: Database, cb: CallbackFunc) => {
+  countByUser: userId => (db, cb) => {
     const { rc } = db.get(
       `select count(*) as rc from ${TABLE} where user_id=?`,
       userId,

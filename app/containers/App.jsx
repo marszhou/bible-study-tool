@@ -5,7 +5,9 @@ import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import db from '../utils/databases'
 
-console.log(db)
+(async function test() {
+  console.log(await db.book.all())
+})()
 
 class App extends Component {
   props: {

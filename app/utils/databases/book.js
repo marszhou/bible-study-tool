@@ -1,13 +1,11 @@
-// @flow
 import camel from 'camelcase'
 import mixins from './mixins'
-import type { Database, CallbackFunc } from './getDatabase'
 
 const TABLE = 'books'
 
 const names = ['abbr_en', 'abbr_cn', 'abbr_tr', 'name_cn', 'name_en', 'name_tr']
 
-const getByTypeOfName = type => name => (db: Database, cb: CallbackFunc) =>
+const getByTypeOfName = type => name => (db, cb) =>
   db.get(`select * from ${TABLE} where ${type} = ? `, name, cb)
 
 const getByNames: {} = names.reduce(

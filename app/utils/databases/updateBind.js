@@ -1,8 +1,6 @@
-// eslint-disable-line
-// @flow
 import { _ } from 'app/bootstrap' // eslint-disable-line
 
-const updateBind = (props: {}): [string, Array<number | string>] => {
+const updateBind = (props) => {
   const params = []
   const values = []
 

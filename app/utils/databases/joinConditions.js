@@ -1,8 +1,6 @@
-// eslint-disable-line
-// @flow
 import { _ } from 'app/bootstrap' // eslint-disable-line
 
-const joinCondition = (conditions: {}): [string, Array<any>] => {
+const joinCondition = (conditions) => {
   const keys = _.keys(conditions)
   const wheres = ['1=1']
   const params = []

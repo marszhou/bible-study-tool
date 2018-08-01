@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ChapterDisplay from '../../components/bible-display/ChapterDisplay'
 import BibleDisplayContainer from '../../components/bible-display/BibleDisplayContainer'
 
 const book = {
