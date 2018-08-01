@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import update from 'immutability-helper';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import _ from 'lodash'
 
 export default {
   React,
@@ -14,7 +15,8 @@ export default {
   Router,
   Route,
   Link,
-  update
+  update,
+  _
 };
 
 // ⌘

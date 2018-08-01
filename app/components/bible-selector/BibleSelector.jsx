@@ -1,97 +1,138 @@
-import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
-import BookSelector from './BookSelector';
-import ChapterSelector from './ChapterSelector';
-import VerseSelector from './VerseSelector';
-import { PropType_BookGroup, filterBooks } from './BookGroup';
+import { React, PropTypes, cx } from 'app/bootstrap' // eslint-disable-line
+import BookSelector from './BookSelector'
+import ChapterSelector from './ChapterSelector'
+import VerseSelector from './VerseSelector'
+import {
+  getSelectorBookGroups,
+  getVerseCoutOf,
+  filterBooks
+} from '../../consts/bible'
 
 class BibleSelector extends React.Component {
   static propTypes = {
-    bookId: PropTypes.number,
-    chapter: PropTypes.number,
-    verse: PropTypes.number,
-    bookGroups: PropTypes.arrayOf(PropType_BookGroup),
+    value: PropTypes.shape({
+      bookId: PropTypes.number,
+      chapter: PropTypes.number,
+      verse: PropTypes.number
+    }),
     columnClassNames: PropTypes.object,
-    bookListStyle: PropTypes.oneOf(['list', 'grid']),
     onChange: PropTypes.func,
-    onBookListStyleToggle: PropTypes.func,
-  };
+  }
 
   static defaultProps = {
-    bookId: -1,
-    chapter: 0,
-    verse: 0,
+    value: {
+      bookId: -1,
+      chapter: 0,
+      verse: 0
+    },
     bookGroups: [],
     columnClassNames: {},
-    bookListStyle: 'list',
     onChange: () => {},
-    onBookListStyleToggle: () => {},
-  };
+  }
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       bookFilter: '',
-    };
+      bookListStyle: 'list', // or grid
+      ...this.getStateFromProps(props)
+    }
+    this.bookGroups = getSelectorBookGroups()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.value !== nextProps.value) {
+      this.setState(this.getStateFromProps(nextProps))
+    }
+  }
+
+  getStateFromProps(props) {
+    return { ...props.value }
+  }
+
+  tryTriggerChange() {
+    const { bookId, chapter, verse } = this.state
+    if (bookId > 0 && chapter > 0 && verse > 0) {
+      this.props.onChange({ bookId, chapter, verse })
+    }
+  }
+
+  handleChange(change) {
+    this.setState(change, () => this.tryTriggerChange())
   }
 
   handleBookSelect = book => {
-    this.props.onChange({ bookId: book.id });
-  };
+    if (book.id === this.props.value.bookId) return
+    const newState = {
+      bookId: book.id,
+      chapter: 0,
+      verse: 0
+    }
+    if (book.chapterCount === 1) {
+      newState.chapter = 1
+    }
+    this.handleChange(newState)
+  }
 
   handleChapterSelect = chapter => {
-    this.props.onChange({ chapter });
-  };
+    if (chapter === this.props.value.chapter) return
+    this.handleChange({ chapter, verse: 0 })
+  }
 
   handleVerseSelect = verse => {
-    this.props.onChange({ verse });
-  };
+    this.handleChange({ verse })
+  }
 
   getAllBooks() {
-    const { bookGroups } = this.props;
+    const { bookGroups } = this
     return (bookGroups || []).reduce(
       (books, group) => [...books, ...group.books],
-      [],
-    );
+      []
+    )
   }
 
   getBookFromID(id, books) {
     if (!books) {
-      books = this.getAllBooks();
+      books = this.getAllBooks()
     }
-    return books.find(book => book.id === id);
+    return books.find(book => book.id === id)
   }
 
   handleBookFilterChange = bookFilter => {
-    this.setState({ bookFilter });
-  };
+    this.setState({ bookFilter })
+  }
+
+  hanldeListStyleToggle = () => {
+    const bookListStyle = this.state.bookListStyle === 'list' ? 'grid' : 'list'
+    this.setState({bookListStyle})
+  }
 
   render() {
     const {
-      bookId,
-      chapter,
-      verse,
-      bookGroups,
       columnClassNames,
-      bookListStyle,
-      onBookListStyleToggle,
-    } = this.props;
+    } = this.props
+    const { bookId, chapter, verse, bookListStyle } = this.state
+
     const book = this.getBookFromID(
       bookId,
-      filterBooks(this.state.bookFilter, this.getAllBooks()),
-    );
+      filterBooks(this.state.bookFilter, this.getAllBooks())
+    )
+
+    const showBook = book && book.chapterCount > 1
+    const showVerse = book && chapter
 
     return (
       <div style={{ display: 'flex' }}>
         <BookSelector
           currentBookId={bookId}
-          bookGroups={bookGroups}
+          bookGroups={this.bookGroups}
           classNames={columnClassNames}
           listStyle={bookListStyle}
           onSelect={this.handleBookSelect}
-          onListStyleToggle={onBookListStyleToggle}
+          onListStyleToggle={this.hanldeListStyleToggle}
           onFilterChange={this.handleBookFilterChange}
         />
-        {book ? (
+        {showBook ? (
           <ChapterSelector
             count={book.chapterCount}
             selected={chapter}
@@ -99,17 +140,17 @@ class BibleSelector extends React.Component {
             onSelect={this.handleChapterSelect}
           />
         ) : null}
-        {book ? (
+        {showVerse ? (
           <VerseSelector
-            count={50}
+            count={getVerseCoutOf(bookId, chapter)}
             selected={verse}
             classNames={columnClassNames}
             onSelect={this.handleVerseSelect}
           />
         ) : null}
       </div>
-    );
+    )
   }
 }
 
-export default BibleSelector;
+export default BibleSelector

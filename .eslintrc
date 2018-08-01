@@ -26,19 +26,42 @@
     "promise/catch-or-return": "error",
     "promise/no-native": "off",
     "react/forbid-prop-types": "off",
-    "react/sort-comp": ["error", {
-      "order": ["type-annotations", "static-methods", "lifecycle", "everything-else", "render"]
-    }],
+    "react/sort-comp": [
+      "error",
+      {
+        "order": [
+          "type-annotations",
+          "static-methods",
+          "lifecycle",
+          "everything-else",
+          "render"
+        ]
+      }
+    ],
     "react/jsx-no-bind": "off",
-    "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
+    "react/jsx-filename-extension": [
+      "error",
+      { "extensions": [".js", ".jsx"] }
+    ],
     "react/prefer-stateless-function": "off",
     "react/no-unused-prop-types": 1,
     "react/no-array-index-key": 0,
     "jsx-a11y/label-has-for": 0,
-    "no-unused-vars": 1,
+    "no-unused-vars": [1, {"vars": "all", "args": "none"}],
     "jsx-a11y/no-noninteractive-element-to-interactive-role": 0,
     "import/no-mutable-exports": 0,
-    "react/no-find-dom-node": 0
+    "react/no-find-dom-node": 0,
+    "import/prefer-default-export": 0,
+    "flowtype/no-weak-types": [
+      2,
+      {
+        "any": false,
+        "Object": true,
+        "Function": true
+      }
+    ],
+    "react/prop-types": [2, { "ignore": ["children"]}],
+    "jsx-a11y/anchor-has-content": 0
   },
   "plugins": [
     "flowtype",

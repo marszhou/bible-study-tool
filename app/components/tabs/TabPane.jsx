@@ -1,8 +1,8 @@
 import { React, PropTypes, cx, ReactDOM } from 'app/bootstrap'; // eslint-disable-line
 import delay from 'lodash/delay';
+import { Icon } from 'semantic-ui-react'
 import GoChevronLeft from '../../vendors/react-icons/lib/go/chevron-left';
 import GoChevronRight from '../../vendors/react-icons/lib/go/chevron-right';
-import TiDelete from '../../vendors/react-icons/lib/ti/delete';
 import {
   Tabs,
   TabControl,
@@ -105,7 +105,7 @@ class TabPane extends React.Component {
     this.props.onTabClose(id);
   }
 
-  renderItemContent(item, index) {
+  renderItemContent(item) {
     const { bodyRendererComponent: Body } = this.props;
     return <Body {...item.props} />;
   }
@@ -121,7 +121,7 @@ class TabPane extends React.Component {
         href="###"
         onClick={e => this.handleTabClose(e, item.id)}
       >
-        <TiDelete />
+        <Icon name="window close" size="small" />
       </a>,
     ];
   }

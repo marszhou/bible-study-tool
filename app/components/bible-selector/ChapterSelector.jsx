@@ -1,25 +1,23 @@
-import { React, PropTypes, cx } from 'app/bootstrap'; // eslint-disable-line
-import styles from './BibleSelector.css';
+import { React, PropTypes, cx } from 'app/bootstrap' // eslint-disable-line
+import styles from './BibleSelector.css'
 
 class ChapterSelector extends React.Component {
   static propTypes = {
     count: PropTypes.number,
     selected: PropTypes.number,
-    visible: PropTypes.bool,
     classNames: PropTypes.object,
-    onSelect: PropTypes.func,
-  };
+    onSelect: PropTypes.func
+  }
 
   static defaultProps = {
     count: 0,
     selected: 0, // start from 1
-    visible: true,
     classNames: [],
-    onSelect: () => {},
-  };
+    onSelect: () => {}
+  }
 
   handleClick(index) {
-    this.props.onSelect(index);
+    this.props.onSelect(index)
   }
 
   renderTitle() {
@@ -29,7 +27,7 @@ class ChapterSelector extends React.Component {
           <span style={{ paddingLeft: 5, fontWeight: 'bold' }}>章</span>
         </div>
       </div>
-    );
+    )
   }
 
   renderList() {
@@ -42,6 +40,7 @@ class ChapterSelector extends React.Component {
               role="button"
               tabIndex="0"
               type={this.props.selected === index + 1 ? 'primary' : 'default'}
+              className={this.props.selected === index + 1 ? 'highlighted' : ''}
               onClick={this.handleClick.bind(this, index + 1)}
             >
               {index + 1}
@@ -49,25 +48,25 @@ class ChapterSelector extends React.Component {
           ))}
         </ul>
       </div>
-    );
+    )
   }
 
   render() {
-    const { classNames } = this.props;
+    const { classNames } = this.props
 
-    return this.props.visible ? (
+    return (
       <div
         className={cx({
           [styles.column]: true,
           [styles.chapterSelector]: true,
-          ...classNames,
+          ...classNames
         })}
       >
         {this.renderTitle()}
         {this.renderList()}
       </div>
-    ) : null;
+    )
   }
 }
 
-export default ChapterSelector;
+export default ChapterSelector
