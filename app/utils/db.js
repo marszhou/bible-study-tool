@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import { remote } from 'electron'
-import { resolve } from 'path'
 
 const path = remote.require('path')
 const dbPath = path.join(__dirname, '../resources/databases/bible_YHWH.sqlite')
