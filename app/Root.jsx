@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
 import { Switch, Route } from 'react-router'
@@ -14,6 +15,12 @@ import db from './utils/databases'
 })()
 
 class Root extends React.Component {
+
+  static propTypes = {
+    store: PropTypes.any.isRequired,
+    history: PropTypes.any.isRequired,
+  }
+
   constructor(props) {
     super(props)
   }
