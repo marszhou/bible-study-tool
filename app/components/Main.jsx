@@ -33,7 +33,7 @@ class Main extends Component {
 
   handleSidebarClik = (type, index) => {
     if (type === 'primary') {
-      push(primaryItems[index].path)
+      this.props.history.push(primaryItems[index].path)
     }
   }
 
@@ -55,7 +55,6 @@ class Main extends Component {
         <div className={styles.container} data-tid="container">
           {this.renderSideBar()}
           <div className="bst-content">
-            <Link to='/search'>xxx</Link>
             <Switch>
               <Route exact path="/" render={() => <h1>read</h1>} />
               <Route exact path="/search" render={() => <h1>search</h1>} />

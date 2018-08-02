@@ -1,8 +1,11 @@
 import { React, PropTypes, cx } from 'app/bootstrap' // eslint-disable-line
+
+import {connect} from 'react-redux'
 import styles from './SideBar.css'
 import SideBarItem, { PropType_Item } from './SiderBarItem'
+import { primaryItems } from 'app/consts/siderbar';
 
-export default class extends React.Component {
+class Sidebar extends React.Component {
   static propTypes = {
     primaryItems: PropTypes.arrayOf(PropType_Item),
     toolItems: PropTypes.arrayOf(PropType_Item),
@@ -36,7 +39,7 @@ export default class extends React.Component {
       height: size,
       width: size
     }
-    const current = 0
+    const {current} = this.props
 
     return (
       <div
@@ -73,3 +76,14 @@ export default class extends React.Component {
     )
   }
 }
+
+Sidebar = connect(
+  state => {
+    const {pathname} = state.router.location
+    const current = primaryItems.findIndex(item => item.path === pathname)
+    return {
+      current
+    }
+  }
+)(Sidebar)
+export default Sidebar
