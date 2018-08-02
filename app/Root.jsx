@@ -4,15 +4,22 @@ import { ConnectedRouter } from 'react-router-redux'
 import { Switch, Route } from 'react-router'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
-import HomePage from './pages/HomePage';
+import HomePage from './pages/HomePage'
+
+import db from './utils/databases'
+;
+
+(async function() {
+  console.log(await db.book.all())
+})()
 
 class Root extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   render() {
-    const { store, history } = this.props;
+    const { store, history } = this.props
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
