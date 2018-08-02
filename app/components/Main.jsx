@@ -1,6 +1,7 @@
 import { React, PropTypes, cx, Component, Route, Link } from 'app/bootstrap' // eslint-disable-line
 
 import { Switch } from 'react-router'
+import {push} from 'connected-react-router'
 import { withRouter } from 'react-router-dom'
 import styles from './Main.css'
 import GlobalComputedCss from './GlobalComputedCss'
@@ -32,7 +33,7 @@ class Main extends Component {
 
   handleSidebarClik = (type, index) => {
     if (type === 'primary') {
-      this.props.history.push(primaryItems[index].path)
+      push(primaryItems[index].path)
     }
   }
 
