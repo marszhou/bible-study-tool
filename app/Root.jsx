@@ -12,6 +12,14 @@ import db from './utils/databases'
 
 (async function() {
   console.log(await db.book.all())
+  console.log(await db.bookGroup.all())
+  console.log(await db.bookGroupSet.getBooksByGroup(1153220277234))
+  console.log(await db.verse('cuvs').get(1)),
+  console.log(await db.verse('lzz').get(1))
+  console.log(await db.verse('cuvs').getVerses(1153072783907, 1))
+  console.log(await db.verseCount.getCount(1153072783907, 1))
+  console.log(await db.dictionary('en').get('H0001'))
+  console.log(await db.dictionary('cn').get('H0001'))
 })()
 
 class Root extends React.Component {

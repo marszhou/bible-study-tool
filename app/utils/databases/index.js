@@ -1,9 +1,13 @@
 import getDatabase from './getDatabase'
 import dbWrapper from './dbWrapper'
-import book from './book'
 
 const wrapper = dbWrapper(getDatabase())
 
 export default {
-  book: wrapper(book)
+  book: wrapper(require('./book')),
+  bookGroup: wrapper(require('./bookGroup')),
+  bookGroupSet: wrapper(require('./bookGroupSet')),
+  verse: (book) => wrapper(require('./verse')[book]),
+  verseCount: wrapper(require('./verseCount')),
+  dictionary: (lang) => wrapper(require('./dictionary')[lang])
 }
