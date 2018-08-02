@@ -14,7 +14,6 @@
     "compat/compat": "error",
     "consistent-return": "off",
     "comma-dangle": "off",
-    "flowtype-errors/show-errors": "error",
     "generator-star-spacing": "off",
     "import/no-unresolved": "error",
     "import/no-extraneous-dependencies": "off",
@@ -52,20 +51,10 @@
     "import/no-mutable-exports": 0,
     "react/no-find-dom-node": 0,
     "import/prefer-default-export": 0,
-    "flowtype/no-weak-types": [
-      2,
-      {
-        "any": false,
-        "Object": true,
-        "Function": true
-      }
-    ],
     "react/prop-types": [2, { "ignore": ["children"]}],
     "jsx-a11y/anchor-has-content": 0
   },
   "plugins": [
-    "flowtype",
-    "flowtype-errors",
     "import",
     "promise",
     "compat",
