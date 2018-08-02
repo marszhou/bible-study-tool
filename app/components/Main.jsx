@@ -1,8 +1,8 @@
 import { React, PropTypes, cx, Component, Route, Link } from 'app/bootstrap' // eslint-disable-line
-import styles from './Home.css'
+import styles from './Main.css'
 import GlobalComputedCss from './GlobalComputedCss'
 import SideBar from './side-bar/SideBar'
-import Samples from '../pages/Samples'
+import Samples from '../pages/samples'
 
 export default class Home extends Component {
   state = {}

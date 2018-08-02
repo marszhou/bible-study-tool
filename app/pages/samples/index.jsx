@@ -5,49 +5,49 @@ const sampleRoutes = [
     path: '/samples/bible-selector-demo',
     exact: true,
     name: 'bible-selector-demo',
-    component: require('../pages/samples/BibleSelectorPage')
+    component: require('./BibleSelectorPage')
   },
   {
     path: '/samples/read-demo',
     exact: true,
     name: 'read-demo',
-    component: require('../pages/samples/ReadPage')
+    component: require('./ReadPage')
   },
   {
     path: '/samples/icon-page',
     exact: true,
     name: 'icon-page',
-    component: require('../pages/samples/IconPage')
+    component: require('./IconPage')
   },
   {
     path: '/samples/split-pane-page',
     exact: true,
     name: 'split-pane-page',
-    component: require('../pages/samples/SplitPanePage')
+    component: require('./SplitPanePage')
   },
   {
     path: '/samples/sqlite-page',
     exact: true,
     name: 'sqlite-page',
-    component: require('../pages/samples/SqliteDemoPage')
+    component: require('./SqliteDemoPage')
   },
   {
     path: '/samples/common-components-page',
     exact: true,
     name: 'common-components',
-    component: require('../pages/samples/CommomComponentPage')
+    component: require('./CommomComponentPage')
   },
   {
     path: '/samples/dialog-page',
     exact: true,
     name: 'dialog',
-    component: require('../pages/samples/DialogPage')
+    component: require('./DialogPage')
   },
   // {
   //   path: '/samples/read',
   //   exact: true,
   //   name: 'read',
-  //   component: require('../pages/samples/Read')
+  //   component: require('./Read')
   // }
 ]
 const Samples = () => {

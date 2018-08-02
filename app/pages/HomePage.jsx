@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import Home from '../components/Home';
+import Main from '../components/Main';
 
 export default class HomePage extends Component {
   render() {
     return (
-      <Home />
+      <Main />
     );
   }
 }
