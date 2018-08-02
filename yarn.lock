@@ -1702,7 +1702,7 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-bowser@^1.0.0, bowser@^1.7.3:
+bowser@^1.7.3:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/bowser/-/bowser-1.8.1.tgz#49785777e7302febadb1a5b71d9a646520ed310d"
 
@@ -1930,6 +1930,10 @@ camelcase@^4.0.0, camelcase@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-4.1.0.tgz#d545635be1e33c542649c69173e5de6acfae34dd"
 
+camelcase@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-5.0.0.tgz#03295527d58bd3cd4aa75363f35b2e8d97be2f42"
+
 can-use-dom@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/can-use-dom/-/can-use-dom-0.1.0.tgz#22cc4a34a0abc43950f42c6411024a3f6366b45a"
@@ -2076,7 +2080,7 @@ clap@^1.0.9:
   dependencies:
     chalk "^1.1.3"
 
-classnames@2.x, classnames@^2.1.3, classnames@^2.2.0, classnames@^2.2.1, classnames@^2.2.3, classnames@^2.2.5, classnames@~2.2.0:
+classnames@2.x, classnames@^2.2.0, classnames@^2.2.1, classnames@^2.2.3, classnames@^2.2.5, classnames@~2.2.0:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
 
@@ -3858,10 +3862,6 @@ execall@^1.0.0:
   dependencies:
     clone-regexp "^1.0.0"
 
-exenv@^1.2.1:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
-
 exit-hook@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/exit-hook/-/exit-hook-1.1.1.tgz#f05ca233b48c05d54fff07765df8507e95c02ff8"
@@ -4840,7 +4840,7 @@ humanize-plus@^1.8.1:
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/humanize-plus/-/humanize-plus-1.8.2.tgz#a65b34459ad6367adbb3707a82a3c9f916167030"
 
-hyphenate-style-name@^1.0.1, hyphenate-style-name@^1.0.2:
+hyphenate-style-name@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.2.tgz#31160a36930adaf1fc04c6074f7eb41465d4ec4b"
 
@@ -4942,13 +4942,6 @@ inherits@2.0.1:
 ini@^1.3.4, ini@~1.3.0:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.4.tgz#0537cb79daf59b59a1a517dff706c86ec039162e"
-
-inline-style-prefixer@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/inline-style-prefixer/-/inline-style-prefixer-2.0.5.tgz#c153c7e88fd84fef5c602e95a8168b2770671fe7"
-  dependencies:
-    bowser "^1.0.0"
-    hyphenate-style-name "^1.0.1"
 
 inline-style-prefixer@^3.0.6:
   version "3.0.8"
@@ -7518,7 +7511,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@15.x, prop-types@^15.5.0, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0:
+prop-types@15.x, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0:
   version "15.6.0"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
   dependencies:
@@ -7620,15 +7613,6 @@ rabin-bindings@~1.7.3:
     bindings "^1.3.0"
     nan "^2.7.0"
     prebuild-install "^2.3.0"
-
-radium@^0.19.5:
-  version "0.19.5"
-  resolved "https://registry.yarnpkg.com/radium/-/radium-0.19.5.tgz#2352ffa9c2265ea7c76e07540d9841727f85dbe8"
-  dependencies:
-    array-find "^1.0.0"
-    exenv "^1.2.1"
-    inline-style-prefixer "^2.0.5"
-    prop-types "^15.5.8"
 
 ramda@^0.25.0:
   version "0.25.0"
@@ -8006,19 +7990,13 @@ react-deep-force-update@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-2.0.1.tgz#4f7f6c12c3e7de42f345992a3c518236fa1ecad3"
 
-react-desktop@^0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/react-desktop/-/react-desktop-0.3.2.tgz#7659c2614f76a7eba3a0245ab65ea9322baf7caa"
-  dependencies:
-    radium "^0.19.5"
-
-react-dnd-html5-backend@^2.1.2, react-dnd-html5-backend@^2.5.4:
+react-dnd-html5-backend@^2.5.4:
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/react-dnd-html5-backend/-/react-dnd-html5-backend-2.5.4.tgz#974ad083f67b12d56977a5b171f5ffeb29d78352"
   dependencies:
     lodash "^4.2.0"
 
-react-dnd@^2.1.4, react-dnd@^2.5.4:
+react-dnd@^2.5.4:
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/react-dnd/-/react-dnd-2.5.4.tgz#0b6dc5e9d0dfc2909f4f4fe736e5534f3afd1bd9"
   dependencies:
@@ -8143,26 +8121,6 @@ react-style-proptype@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-style-proptype/-/react-style-proptype-3.1.0.tgz#c8912fc13460f5b0c1ec1114c729d535b52b8073"
   dependencies:
     prop-types "^15.5.4"
-
-react-tabs@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/react-tabs/-/react-tabs-2.1.0.tgz#ba184a519e0a0803cf790a1eb19bc4fdba5fd0ea"
-  dependencies:
-    classnames "^2.2.0"
-    prop-types "^15.5.0"
-
-react-tabtab@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/react-tabtab/-/react-tabtab-0.8.0.tgz#6680cffcd1c21c360383281328231bb7ae183f78"
-  dependencies:
-    classnames "^2.1.3"
-    react-dnd "^2.1.4"
-    react-dnd-html5-backend "^2.1.2"
-    react-tappable "^0.8.4"
-
-react-tappable@^0.8.4:
-  version "0.8.4"
-  resolved "https://registry.yarnpkg.com/react-tappable/-/react-tappable-0.8.4.tgz#c3670cf0c4eb71b2764deb749a3adac1d628af78"
 
 react-test-renderer@^15.6.1:
   version "15.6.1"

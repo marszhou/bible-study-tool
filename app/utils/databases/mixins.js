@@ -1,24 +1,13 @@
+// @flow
 import updateBind from './updateBind'
+import type { Database, CallbackFunc } from './getDatabase'
 
-module.exports = TABLE => ({
-  delete: id => (db, cb) => {
-    return db
-      .prepare(`delete from ${TABLE} where id=?`)
-      .run(id, cb)
-      .finalize()
-  },
-  update: (id, props) => (db, cb) => {
-    const bind = updateBind(props)
-    return db
-      .prepare(`update ${TABLE} set ${bind[0]} where id=?`)
-      .run([...bind[1], id], cb)
-      .finalize()
+const mixins = TABLE => ({
+  get: id => (db, cb) => {
+    db.get(`select * from ${TABLE} where id=?`, id, cb)
   },
   all: () => (db, cb) => {
     return db.all(`select * from ${TABLE}`, cb)
-  },
-  get: id => (db, cb) => {
-    db.get(`select * from ${TABLE} where id=?`, id, cb)
   },
   in: ids => (db, cb) => {
     return db.all(
@@ -27,7 +16,23 @@ module.exports = TABLE => ({
       cb
     )
   },
-  list: (offset, length) => (db, cb) => {
+  delete: id => (db, cb) => {
+    return db
+      .prepare(`delete from ${TABLE} where id=?`)
+      .run(id, cb)
+      .finalize()
+  },
+  update: (id, props) => (db: Database, cb: CallbackFunc) => {
+    const bind = updateBind(props)
+    return db
+      .prepare(`update ${TABLE} set ${bind[0]} where id=?`)
+      .run([...bind[1], id], cb)
+      .finalize()
+  },
+  list: (offset: number, length: number) => (
+    db: Database,
+    cb: CallbackFunc
+  ) => {
     return db.all(
       `select * from ${TABLE} \
       limit ${offset}, ${length}`,
@@ -38,7 +43,7 @@ module.exports = TABLE => ({
     const { rc } = db.get(`select count(*) as rc from ${TABLE} `, cb)
     return rc
   },
-  listByUser: (userId, offset, length) => (db, cb) => {
+  listByUser: (userId, offset, length) => (db: Database, cb: CallbackFunc) => {
     return db.all(
       `select * from ${TABLE} \
       where user_id=? ` +
@@ -56,3 +61,5 @@ module.exports = TABLE => ({
     return rc
   }
 })
+
+export default mixins

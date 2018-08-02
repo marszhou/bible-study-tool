@@ -15,7 +15,7 @@ import {
 } from 'semantic-ui-react'
 import { PropType_BookItem } from '../bible-selector/BookItem'
 import * as db from '../../utils/db'
-import ChapterDisplay from 'app/components/bible-display/ChapterDisplay'
+import ChapterDisplay from './ChapterDisplay'
 import styles from './styles.css'
 
 class BibleDisplayContainer extends React.PureComponent {
@@ -136,7 +136,6 @@ class BibleDisplayContainer extends React.PureComponent {
       displayCode,
       selectedVersions,
       selectedVerses,
-      contextRef
     } = this.state
     return (
       <ChapterDisplay

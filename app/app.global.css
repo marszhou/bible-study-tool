@@ -1,6 +1,5 @@
 @import "~font-awesome/css/font-awesome.css";
 @import '~semantic-ui-css/semantic.min.css';
-/* @import '~react-tabs/style/react-tabs.css'; */
 @import './components/split-pane/style.css';
 
 @import '~antd/dist/antd.css';
