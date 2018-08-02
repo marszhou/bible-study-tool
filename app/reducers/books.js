@@ -1,4 +1,3 @@
-// @flow
 import { combineReducers } from 'redux'
 
 const allIds = (state = []) => {
@@ -14,19 +13,13 @@ export default combineReducers({
 })
 // ↑↑↑↑ reducers ↑↑↑↑
 
-// define reducer type
-export type booksStateType = {
-  allIds: Array<string>,
-  byIds: { [key: string | number]: any }
-};
-
 // ↓↓↓↓ selectors ↓↓↓↓
-export const getAllBooks = (state: booksStateType) =>
+export const getAllBooks = (state) =>
   state.allIds.map(id => state.byIds[id])
 
 export const getGroupedBooks = (
-  state: booksStateType,
-  bookIds: Array<number>
+  state,
+  bookIds
 ) => bookIds.map(id => state.byIds[id])
 
 
