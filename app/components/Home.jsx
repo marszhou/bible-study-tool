@@ -2,7 +2,7 @@ import { React, PropTypes, cx, Component, Route, Link } from 'app/bootstrap' // 
 import styles from './Home.css'
 import GlobalComputedCss from './GlobalComputedCss'
 import SideBar from './side-bar/SideBar'
-import Samples from './Samples'
+import Samples from '../pages/Samples'
 
 export default class Home extends Component {
   state = {}
