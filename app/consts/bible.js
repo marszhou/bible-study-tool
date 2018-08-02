@@ -1,7 +1,6 @@
-// @flow
 import escapeStringRegexp from 'escape-string-regexp'
 
-export const filterBooks = (filter: string, books: Array<any>) => {
+export const filterBooks = (filter, books) => {
   if (!filter) return books
 
   return books.filter(book => {
@@ -36,7 +35,7 @@ export const getSelectorBookGroups = () => {
   })
 }
 
-export const getVerseCoutOf = (bookId: number, chapter: number): ?number => {
+export const getVerseCoutOf = (bookId, chapter) => {
   const count = verseCountByBook[bookId] && verseCountByBook[bookId][chapter]
   if (count) {
     return +count
