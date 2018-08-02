@@ -51,7 +51,7 @@
     "import/no-mutable-exports": 0,
     "react/no-find-dom-node": 0,
     "import/prefer-default-export": 0,
-    "react/prop-types": [2, { "ignore": ["children"]}],
+    "react/prop-types": [2, { "ignore": ["children", "history", "location", "match"]}],
     "jsx-a11y/anchor-has-content": 0
   },
   "plugins": [
