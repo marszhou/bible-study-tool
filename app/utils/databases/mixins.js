@@ -1,4 +1,3 @@
-// @flow
 import updateBind from './updateBind'
 import type { Database, CallbackFunc } from './getDatabase'
 
@@ -22,14 +21,14 @@ const mixins = TABLE => ({
       .run(id, cb)
       .finalize()
   },
-  update: (id, props) => (db: Database, cb: CallbackFunc) => {
+  update: (id, props) => (db, cb) => {
     const bind = updateBind(props)
     return db
       .prepare(`update ${TABLE} set ${bind[0]} where id=?`)
       .run([...bind[1], id], cb)
       .finalize()
   },
-  list: (offset: number, length: number) => (
+  list: (offset, length) => (
     db: Database,
     cb: CallbackFunc
   ) => {
@@ -43,7 +42,7 @@ const mixins = TABLE => ({
     const { rc } = db.get(`select count(*) as rc from ${TABLE} `, cb)
     return rc
   },
-  listByUser: (userId, offset, length) => (db: Database, cb: CallbackFunc) => {
+  listByUser: (userId, offset, length) => (db, cb) => {
     return db.all(
       `select * from ${TABLE} \
       where user_id=? ` +
