@@ -1,14 +1,19 @@
 import { React, PropTypes, cx, Component, Route, Link } from 'app/bootstrap' // eslint-disable-line
+
+import { Switch } from 'react-router'
+import {push} from 'connected-react-router'
+import { withRouter } from 'react-router-dom'
 import styles from './Main.css'
 import GlobalComputedCss from './GlobalComputedCss'
 import SideBar from './side-bar/SideBar'
 import Samples from '../pages/samples'
+import { primaryItems, toolItems } from '../consts/siderbar'
 
-export default class Home extends Component {
+class Main extends Component {
   state = {}
 
   componentDidMount() {
-    const cssLoaded = e => this.setState({cssLoaded: true})
+    const cssLoaded = e => this.setState({ cssLoaded: true })
 
     Promise.all(
       Array.prototype.slice
@@ -26,45 +31,19 @@ export default class Home extends Component {
       .catch(cssLoaded)
   }
 
+  handleSidebarClik = (type, index) => {
+    if (type === 'primary') {
+      this.props.history.push(primaryItems[index].path)
+    }
+  }
+
   renderSideBar() {
     return (
       <SideBar
         style={{ width: 48 }}
-        onItemClick={(type, index) => console.log(type, index)}
-        primaryItems={[
-          {
-            text: '圣经',
-            icon: 'book',
-            key: 'book'
-          },
-          {
-            text: '搜索',
-            icon: 'search',
-            key: 'search'
-          },
-          {
-            text: '我的收藏',
-            icon: 'star',
-            key: 'favorite'
-          },
-          {
-            text: '原文字典',
-            icon: 'font',
-            key: 'origin'
-          }
-        ]}
-        toolItems={[
-          {
-            text: 'GitHub',
-            icon: 'github',
-            key: 'github'
-          },
-          {
-            text: '设置',
-            icon: 'cog',
-            key: 'preference'
-          }
-        ]}
+        onItemClick={this.handleSidebarClik}
+        primaryItems={primaryItems}
+        toolItems={toolItems}
       />
     )
   }
@@ -76,6 +55,12 @@ export default class Home extends Component {
         <div className={styles.container} data-tid="container">
           {this.renderSideBar()}
           <div className="bst-content">
+            <Switch>
+              <Route exact path="/" component={require('../pages/BiblePage')} />
+              <Route exact path="/search" component={require('../pages/SearchPage')} />
+              <Route exact path="/favorite" component={require('../pages/FavoritePage')} />
+              <Route exact path="/dictionary" component={require('../pages/DictionaryPage')} />
+            </Switch>
             <Samples />
           </div>
           <GlobalComputedCss />
@@ -84,3 +69,5 @@ export default class Home extends Component {
     ) : null
   }
 }
+
+export default withRouter(Main)

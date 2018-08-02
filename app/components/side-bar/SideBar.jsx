@@ -1,61 +1,52 @@
-import { React, PropTypes, cx } from "app/bootstrap"; // eslint-disable-line
-import styles from "./SideBar.css";
-import SideBarItem, { PropType_Item } from "./SiderBarItem";
+import { React, PropTypes, cx } from 'app/bootstrap' // eslint-disable-line
 
-export default class extends React.Component {
+import {connect} from 'react-redux'
+import styles from './SideBar.css'
+import SideBarItem, { PropType_Item } from './SiderBarItem'
+import { primaryItems } from 'app/consts/siderbar';
+
+class Sidebar extends React.Component {
   static propTypes = {
     primaryItems: PropTypes.arrayOf(PropType_Item),
     toolItems: PropTypes.arrayOf(PropType_Item),
     style: PropTypes.object,
-    onItemClick: PropTypes.func,
-  };
+    onItemClick: PropTypes.func
+  }
 
   static defaultProps = {
     style: {},
     primaryItems: [],
     toolItems: [],
-    onItemClick: null,
-  };
+    onItemClick: null
+  }
 
   constructor(props) {
-    super(props);
-    this.state = {
-      current: -1,
-    };
+    super(props)
   }
 
   handleItemClick(type, index, event) {
-    if (type === "primary") {
-      const { current } = this.state;
-      let next = index;
-      if (current === index) {
-        next = -1;
-      }
-      this.setState({
-        current: next,
-      });
-    }
-
-    const { onItemClick } = this.props;
-    if (onItemClick && typeof onItemClick === "function") {
-      onItemClick(type, index, event.nativeEvent);
+    const { onItemClick } = this.props
+    if (onItemClick && typeof onItemClick === 'function') {
+      onItemClick(type, index, event.nativeEvent)
     }
   }
 
   render() {
-    const size = (this.props.style.width || 48) * 0.8;
+    const size = (this.props.style.width || 48) * 0.8
     const itemStyle = {
       fontSize: size * 0.5,
-      lineHeight: size + "px",
+      lineHeight: size + 'px',
       height: size,
-      width: size,
-    };
+      width: size
+    }
+    const {current} = this.props
+
     return (
       <div
         className={cx({ [styles.sideBar]: true })}
         style={{
-          ...{ position: "absolute", top: 0, bottom: 0 },
-          ...this.props.style,
+          ...{ position: 'absolute', top: 0, bottom: 0 },
+          ...this.props.style
         }}
       >
         <div className={styles.sideBarPrimaryItems}>
@@ -64,9 +55,9 @@ export default class extends React.Component {
               key={item.key}
               item={item}
               type="primary"
-              highlighted={index === this.state.current}
+              highlighted={index === current}
               style={itemStyle}
-              onClick={this.handleItemClick.bind(this, "primary", index)}
+              onClick={this.handleItemClick.bind(this, 'primary', index)}
             />
           ))}
         </div>
@@ -77,11 +68,22 @@ export default class extends React.Component {
               item={item}
               type="tool"
               style={itemStyle}
-              onClick={this.handleItemClick.bind(this, "tool", index)}
+              onClick={this.handleItemClick.bind(this, 'tool', index)}
             />
           ))}
         </div>
       </div>
-    );
+    )
   }
 }
+
+Sidebar = connect(
+  state => {
+    const {pathname} = state.router.location
+    const current = primaryItems.findIndex(item => item.path === pathname)
+    return {
+      current
+    }
+  }
+)(Sidebar)
+export default Sidebar
