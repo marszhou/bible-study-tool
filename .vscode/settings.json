@@ -1,6 +1,5 @@
 {
   "javascript.validate.enable": false,
-  "flow.useNPMPackagedFlow": true,
   "search.exclude": {
     ".git": true,
     ".eslintcache": true,
@@ -9,11 +8,13 @@
     "app/main.prod.js.map": true,
     "bower_components": true,
     "dll": true,
-    "flow-typed": true,
     "release": true,
     "node_modules": true,
     "npm-debug.log.*": true,
     "test/**/__snapshots__": true,
     "yarn.lock": true
+  },
+  "path-intellisense.mappings": {
+    "app": "${workspaceRoot}/app"
   }
 }

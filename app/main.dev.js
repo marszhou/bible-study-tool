@@ -1,4 +1,4 @@
-/* eslint global-require: 1, flowtype-errors/show-errors: 0 */
+/* eslint global-require: 1 */
 
 /**
  * This module executes inside of electron's main process. You can start
@@ -8,7 +8,6 @@
  * When running `npm run build` or `npm run build-main`, this file is compiled to
  * `./app/main.prod.js` using webpack. This gives us some performance wins.
  *
- * @flow
  */
 import { app, BrowserWindow } from 'electron';
 import MenuBuilder from './menu';
@@ -60,9 +59,11 @@ app.on('ready', async () => {
   }
 
   mainWindow = new BrowserWindow({
-    show: false,
+    show: true,
     width: 1024,
-    height: 728
+    height: 728,
+    minWidth: 800,
+    minHeight: 600
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
@@ -73,8 +74,8 @@ app.on('ready', async () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
     }
-    mainWindow.show();
-    mainWindow.focus();
+    // mainWindow.show();
+    // mainWindow.focus();
   });
 
   mainWindow.on('closed', () => {
