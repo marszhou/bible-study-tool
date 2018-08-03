@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux'
-import { routerReducer as router } from 'react-router-redux'
 import books, * as fromBooks from './books'
 import bookGroups, * as fromBookGroups from './bookGroups'
 import verseCount, * as fromVerseCount from './verseCount'
+import layout, * as fromLayout from './layout'
 
 const rootReducer = combineReducers({
-  router,
   books,
   bookGroups,
-  verseCount
+  verseCount,
+  layout
 })
 
 export default rootReducer
