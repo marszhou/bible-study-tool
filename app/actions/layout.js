@@ -14,7 +14,7 @@ export const setSplitPaneSize = size => ({
   type: Types.SET_SPLIT_PANE_SIZE,
   size
 })
-export const tabAdd = (id, item) => ({
+export const tabAdd = (item) => ({
   type: Types.TAB_ADD,
   item
 })

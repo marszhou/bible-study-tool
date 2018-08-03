@@ -115,7 +115,7 @@ class TabPane extends React.Component {
 
   renderItemTitle(item) {
     return [
-      <span key="content">{item.title}</span>,
+      <span key="content">{item.title || <span className={styles.emptyTitle}>(空)</span>}</span>,
       <a
         key="close"
         className={styles.close}

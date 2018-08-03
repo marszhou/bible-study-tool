@@ -88,3 +88,4 @@ export const getSplitPaneSize = state => state.splitPane.size
 export const getTabs = state => state.tabs.order.map(id => state.tabs.byId[id])
 export const getActiveTabIndex = state =>
   state.tabs.order.findIndex(id => id === state.tabs.activate)
+export const getActived = state => state.tabs.activate
