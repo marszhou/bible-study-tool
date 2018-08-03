@@ -1,4 +1,5 @@
 import { React, PropTypes, cx, ReactDOM } from 'app/bootstrap' // eslint-disable-line
+
 import { DragSource, DropTarget } from 'react-dnd'
 import styles from './styles.css'
 

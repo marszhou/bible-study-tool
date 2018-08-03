@@ -1,8 +1,9 @@
-import { React, PropTypes, cx, ReactDOM } from 'app/bootstrap'; // eslint-disable-line
-import delay from 'lodash/delay';
+import { React, PropTypes, cx, ReactDOM } from 'app/bootstrap' // eslint-disable-line
+import delay from 'lodash/delay'
 import { Icon } from 'semantic-ui-react'
-import GoChevronLeft from '../../vendors/react-icons/lib/go/chevron-left';
-import GoChevronRight from '../../vendors/react-icons/lib/go/chevron-right';
+import GoChevronLeft from '../../vendors/react-icons/lib/go/chevron-left'
+import GoChevronRight from '../../vendors/react-icons/lib/go/chevron-right'
+import GoDiffAdded from '../../vendors/react-icons/lib/md/add'
 import {
   Tabs,
   TabControl,
@@ -11,9 +12,9 @@ import {
   TabPanel,
   TabPanelList,
   TabTitle,
-  TabTitleList,
-} from './index';
-import styles from './styles.css';
+  TabTitleList
+} from './index'
+import styles from './styles.css'
 
 // main index component
 class TabPane extends React.Component {
@@ -22,15 +23,16 @@ class TabPane extends React.Component {
       PropTypes.shape({
         id: PropTypes.any,
         title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-        props: PropTypes.object,
-      }),
+        content: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
+      })
     ),
     bodyRendererComponent: PropTypes.func.isRequired,
     selectedId: PropTypes.string,
     onTabClick: PropTypes.func,
     onTabClose: PropTypes.func,
     onTabSort: PropTypes.func,
-  };
+    onAdd: PropTypes.func
+  }
 
   static defaultProps = {
     items: [],
@@ -38,76 +40,77 @@ class TabPane extends React.Component {
     onTabClick: () => {},
     onTabClose: () => {},
     onTabSort: () => {},
-  };
+    onAdd: () => {}
+  }
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       showLeftScrollBtn: false,
-      showRightScrollBtn: false,
-    };
+      showRightScrollBtn: false
+    }
     this.tabTitleScrollInfo = {
       width: 0,
       scrollWidth: 0,
-      scrollLeft: 0,
-    };
+      scrollLeft: 0
+    }
   }
 
   componentDidMount() {
-    delay(() => this.dealWithTabTitleScroll());
-    window.addEventListener('resize', this.handleResize);
+    delay(() => this.dealWithTabTitleScroll())
+    window.addEventListener('resize', this.handleResize)
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener('resize', this.handleResize)
   }
 
   handleResize = () => {
-    this.dealWithTabTitleScroll();
-  };
+    this.dealWithTabTitleScroll()
+  }
 
   dealWithTabTitleScroll() {
-    this.tabTitleScrollInfo = this.tab.getTabTitleScrollInfo();
+    this.tabTitleScrollInfo = this.tab.getTabTitleScrollInfo()
 
-    const { width, scrollLeft, scrollWidth } = this.tabTitleScrollInfo;
-    const showLeftScrollBtn = scrollLeft > 0;
-    const showRightScrollBtn = scrollWidth > width + scrollLeft;
+    const { width, scrollLeft, scrollWidth } = this.tabTitleScrollInfo
+    const showLeftScrollBtn = scrollLeft > 0
+    const showRightScrollBtn = scrollWidth > width + scrollLeft
     this.setState({ showLeftScrollBtn, showRightScrollBtn }, () => {
-      this.tabTitleScrollInfo = this.tab.getTabTitleScrollInfo();
-    });
+      this.tabTitleScrollInfo = this.tab.getTabTitleScrollInfo()
+    })
   }
 
   handleScrollTabTitle(direction) {
-    const { width, scrollLeft, scrollWidth } = this.tabTitleScrollInfo;
-    const scrollStep = width / 3;
+    const { width, scrollLeft, scrollWidth } = this.tabTitleScrollInfo
+    const scrollStep = width / 3
 
-    let nextScrollLeft = scrollLeft + direction * scrollStep;
+    let nextScrollLeft = scrollLeft + direction * scrollStep
     nextScrollLeft =
       nextScrollLeft < 0
         ? 0
         : nextScrollLeft + width > scrollWidth
           ? scrollWidth - width
-          : nextScrollLeft;
-    this.tab.scrollTabTitleTo(nextScrollLeft);
-    this.dealWithTabTitleScroll();
+          : nextScrollLeft
+    this.tab.scrollTabTitleTo(nextScrollLeft)
+    this.dealWithTabTitleScroll()
   }
 
   handleTabClick(id) {
     this.setState({
-      selectedId: id,
-    });
+      selectedId: id
+    })
   }
 
   handleTabClose(e, id) {
-    e.preventDefault();
-    e.stopPropagation();
+    e.preventDefault()
+    e.stopPropagation()
 
-    this.props.onTabClose(id);
+    this.props.onTabClose(id)
   }
 
   renderItemContent(item) {
-    const { bodyRendererComponent: Body } = this.props;
-    return <Body {...item.props} />;
+    const { bodyRendererComponent: Body } = this.props
+    return <Body>{item.content}</Body>
   }
 
   renderItemTitle(item) {
@@ -122,30 +125,18 @@ class TabPane extends React.Component {
         onClick={e => this.handleTabClose(e, item.id)}
       >
         <Icon name="window close" size="small" />
-      </a>,
-    ];
+      </a>
+    ]
   }
 
   render() {
-    const { showLeftScrollBtn, showRightScrollBtn } = this.state;
-    const { selectedId, items, onTabClick, onTabSort } = this.props;
+    const { showLeftScrollBtn, showRightScrollBtn } = this.state
+    const { selectedId, items, onTabClick, onTabSort, onAdd } = this.props
     return (
       <Tabs selectedId={selectedId} ref={node => (this.tab = node)}>
         <TabHead key="tabHead">
-          <TabTitleList>
-            {items.map(item => (
-              <TabTitle
-                id={item.id}
-                key={item.id}
-                onClick={() => onTabClick(item.id)}
-                onSort={onTabSort}
-              >
-                {this.renderItemTitle(item)}
-              </TabTitle>
-            ))}
-          </TabTitleList>
           {showLeftScrollBtn || showRightScrollBtn ? (
-            <TabControlList type="rear">
+            <TabControlList type="front">
               <TabControl>
                 <button
                   onClick={() => this.handleScrollTabTitle(-1)}
@@ -164,6 +155,23 @@ class TabPane extends React.Component {
               </TabControl>
             </TabControlList>
           ) : null}
+          <TabTitleList>
+            {items.map(item => (
+              <TabTitle
+                id={item.id}
+                key={item.id}
+                onClick={() => onTabClick(item.id)}
+                onSort={onTabSort}
+              >
+                {this.renderItemTitle(item)}
+              </TabTitle>
+            ))}
+          </TabTitleList>
+          <TabControlList type="front">
+            <TabControl>
+              <button onClick={onAdd}><GoDiffAdded /></button>
+            </TabControl>
+          </TabControlList>
         </TabHead>
         <TabPanelList key="tabBody">
           {items.map((item, index) => (
@@ -173,8 +181,8 @@ class TabPane extends React.Component {
           ))}
         </TabPanelList>
       </Tabs>
-    );
+    )
   }
 }
 
-export default TabPane;
+export default TabPane

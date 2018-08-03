@@ -54,7 +54,13 @@
   margin-left: 10px;
 }
 .tabTitle {
-  display: table;
+  flex: 1;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  display: block;
   position: relative;
   cursor: default;
   border-bottom: none;
