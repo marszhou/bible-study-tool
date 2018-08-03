@@ -1,6 +1,6 @@
 import { React, PropTypes, cx, Component, Route, Link } from 'app/bootstrap' // eslint-disable-line
 
-import { Switch } from 'react-router'
+import { Switch, Redirect } from 'react-router'
 import { withRouter } from 'react-router-dom'
 import styles from './Main.css'
 import GlobalComputedCss from './GlobalComputedCss'
@@ -55,10 +55,11 @@ class Main extends Component {
           {this.renderSideBar()}
           <div className="bst-content">
             <Switch>
-              <Route exact path="/" component={require('../pages/BiblePage')} />
+              <Route exact path="/bible" component={require('../pages/BiblePage')} />
               <Route exact path="/search" component={require('../pages/SearchPage')} />
               <Route exact path="/favorite" component={require('../pages/FavoritePage')} />
               <Route exact path="/dictionary" component={require('../pages/DictionaryPage')} />
+              <Redirect to='/bible' />
             </Switch>
             <Samples />
           </div>

@@ -4,12 +4,22 @@ import { connect } from 'react-redux'
 import * as layoutActions from '../actions/layout'
 import { layoutSelectors } from '../reducers'
 import { TabPane } from '../components/tabs'
+import getConnectedBibleView from '../components/bible-view/BibleView'
 
 class BiblePage extends Component {
-  getNewTab() {
+  componentWillMount() {
+    this.props.tabInit(this.createTabItem())
+  }
+
+  createTabItem() {
     return {
       id: v1()
     }
+  }
+
+  handleItemRenderer = item => {
+    const BibleView = getConnectedBibleView(item.id)
+    return <BibleView />
   }
 
   handleTabSort = (sourceId, targetId, before) => {
@@ -46,7 +56,7 @@ class BiblePage extends Component {
           onTabClick={tabActivate}
           onTabClose={tabRemove}
           onTabSort={this.handleTabSort}
-          onAdd={() => tabAdd(this.getNewTab())}
+          onAdd={() => tabAdd(this.createTabItem())}
         />
       </div>
     )

@@ -27,6 +27,7 @@ class TabPane extends React.Component {
       })
     ),
     bodyRendererComponent: PropTypes.func.isRequired,
+    itemRendererFunc: PropTypes.func,
     selectedId: PropTypes.string,
     onTabClick: PropTypes.func,
     onTabClose: PropTypes.func,
@@ -37,6 +38,7 @@ class TabPane extends React.Component {
   static defaultProps = {
     items: [],
     selectedId: null,
+    itemRendererFunc: item => item.content,
     onTabClick: () => {},
     onTabClose: () => {},
     onTabSort: () => {},
@@ -109,13 +111,15 @@ class TabPane extends React.Component {
   }
 
   renderItemContent(item) {
-    const { bodyRendererComponent: Body } = this.props
-    return <Body>{item.content}</Body>
+    const { bodyRendererComponent: Body, itemRendererFunc } = this.props
+    return <Body>{itemRendererFunc(item)}</Body>
   }
 
   renderItemTitle(item) {
     return [
-      <span key="content">{item.title || <span className={styles.emptyTitle}>(空)</span>}</span>,
+      <span key="content">
+        {item.title || <span className={styles.emptyTitle}>(空)</span>}
+      </span>,
       <a
         key="close"
         className={styles.close}
@@ -169,7 +173,9 @@ class TabPane extends React.Component {
           </TabTitleList>
           <TabControlList type="front">
             <TabControl>
-              <button onClick={onAdd}><GoDiffAdded /></button>
+              <button onClick={onAdd}>
+                <GoDiffAdded />
+              </button>
             </TabControl>
           </TabControlList>
         </TabHead>

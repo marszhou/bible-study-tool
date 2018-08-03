@@ -3,7 +3,7 @@ export const primaryItems = [
     text: '圣经',
     icon: 'book',
     key: 'book',
-    path: '/'
+    path: '/bible'
   },
   {
     text: '搜索',

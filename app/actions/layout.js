@@ -1,3 +1,5 @@
+import { layoutSelectors } from "app/reducers";
+
 export const Types = {
   DISPLAY_SPLIT_PANE: 'DISPLAY_SPLIT_PANE',
   SET_SPLIT_PANE_SIZE: 'SET_SPLIT_PANE_SIZE',
@@ -30,3 +32,8 @@ export const tabActivate = id => ({
   type: Types.TAB_ACTIVATE,
   id
 })
+export const tabInit = (newItem) => (dispatch, getState) => {
+  if (layoutSelectors.getTabs(getState()).length === 0) {
+    dispatch(tabAdd(newItem))
+  }
+}
