@@ -40,23 +40,23 @@ class BibleDisplayContainer extends React.PureComponent {
     }
   }
 
-  componentWillMount() {
+  async componentWillMount() {
     this.setState({
-      verses: this.fetchVerses(this.props)
+      verses: await this.fetchVerses(this.props)
     })
   }
 
-  componentWillReceiveProps(nextProps) {
+  async componentWillReceiveProps(nextProps) {
     this.setState({
-      verses: this.fetchVerses(nextProps),
+      verses: await this.fetchVerses(nextProps),
       selectedVerses: []
     })
   }
 
-  fetchVerses(props, state) {
+  async fetchVerses(props, state) {
     const { book, chapterIndex } = props || this.props
     const { selectedVersions } = state || this.state
-    const verses = db.fetchVersesForChapterByVersions(
+    const verses = await db.fetchVersesForChapterByVersions(
       book.id,
       chapterIndex,
       selectedVersions
@@ -122,9 +122,9 @@ class BibleDisplayContainer extends React.PureComponent {
       {
         selectedVersions: this.toggleSelectedVersion(version)
       },
-      () =>
+      async () =>
         this.setState({
-          verses: this.fetchVerses(this.props)
+          verses: await this.fetchVerses(this.props)
         })
     )
   }
