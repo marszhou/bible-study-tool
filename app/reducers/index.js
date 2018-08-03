@@ -14,6 +14,17 @@ const rootReducer = combineReducers({
 export default rootReducer
 
 // ↓↓↓↓ selectors ↓↓↓↓
+const makeGroupSelectors = (namespace, statePath) =>
+  _.keys(namespace).reduce(
+    (ret, name) => ({
+      ...ret,
+      [name]: (state, ...args) => namespace[name](_.get(state, statePath), ...args)
+    }),
+    {}
+  )
+
+export const layoutSelectors = makeGroupSelectors(fromLayout, 'layout')
+
 export const getGroupedBooks = (state, groupId) =>
   fromBooks.getGroupedBooks(
     state.books,

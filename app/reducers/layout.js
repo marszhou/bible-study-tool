@@ -81,3 +81,10 @@ const tabs = (state = {}, action) => {
 const layout = combineReducers({ splitPane, tabs })
 
 export default layout
+
+// ↓↓↓↓ selectors ↓↓↓↓
+export const getSplitPaneIsDisplay = state => state.splitPane.on
+export const getSplitPaneSize = state => state.splitPane.size
+export const getTabs = state => state.tabs.order.map(id => state.tabs.byId[id])
+export const getActiveTabIndex = state =>
+  state.tabs.order.findIndex(id => id === state.tabs.activate)
