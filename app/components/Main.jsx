@@ -1,7 +1,6 @@
 import { React, PropTypes, cx, Component, Route, Link } from 'app/bootstrap' // eslint-disable-line
 
 import { Switch } from 'react-router'
-import {push} from 'connected-react-router'
 import { withRouter } from 'react-router-dom'
 import styles from './Main.css'
 import GlobalComputedCss from './GlobalComputedCss'
