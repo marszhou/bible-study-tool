@@ -33,12 +33,21 @@ export const tabSort = orderList => ({
   type: Types.TAB_SORT,
   ids: orderList
 })
-export const tabActivate = id => ({
-  type: Types.TAB_ACTIVATE,
-  id
-})
+export const tabActivate = (id) => (dispatch, getState) => {
+  const state = getState()
+  const tabItem = layoutSelectors.getTab(state, id)
+  dispatch(push(makeTabUrl(tabItem)))
+}
 export const tabInit = (newItem) => (dispatch, getState) => {
   if (layoutSelectors.getTabs(getState()).length === 0) {
     dispatch(tabAdd(newItem))
   }
+}
+
+const makeTabUrl = (tabItem) => {
+  let url = `/bible/${tabItem.id}`
+  if (tabItem.bookId) {
+    url += `${url}/${tabItem.bookId}/${tabItem.chapterIndex}}`
+  }
+  return url
 }
