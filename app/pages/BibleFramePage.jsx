@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import { v1 } from 'uuid'
 import { connect } from 'react-redux'
 import * as layoutActions from '../actions/layout'
@@ -9,12 +9,13 @@ import getConnectedBibleView from 'app/components/bible-view/BibleView'
 
 class BibleFramePage extends Component {
   componentWillMount() {
-    this.props.tabInit(this.createTabItem())
+    // this.props.tabInit(this.createTabItem())
   }
 
-  createTabItem() {
-    return {
-      id: v1()
+  componentDidMount() {
+    const { tabs, history } = this.props
+    if (tabs.length === 0) {
+      // history.replace('/search/initial/1/2')
     }
   }
 
@@ -37,6 +38,10 @@ class BibleFramePage extends Component {
     tabSort(newItems.map(item => item.id))
   }
 
+  renderNewTabRedirect() {
+    return <Redirect to="/bible/initial" />
+  }
+
   render() {
     const {
       tabs,
@@ -47,23 +52,28 @@ class BibleFramePage extends Component {
       tabActivate,
       match
     } = this.props
-    console.log(match)
     return (
       <div style={{ marginTop: 10 }}>
-        <TabPane
-          ref={tabPane => (this.tabPane = tabPane)}
-          items={tabs}
-          selectedId={actived}
-          bodyRendererComponent={({ children }) => <div>{children}</div>}
-          onTabClick={tabActivate}
-          onTabClose={tabRemove}
-          onTabSort={this.handleTabSort}
-          onAdd={() => tabAdd(this.createTabItem())}
-        />
-        <Route
-          path={`${match.path}/:tabId/:bookId/:chapterIndex`}
-          component={require('./BibleViewPage')}
-        />
+        {tabs.length > 0
+          ? [
+            <TabPane
+              key="tab"
+              ref={tabPane => (this.tabPane = tabPane)}
+              items={tabs}
+              selectedId={actived}
+              bodyRendererComponent={({ children }) => <div>{children}</div>}
+              onTabClick={tabActivate}
+              onTabClose={tabRemove}
+              onTabSort={this.handleTabSort}
+              onAdd={() => tabAdd(this.createTabItem())}
+            />,
+            <Route
+              key="view"
+              path={`${match.path}/:tabId/:bookId?/:chapterIndex?`}
+              component={require('./BibleViewPage')}
+            />
+            ]
+          : this.renderNewTabRedirect()}
       </div>
     )
   }

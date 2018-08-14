@@ -80,7 +80,7 @@ class Sidebar extends React.Component {
 Sidebar = connect(
   state => {
     const {pathname} = state.router.location
-    const current = primaryItems.findIndex(item => item.path === pathname)
+    const current = primaryItems.findIndex(item => pathname.indexOf(item.path) === 0)
     return {
       current
     }

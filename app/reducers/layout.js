@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import _ from 'lodash'
+import pathToRegexp from 'path-to-regexp'
 import { Types } from '../actions/layout'
 
 const on = (state = false, action) => {
@@ -19,14 +20,19 @@ const size = (state = 0, action) => {
 const splitPane = combineReducers({ on, size })
 
 const byId = (state = {}, action) => {
+  const re = pathToRegexp('/bible/:tabId/:bookId?/:chapterIndex?')
+
   switch (action.type) {
+    case '@@router/LOCATION_CHANGE':
+      console.log(action.payload.location.pathname)
+      return state
     case Types.TAB_ADD:
       return {
         ...state,
         [action.item.id]: action.item
       }
     case Types.TAB_REMOVE: {
-      const nextState = { ...state }
+    const nextState = { ...state }
       delete nextState[action.id]
       return nextState
     }

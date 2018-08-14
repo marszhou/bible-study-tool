@@ -29,7 +29,6 @@ class Main extends Component {
       <div className="bst-content">
         <Switch>
           <Route
-            exact
             path="/bible"
             component={require('../pages/BibleFramePage')}
           />
