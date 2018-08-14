@@ -1,4 +1,6 @@
 import { layoutSelectors } from "app/reducers";
+import { push } from 'connected-react-router'
+import { v1} from 'uuid'
 
 export const Types = {
   DISPLAY_SPLIT_PANE: 'DISPLAY_SPLIT_PANE',
@@ -16,6 +18,9 @@ export const setSplitPaneSize = size => ({
   type: Types.SET_SPLIT_PANE_SIZE,
   size
 })
+export const tabNew = () => (dispatch) => {
+  dispatch(push('/bible/'+ v1()))
+}
 export const tabAdd = (item) => ({
   type: Types.TAB_ADD,
   item

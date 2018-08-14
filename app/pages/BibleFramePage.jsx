@@ -46,7 +46,7 @@ class BibleFramePage extends Component {
     const {
       tabs,
       actived,
-      tabAdd,
+      tabNew,
       tabSort,
       tabRemove,
       tabActivate,
@@ -65,7 +65,7 @@ class BibleFramePage extends Component {
               onTabClick={tabActivate}
               onTabClose={tabRemove}
               onTabSort={this.handleTabSort}
-              onAdd={() => tabAdd(this.createTabItem())}
+              onAdd={() => tabNew()}
             />,
             <Route
               key="view"
