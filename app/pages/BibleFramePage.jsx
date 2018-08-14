@@ -8,14 +8,12 @@ import { TabPane } from '../components/tabs'
 import getConnectedBibleView from 'app/components/bible-view/BibleView'
 
 class BibleFramePage extends Component {
-  componentWillMount() {
-    // this.props.tabInit(this.createTabItem())
-  }
-
   componentDidMount() {
-    const { tabs, history } = this.props
+    const { tabs, history, match, tabRecoverActivated, tabNew } = this.props
     if (tabs.length === 0) {
-      // history.replace('/search/initial/1/2')
+      tabNew()
+    } else {
+      tabRecoverActivated()
     }
   }
 
@@ -36,10 +34,6 @@ class BibleFramePage extends Component {
       ...items.slice(pos).filter(item => item.id !== sourceId)
     ]
     tabSort(newItems.map(item => item.id))
-  }
-
-  renderNewTabRedirect() {
-    return <Redirect to="/bible/initial" />
   }
 
   render() {
@@ -73,7 +67,7 @@ class BibleFramePage extends Component {
               component={require('./BibleViewPage')}
             />
             ]
-          : this.renderNewTabRedirect()}
+          : null}
       </div>
     )
   }

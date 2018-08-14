@@ -69,7 +69,7 @@ const order = (state = [], action) => {
   }
 }
 
-const activate = (beforeOrderList = []) => (state = null, action) => {
+const activated = (beforeOrderList = []) => (state = null, action) => {
   switch (action.type) {
     case '@@router/LOCATION_CHANGE': {
       const match = parseUrl(action)
@@ -86,7 +86,7 @@ const tabs = (state = {}, action) => {
     order
   })
   const nextState = reducers(_.pick(state, 'byId', 'order'), action)
-  nextState.activate = activate(state.order)(state.activate, action)
+  nextState.activated = activated(state.order)(state.activated, action)
   return nextState
 }
 
@@ -99,6 +99,7 @@ export const getSplitPaneIsDisplay = state => state.splitPane.on
 export const getSplitPaneSize = state => state.splitPane.size
 export const getTabs = state => state.tabs.order.map(id => state.tabs.byId[id])
 export const getActivatedTabIndex = state =>
-  state.tabs.order.findIndex(id => id === state.tabs.activate)
-export const getActivated = state => state.tabs.activate
+  state.tabs.order.findIndex(id => id === getActivated(state))
+export const getActivated = state => state.tabs.activated
+export const getActivatedTab = state => getTab(state, getActivated(state))
 export const getTab = (state, id) => state.tabs.byId[id]

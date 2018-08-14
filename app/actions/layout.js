@@ -21,10 +21,6 @@ export const setSplitPaneSize = size => ({
 export const tabNew = () => dispatch => {
   dispatch(push('/bible/' + v1()))
 }
-export const tabAdd = item => ({
-  type: Types.TAB_ADD,
-  item
-})
 export const tabRemove = id => (dispatch, getState) => {
   const state = getState()
   const beforeOrderList = layoutSelectors.getTabs(state)
@@ -50,10 +46,10 @@ export const tabActivate = id => (dispatch, getState) => {
   const tabItem = layoutSelectors.getTab(state, id)
   dispatch(push(makeTabUrl(tabItem)))
 }
-export const tabInit = newItem => (dispatch, getState) => {
-  if (layoutSelectors.getTabs(getState()).length === 0) {
-    dispatch(tabAdd(newItem))
-  }
+export const tabRecoverActivated = () => (dispatch, getState) => {
+  const state = getState()
+  const tabItem = layoutSelectors.getActivatedTab(state)
+  dispatch(replace(makeTabUrl(tabItem)))
 }
 
 const makeTabUrl = tabItem => {
