@@ -98,7 +98,7 @@ export default layout
 export const getSplitPaneIsDisplay = state => state.splitPane.on
 export const getSplitPaneSize = state => state.splitPane.size
 export const getTabs = state => state.tabs.order.map(id => state.tabs.byId[id])
-export const getActiveTabIndex = state =>
+export const getActivatedTabIndex = state =>
   state.tabs.order.findIndex(id => id === state.tabs.activate)
-export const getActived = state => state.tabs.activate
+export const getActivated = state => state.tabs.activate
 export const getTab = (state, id) => state.tabs.byId[id]

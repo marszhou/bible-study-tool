@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Redirect } from 'react-router-dom'
+import { Route, Redirect, Switch } from 'react-router-dom'
 import { v1 } from 'uuid'
 import { connect } from 'react-redux'
 import * as layoutActions from '../actions/layout'
@@ -45,7 +45,7 @@ class BibleFramePage extends Component {
   render() {
     const {
       tabs,
-      actived,
+      activated,
       tabNew,
       tabSort,
       tabRemove,
@@ -60,7 +60,7 @@ class BibleFramePage extends Component {
               key="tab"
               ref={tabPane => (this.tabPane = tabPane)}
               items={tabs}
-              selectedId={actived}
+              selectedId={activated}
               bodyRendererComponent={({ children }) => <div>{children}</div>}
               onTabClick={tabActivate}
               onTabClose={tabRemove}
@@ -83,7 +83,7 @@ BibleFramePage = connect(
   state => {
     return {
       tabs: layoutSelectors.getTabs(state),
-      actived: layoutSelectors.getActived(state)
+      activated: layoutSelectors.getActivated(state)
     }
   },
   layoutActions

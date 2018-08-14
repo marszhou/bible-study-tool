@@ -29,8 +29,8 @@ export const tabRemove = id => (dispatch, getState) => {
   const state = getState()
   const beforeOrderList = layoutSelectors.getTabs(state)
 
-  if (id === layoutSelectors.getActived(state)) {
-    const index = layoutSelectors.getActiveTabIndex(state)
+  if (id === layoutSelectors.getActivated(state)) {
+    const index = layoutSelectors.getActivatedTabIndex(state)
     const activeTabItem =
       beforeOrderList[index - 1] || beforeOrderList[index + 1]
     dispatch(replace(makeTabUrl(activeTabItem)))
