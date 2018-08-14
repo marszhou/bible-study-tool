@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import _ from 'lodash'
-import pathToRegexp from 'path-to-regexp'
 import { Types } from '../actions/layout'
+import { parseUrlParams } from '../utils/url'
 
 const on = (state = false, action) => {
   if (action.type === Types.DISPLAY_SPLIT_PANE) {
@@ -19,20 +19,30 @@ const size = (state = 0, action) => {
 
 const splitPane = combineReducers({ on, size })
 
-const byId = (state = {}, action) => {
-  const re = pathToRegexp('/bible/:tabId/:bookId?/:chapterIndex?')
+const parseUrl = action =>
+  parseUrlParams(
+    '/bible/:tabId/:bookId?/:chapterIndex?',
+    action.payload.location.pathname
+  )
 
+const byId = (state = {}, action) => {
   switch (action.type) {
-    case '@@router/LOCATION_CHANGE':
-      console.log(action.payload.location.pathname)
-      return state
-    case Types.TAB_ADD:
-      return {
-        ...state,
-        [action.item.id]: action.item
+    case '@@router/LOCATION_CHANGE': {
+      const match = parseUrl(action)
+      if (match.tabId) {
+        return {
+          ...state,
+          [match.tabId]: {
+            id: match.tabId,
+            bookId: match.bookId,
+            chapterIndex: +match.chapterIndex
+          }
+        }
       }
+      return state
+    }
     case Types.TAB_REMOVE: {
-    const nextState = { ...state }
+      const nextState = { ...state }
       delete nextState[action.id]
       return nextState
     }
@@ -43,8 +53,13 @@ const byId = (state = {}, action) => {
 
 const order = (state = [], action) => {
   switch (action.type) {
-    case Types.TAB_ADD:
-      return [...state, action.item.id]
+    case '@@router/LOCATION_CHANGE': {
+      const match = parseUrl(action)
+      if (match.tabId && state.indexOf(match.tabId) === -1) {
+        return [...state, match.tabId]
+      }
+      return state
+    }
     case Types.TAB_REMOVE:
       return state.filter(id => id !== action.id)
     case Types.TAB_SORT:
@@ -56,8 +71,9 @@ const order = (state = [], action) => {
 
 const activate = (beforeOrderList = []) => (state = null, action) => {
   switch (action.type) {
-    case Types.TAB_ADD: {
-      return action.item.id
+    case '@@router/LOCATION_CHANGE': {
+      const match = parseUrl(action)
+      return match.tabId || state
     }
     case Types.TAB_REMOVE: {
       if (action.id === state) {
