@@ -1,4 +1,6 @@
-import { layoutSelectors } from "app/reducers";
+import { layoutSelectors } from 'app/reducers'
+import { push, replace } from 'connected-react-router'
+import { v1 } from 'uuid'
 
 export const Types = {
   DISPLAY_SPLIT_PANE: 'DISPLAY_SPLIT_PANE',
@@ -16,24 +18,44 @@ export const setSplitPaneSize = size => ({
   type: Types.SET_SPLIT_PANE_SIZE,
   size
 })
-export const tabAdd = (item) => ({
-  type: Types.TAB_ADD,
-  item
-})
-export const tabRemove = id => ({
-  type: Types.TAB_REMOVE,
-  id
-})
+export const tabNew = () => dispatch => {
+  dispatch(push('/bible/' + v1()))
+}
+export const tabRemove = id => (dispatch, getState) => {
+  const state = getState()
+  const beforeOrderList = layoutSelectors.getTabs(state)
+
+  if (id === layoutSelectors.getActivated(state)) {
+    const index = layoutSelectors.getActivatedTabIndex(state)
+    const activeTabItem =
+      beforeOrderList[index - 1] || beforeOrderList[index + 1]
+    dispatch(replace(makeTabUrl(activeTabItem)))
+  }
+
+  dispatch({
+    type: Types.TAB_REMOVE,
+    id
+  })
+}
 export const tabSort = orderList => ({
   type: Types.TAB_SORT,
   ids: orderList
 })
-export const tabActivate = id => ({
-  type: Types.TAB_ACTIVATE,
-  id
-})
-export const tabInit = (newItem) => (dispatch, getState) => {
-  if (layoutSelectors.getTabs(getState()).length === 0) {
-    dispatch(tabAdd(newItem))
+export const tabActivate = id => (dispatch, getState) => {
+  const state = getState()
+  const tabItem = layoutSelectors.getTab(state, id)
+  dispatch(push(makeTabUrl(tabItem)))
+}
+export const tabRecoverActivated = () => (dispatch, getState) => {
+  const state = getState()
+  const tabItem = layoutSelectors.getActivatedTab(state)
+  dispatch(replace(makeTabUrl(tabItem)))
+}
+
+const makeTabUrl = tabItem => {
+  let url = `/bible/${tabItem.id}`
+  if (tabItem.bookId) {
+    url += `${url}/${tabItem.bookId}/${tabItem.chapterIndex}}`
   }
+  return url
 }
