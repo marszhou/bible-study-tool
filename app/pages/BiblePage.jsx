@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import * as layoutActions from '../actions/layout'
 import { layoutSelectors } from '../reducers'
 import { TabPane } from '../components/tabs'
-import getConnectedBibleView from '../components/bible-view/BibleView'
 
 class BiblePage extends Component {
   componentWillMount() {
