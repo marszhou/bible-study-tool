@@ -115,21 +115,23 @@ class TabPane extends React.Component {
     return <Body>{itemRendererFunc(item)}</Body>
   }
 
-  renderItemTitle(item) {
+  renderItemTitle(item, allowRemove = true) {
     return [
       <span key="content">
         {item.title || <span className={styles.emptyTitle}>(空)</span>}
       </span>,
-      <a
-        key="close"
-        className={styles.close}
-        role="button"
-        tabIndex="0"
-        href="###"
-        onClick={e => this.handleTabClose(e, item.id)}
-      >
-        <Icon name="window close" size="small" />
-      </a>
+      allowRemove ? (
+        <a
+          key="close"
+          className={styles.close}
+          role="button"
+          tabIndex="0"
+          href="###"
+          onClick={e => this.handleTabClose(e, item.id)}
+        >
+          <Icon name="window close" size="small" />
+        </a>
+      ) : null
     ]
   }
 
@@ -167,7 +169,7 @@ class TabPane extends React.Component {
                 onClick={() => onTabClick(item.id)}
                 onSort={onTabSort}
               >
-                {this.renderItemTitle(item)}
+                {this.renderItemTitle(item, items.length > 1)}
               </TabTitle>
             ))}
           </TabTitleList>
