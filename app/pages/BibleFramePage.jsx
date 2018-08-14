@@ -5,21 +5,15 @@ import { connect } from 'react-redux'
 import * as layoutActions from '../actions/layout'
 import { layoutSelectors } from '../reducers'
 import { TabPane } from '../components/tabs'
-import getConnectedBibleView from 'app/components/bible-view/BibleView'
 
 class BibleFramePage extends Component {
   componentDidMount() {
-    const { tabs, history, match, tabRecoverActivated, tabNew } = this.props
+    const { tabs, tabRecoverActivated, tabNew } = this.props
     if (tabs.length === 0) {
       tabNew()
     } else {
       tabRecoverActivated()
     }
-  }
-
-  handleItemRenderer = item => {
-    const BibleView = getConnectedBibleView(item.id)
-    return <BibleView />
   }
 
   handleTabSort = (sourceId, targetId, before) => {
