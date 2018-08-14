@@ -4,7 +4,7 @@ import ChapterSelector from './ChapterSelector'
 import VerseSelector from './VerseSelector'
 import {
   getSelectorBookGroups,
-  getVerseCoutOf,
+  getVerseCountOf,
   filterBooks
 } from '../../consts/bible'
 
@@ -142,7 +142,7 @@ class BibleSelector extends React.Component {
         ) : null}
         {showVerse ? (
           <VerseSelector
-            count={getVerseCoutOf(bookId, chapter)}
+            count={getVerseCountOf(bookId, chapter)}
             selected={verse}
             classNames={columnClassNames}
             onSelect={this.handleVerseSelect}
