@@ -75,16 +75,6 @@ const activate = (beforeOrderList = []) => (state = null, action) => {
       const match = parseUrl(action)
       return match.tabId || state
     }
-    case Types.TAB_REMOVE: {
-      if (action.id === state) {
-        const index = beforeOrderList.findIndex(id => id === action.id)
-        return beforeOrderList[index - 1] || beforeOrderList[index + 1]
-      } else {
-        return state
-      }
-    }
-    case Types.TAB_ACTIVATE:
-      return action.id
     default:
       return state
   }
