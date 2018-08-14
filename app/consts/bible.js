@@ -14,7 +14,7 @@ export const filterBooks = (filter, books) => {
   })
 }
 
-export const getSelectorBookGroups = () => {
+export const getSelectorBookGroups = (lang = 'cn') => {
   return ['1', '2'].map(groupId => {
     const group = groupsById[groupId]
     return {
