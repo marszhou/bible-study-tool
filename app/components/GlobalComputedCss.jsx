@@ -20,6 +20,9 @@ export default class extends React.Component {
           .client-width {
             width: ${window.document.documentElement.clientWidth}px;
           }
+          .bible-selector-height {
+            height: 400px;
+          }
           `
         }
       </style>

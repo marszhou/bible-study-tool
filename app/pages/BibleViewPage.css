@@ -2,8 +2,8 @@
   padding: 16px;
 }
 .bibleSelectorPopup {
-  padding: 0!important;
+  /* padding: 10px!important; */
 }
 .bibleSelectorPopup::before {
-  opacity: 0!important;
+  /* opacity: 0!important; */
 }

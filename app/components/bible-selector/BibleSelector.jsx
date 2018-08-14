@@ -122,7 +122,7 @@ class BibleSelector extends React.Component {
     const showVerse = book && chapter
 
     return (
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex' }} className='bible-selector-height'>
         <BookSelector
           currentBookId={bookId}
           bookGroups={this.bookGroups}
