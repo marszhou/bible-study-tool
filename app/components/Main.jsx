@@ -55,7 +55,7 @@ class Main extends Component {
           {this.renderSideBar()}
           <div className="bst-content">
             <Switch>
-              <Route exact path="/bible" component={require('../pages/BiblePage')} />
+              <Route exact path="/bible" component={require('../pages/BibleFramePage')} />
               <Route exact path="/search" component={require('../pages/SearchPage')} />
               <Route exact path="/favorite" component={require('../pages/FavoritePage')} />
               <Route exact path="/dictionary" component={require('../pages/DictionaryPage')} />

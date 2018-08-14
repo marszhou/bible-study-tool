@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
+import { Route } from 'react-router-dom'
 import { v1 } from 'uuid'
 import { connect } from 'react-redux'
 import * as layoutActions from '../actions/layout'
 import { layoutSelectors } from '../reducers'
 import { TabPane } from '../components/tabs'
+import getConnectedBibleView from 'app/components/bible-view/BibleView'
 
-class BiblePage extends Component {
+class BibleFramePage extends Component {
   componentWillMount() {
     this.props.tabInit(this.createTabItem())
   }
@@ -42,9 +44,10 @@ class BiblePage extends Component {
       tabAdd,
       tabSort,
       tabRemove,
-      tabActivate
+      tabActivate,
+      match
     } = this.props
-
+    console.log(match)
     return (
       <div style={{ marginTop: 10 }}>
         <TabPane
@@ -57,12 +60,16 @@ class BiblePage extends Component {
           onTabSort={this.handleTabSort}
           onAdd={() => tabAdd(this.createTabItem())}
         />
+        <Route
+          path={`${match.path}/:tabId/:bookId/:chapterIndex`}
+          component={require('./BibleViewPage')}
+        />
       </div>
     )
   }
 }
 
-BiblePage = connect(
+BibleFramePage = connect(
   state => {
     return {
       tabs: layoutSelectors.getTabs(state),
@@ -70,6 +77,6 @@ BiblePage = connect(
     }
   },
   layoutActions
-)(BiblePage)
+)(BibleFramePage)
 
-export default BiblePage
+export default BibleFramePage
