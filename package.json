@@ -193,6 +193,7 @@
     "history": "^4.6.3",
     "immutability-helper": "^2.4.0",
     "lodash": "^4.17.4",
+    "path-to-regexp": "^2.2.1",
     "prop-types": "^15.6.0",
     "ramda": "^0.25.0",
     "react": "^16.0.0",
