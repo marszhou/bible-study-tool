@@ -55,7 +55,7 @@
 }
 .tabTitle {
   flex: 1;
-  max-width: 160px;
+  max-width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
