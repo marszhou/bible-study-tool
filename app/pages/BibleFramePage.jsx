@@ -10,6 +10,7 @@ class BibleFramePage extends Component {
   componentDidMount() {
     const { tabs, tabRecoverActivated, tabNew } = this.props
     if (tabs.length === 0) {
+      // @todo 恢复当前的url上的book/chapter设置
       tabNew()
     } else {
       tabRecoverActivated()

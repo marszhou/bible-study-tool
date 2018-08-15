@@ -1,25 +1,39 @@
 import React, { Component } from 'react'
 // import update from 'immutability-helper'
+import {connect} from 'react-redux'
 import { Breadcrumb, Button, Grid, Popup, Label, Icon } from 'semantic-ui-react'
 import styles from './BibleViewPage.css'
 import BibleSelector from '../components/bible-selector/BibleSelector'
 import { getBook } from 'app/consts/bible'
+import * as layoutActions from '../actions/layout'
 
 class BibleViewPage extends Component {
   constructor(props: {}) {
     super(props)
     this.state = {
       bibleSelectorIsOpen: {},
-      value: {
-        bookId: -1,
-        chapter: 0,
-        verse: 0
-      }
+    }
+  }
+
+  get value() {
+    const {match} = this.props
+    return {
+      bookId: +match.params.bookId || 0,
+      chapter: +match.params.chapter || 0,
+      verse: 0
     }
   }
 
   handleBibleSelectorChange = value => {
-
+    const {match, tabUpdate} = this.props
+    const tabId = match.params.tabId
+    const title = value.bookId ? getBook(value.bookId).name_cn : null
+    const tabItem = {
+      id: tabId,
+      title,
+      ...value
+    }
+    tabUpdate(tabId, tabItem)
   }
 
   handleBibleSelectorCloseClick = type => {
@@ -73,7 +87,9 @@ class BibleViewPage extends Component {
   }
 
   renderBreadcrumb() {
-    const { value, bibleSelectorIsOpen } = this.state
+    const { bibleSelectorIsOpen } = this.state
+    const value = this.value
+
     const bookSelectorName =
       value.bookId > 0 ? getBook(value.bookId).name_cn : '选择书本...'
     const chapterSelectorName =
@@ -129,4 +145,4 @@ class BibleViewPage extends Component {
   }
 }
 
-export default BibleViewPage
+export default connect(null, layoutActions)(BibleViewPage)
