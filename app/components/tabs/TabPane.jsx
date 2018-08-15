@@ -1,6 +1,6 @@
 import { React, PropTypes, cx, ReactDOM } from 'app/bootstrap' // eslint-disable-line
 import delay from 'lodash/delay'
-import { Icon } from 'semantic-ui-react'
+import Close from '../icons/Close'
 import GoChevronLeft from '../../vendors/react-icons/lib/go/chevron-left'
 import GoChevronRight from '../../vendors/react-icons/lib/go/chevron-right'
 import GoDiffAdded from '../../vendors/react-icons/lib/md/add'
@@ -61,6 +61,12 @@ class TabPane extends React.Component {
   componentDidMount() {
     delay(() => this.dealWithTabTitleScroll())
     window.addEventListener('resize', this.handleResize)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.items.length !== this.props.items.length) {
+      this.dealWithTabTitleScroll()
+    }
   }
 
   componentWillUnmount() {
@@ -129,7 +135,7 @@ class TabPane extends React.Component {
           href="###"
           onClick={e => this.handleTabClose(e, item.id)}
         >
-          <Icon name="window close" size="small" />
+          <Close />
         </a>
       ) : null
     ]

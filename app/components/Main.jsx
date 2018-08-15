@@ -2,7 +2,7 @@ import { React, PropTypes, cx, Component, Route, Link } from 'app/bootstrap' // 
 import { Switch, Redirect } from 'react-router'
 import { withRouter } from 'react-router-dom'
 import SideBar from './side-bar/SideBar'
-import Samples from '../pages/samples'
+import Samples, {getSampleRoutes} from '../pages/samples'
 import { primaryItems, toolItems } from '../consts/siderbar'
 import styles from './Main.css'
 
@@ -47,6 +47,9 @@ class Main extends Component {
             path="/dictionary"
             component={require('../pages/DictionaryPage')}
           />
+          {
+            getSampleRoutes()
+          }
           <Redirect to="/bible" />
         </Switch>
         <Samples />

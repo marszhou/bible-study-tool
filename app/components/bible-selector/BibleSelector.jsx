@@ -2,24 +2,46 @@ import { React, PropTypes, cx } from 'app/bootstrap' // eslint-disable-line
 import BookSelector from './BookSelector'
 import ChapterSelector from './ChapterSelector'
 import VerseSelector from './VerseSelector'
+import Close from '../icons/Close'
 import {
   getSelectorBookGroups,
-  getVerseCoutOf,
-  filterBooks
+  getVerseCountOf,
+  filterBooks,
+  getBook,
 } from '../../consts/bible'
+import styles from './BibleSelector.css'
+
+export const getTabTitle = (tabItem) => {
+  if (tabItem.bookId) {
+    let title = getBook(tabItem.bookId).abbr_cn+(tabItem.chapter ? `:${tabItem.chapter}`:'')
+    return title
+  }
+}
 
 class BibleSelector extends React.Component {
   static propTypes = {
+    viewMode: PropTypes.oneOf([
+      'full',
+      'bookOnly',
+      'chapter',
+      'chapterOnly',
+      'verse'
+    ]),
+    showClose: PropTypes.bool,
+    onCloseClick: PropTypes.func,
     value: PropTypes.shape({
       bookId: PropTypes.number,
       chapter: PropTypes.number,
       verse: PropTypes.number
     }),
     columnClassNames: PropTypes.object,
-    onChange: PropTypes.func,
+    onChange: PropTypes.func
   }
 
   static defaultProps = {
+    viewMode: 'full',
+    showClose: false,
+    onCloseClick: () => {},
     value: {
       bookId: -1,
       chapter: 0,
@@ -27,7 +49,7 @@ class BibleSelector extends React.Component {
     },
     bookGroups: [],
     columnClassNames: {},
-    onChange: () => {},
+    onChange: () => {}
   }
 
   constructor(props) {
@@ -35,52 +57,40 @@ class BibleSelector extends React.Component {
     this.state = {
       bookFilter: '',
       bookListStyle: 'list', // or grid
-      ...this.getStateFromProps(props)
     }
     this.bookGroups = getSelectorBookGroups()
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.value !== nextProps.value) {
-      this.setState(this.getStateFromProps(nextProps))
-    }
-  }
-
-  getStateFromProps(props) {
-    return { ...props.value }
-  }
-
-  tryTriggerChange() {
-    const { bookId, chapter, verse } = this.state
-    if (bookId > 0 && chapter > 0 && verse > 0) {
-      this.props.onChange({ bookId, chapter, verse })
-    }
-  }
-
   handleChange(change) {
-    this.setState(change, () => this.tryTriggerChange())
+    this.props.onChange(change)
   }
 
   handleBookSelect = book => {
     if (book.id === this.props.value.bookId) return
-    const newState = {
+    const change = {
       bookId: book.id,
       chapter: 0,
       verse: 0
     }
     if (book.chapterCount === 1) {
-      newState.chapter = 1
+      change.chapter = 1
     }
-    this.handleChange(newState)
+    this.handleChange(change)
   }
 
   handleChapterSelect = chapter => {
     if (chapter === this.props.value.chapter) return
-    this.handleChange({ chapter, verse: 0 })
+    this.handleChange({
+      ...this.props.value,
+      ...{ chapter, verse: 0 }
+    })
   }
 
   handleVerseSelect = verse => {
-    this.handleChange({ verse })
+    this.handleChange({
+      ...this.props.value,
+      verse
+    })
   }
 
   getAllBooks() {
@@ -104,35 +114,55 @@ class BibleSelector extends React.Component {
 
   hanldeListStyleToggle = () => {
     const bookListStyle = this.state.bookListStyle === 'list' ? 'grid' : 'list'
-    this.setState({bookListStyle})
+    this.setState({ bookListStyle })
   }
 
   render() {
-    const {
-      columnClassNames,
-    } = this.props
-    const { bookId, chapter, verse, bookListStyle } = this.state
+    const { value, columnClassNames, viewMode, onCloseClick } = this.props
+    const { bookId, chapter, verse } = value
+    const { bookListStyle } = this.state
 
     const book = this.getBookFromID(
       bookId,
       filterBooks(this.state.bookFilter, this.getAllBooks())
     )
-
-    const showBook = book && book.chapterCount > 1
-    const showVerse = book && chapter
+    const showBook = viewMode === 'full' || viewMode === 'bookOnly'
+    const showChapter =
+      (viewMode === 'full' ||
+        viewMode === 'chapter' ||
+        viewMode === 'chapterOnly') &&
+      book &&
+      book.chapterCount > 1
+    const showVerse =
+      (viewMode === 'full' || viewMode === 'chapter' || viewMode === 'verse') &&
+      book &&
+      chapter
 
     return (
-      <div style={{ display: 'flex' }}>
-        <BookSelector
-          currentBookId={bookId}
-          bookGroups={this.bookGroups}
-          classNames={columnClassNames}
-          listStyle={bookListStyle}
-          onSelect={this.handleBookSelect}
-          onListStyleToggle={this.hanldeListStyleToggle}
-          onFilterChange={this.handleBookFilterChange}
-        />
+      <div style={{ display: 'flex' }} className="bible-selector-height">
+        <a
+          href="###"
+          role="button"
+          className={styles.close}
+          onClick={e => {
+            e.preventDefault()
+            onCloseClick()
+          }}
+        >
+          <Close />
+        </a>
         {showBook ? (
+          <BookSelector
+            currentBookId={bookId}
+            bookGroups={this.bookGroups}
+            classNames={columnClassNames}
+            listStyle={bookListStyle}
+            onSelect={this.handleBookSelect}
+            onListStyleToggle={this.hanldeListStyleToggle}
+            onFilterChange={this.handleBookFilterChange}
+          />
+        ) : null}
+        {showChapter ? (
           <ChapterSelector
             count={book.chapterCount}
             selected={chapter}
@@ -142,7 +172,7 @@ class BibleSelector extends React.Component {
         ) : null}
         {showVerse ? (
           <VerseSelector
-            count={getVerseCoutOf(bookId, chapter)}
+            count={getVerseCountOf(bookId, chapter)}
             selected={verse}
             classNames={columnClassNames}
             onSelect={this.handleVerseSelect}

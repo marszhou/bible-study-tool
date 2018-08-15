@@ -6,11 +6,11 @@ export const PropType_BookItem = PropTypes.shape({
   chapterCount: PropTypes.number,
 });
 
-const BookItem = ({ book, highlighted, onClick }) => {
+const BookItem = ({ book, listStyle, highlighted, onClick }) => {
   return (
     <li className={cx({ highlighted })} onClick={onClick} role="button" tabIndex="0">
       <span>
-        {book.name}
+        {listStyle === 'list' ? book.name: book.nameAbbr}
       </span>
     </li>
   );

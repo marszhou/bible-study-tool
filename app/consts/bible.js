@@ -14,7 +14,7 @@ export const filterBooks = (filter, books) => {
   })
 }
 
-export const getSelectorBookGroups = () => {
+export const getSelectorBookGroups = (lang = 'cn') => {
   return ['1', '2'].map(groupId => {
     const group = groupsById[groupId]
     return {
@@ -25,6 +25,7 @@ export const getSelectorBookGroups = () => {
         return {
           id: +book.id,
           name: book.name_cn,
+          nameAbbr: book.abbr_cn,
           nameEn: book.name_en,
           namePy: book.pinyin,
           namePyInitial: book.pinyin_initial,
@@ -35,13 +36,15 @@ export const getSelectorBookGroups = () => {
   })
 }
 
-export const getVerseCoutOf = (bookId, chapter) => {
+export const getVerseCountOf = (bookId, chapter) => {
   const count = verseCountByBook[bookId] && verseCountByBook[bookId][chapter]
   if (count) {
     return +count
   }
   return null
 }
+
+export const getBook = (bookId) => booksById[bookId]
 
 export const booksById = {
   '1153072783907': {

@@ -6,7 +6,7 @@ import styles from './styles.css'
 class ChapterDisplay extends React.Component {
   static propTypes = {
     // book: PropType_BookItem.isRequired,
-    // chapterIndex: PropTypes.number.isRequired,
+    // chapter: PropTypes.number.isRequired,
     versions: PropTypes.arrayOf(PropTypes.string).isRequired,
     verses: PropTypes.array,
     selectedVerses: PropTypes.array,

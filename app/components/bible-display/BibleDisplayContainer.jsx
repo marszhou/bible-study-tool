@@ -21,7 +21,7 @@ import styles from './styles.css'
 class BibleDisplayContainer extends React.PureComponent {
   static propTypes = {
     book: PropType_BookItem.isRequired,
-    chapterIndex: PropTypes.number.isRequired,
+    chapter: PropTypes.number.isRequired,
     versions: PropTypes.array.isRequired,
     onStep: PropTypes.func
   }
@@ -54,11 +54,11 @@ class BibleDisplayContainer extends React.PureComponent {
   }
 
   async fetchVerses(props, state) {
-    const { book, chapterIndex } = props || this.props
+    const { book, chapter } = props || this.props
     const { selectedVersions } = state || this.state
     const verses = await db.fetchVersesForChapterByVersions(
       book.id,
-      chapterIndex,
+      chapter,
       selectedVersions
     )
     return verses.map(verse => ({
@@ -130,7 +130,7 @@ class BibleDisplayContainer extends React.PureComponent {
   }
 
   renderChapter() {
-    const { book, chapterIndex, versions } = this.props
+    const { book, chapter, versions } = this.props
     const {
       verses,
       displayCode,
@@ -140,7 +140,7 @@ class BibleDisplayContainer extends React.PureComponent {
     return (
       <ChapterDisplay
         book={book}
-        chapterIndex={chapterIndex}
+        chapter={chapter}
         displayCode={displayCode}
         verses={verses}
         selectedVerses={selectedVerses}
@@ -220,7 +220,7 @@ class BibleDisplayContainer extends React.PureComponent {
   }
 
   renderHeader() {
-    const { book, chapterIndex, versions } = this.props
+    const { book, chapter, versions } = this.props
     const {
       displayCode,
       selectedVersions,
@@ -238,7 +238,7 @@ class BibleDisplayContainer extends React.PureComponent {
           </div>
           <div className={styles.titleItem}>
             <Header as="h2">
-              {book.name} {book.chapterCount > 1 ? `第${chapterIndex}章` : ''}
+              {book.name} {book.chapterCount > 1 ? `第${chapter}章` : ''}
             </Header>
           </div>
           <div className={styles.titleItem} style={{ flexGrow: 0 }}>

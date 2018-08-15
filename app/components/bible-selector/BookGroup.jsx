@@ -14,6 +14,7 @@ const BookGroup = ({ group, currentBookId, listStyle, filter, onSelect }) => {
             <BookItem
               key={book.id}
               book={book}
+              listStyle={listStyle}
               highlighted={currentBookId === book.id}
               onClick={() => onSelect(book)}
             />

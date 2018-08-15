@@ -1,0 +1,9 @@
+.bibleViewWrapper {
+  padding: 16px;
+}
+.bibleSelectorPopup {
+  /* padding: 10px!important; */
+}
+.bibleSelectorPopup::before {
+  /* opacity: 0!important; */
+}
