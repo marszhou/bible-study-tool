@@ -2,11 +2,13 @@ import { React, PropTypes, cx } from 'app/bootstrap' // eslint-disable-line
 import BookSelector from './BookSelector'
 import ChapterSelector from './ChapterSelector'
 import VerseSelector from './VerseSelector'
+import Close from '../icons/Close'
 import {
   getSelectorBookGroups,
   getVerseCountOf,
   filterBooks
 } from '../../consts/bible'
+import styles from './BibleSelector.css'
 
 class BibleSelector extends React.Component {
   static propTypes = {
@@ -17,6 +19,8 @@ class BibleSelector extends React.Component {
       'chapterOnly',
       'verse'
     ]),
+    showClose: PropTypes.bool,
+    onCloseClick: PropTypes.func,
     value: PropTypes.shape({
       bookId: PropTypes.number,
       chapter: PropTypes.number,
@@ -28,6 +32,8 @@ class BibleSelector extends React.Component {
 
   static defaultProps = {
     viewMode: 'full',
+    showClose: false,
+    onCloseClick: () => {},
     value: {
       bookId: -1,
       chapter: 0,
@@ -114,7 +120,7 @@ class BibleSelector extends React.Component {
   }
 
   render() {
-    const { columnClassNames, viewMode } = this.props
+    const { columnClassNames, viewMode, onCloseClick } = this.props
     const { bookId, chapter, verse, bookListStyle } = this.state
 
     const book = this.getBookFromID(
@@ -135,6 +141,17 @@ class BibleSelector extends React.Component {
 
     return (
       <div style={{ display: 'flex' }} className="bible-selector-height">
+        <a
+          href="###"
+          role="button"
+          className={styles.close}
+          onClick={e => {
+            e.preventDefault()
+            onCloseClick()
+          }}
+        >
+          <Close />
+        </a>
         {showBook ? (
           <BookSelector
             currentBookId={bookId}

@@ -150,3 +150,8 @@ ul.grid li {
   line-height: 3em;
   text-align: center;
 }
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

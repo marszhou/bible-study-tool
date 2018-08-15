@@ -7,7 +7,7 @@ class BibleViewPage extends Component {
   constructor(props: {}) {
     super(props)
     this.state = {
-      visible: false,
+      bibleSelectorIsOpen: {},
       bookId: 0,
       value: {
         bookId: -1,
@@ -22,9 +22,25 @@ class BibleViewPage extends Component {
     this.setState({ value })
   }
 
+  handleBibleSelectorCloseClick = type => {
+    this.setState({
+      bibleSelectorIsOpen: {
+        [type]: false
+      }
+    })
+  }
+
+  handleBibleSelectorToggle = (type, isOpen) => {
+    this.setState({
+      bibleSelectorIsOpen: {
+        [type]: isOpen
+      }
+    })
+  }
+
   render() {
     const { match } = this.props
-    const { value } = this.state
+    const { value, bibleSelectorIsOpen } = this.state
 
     return (
       <div className={styles.bibleViewWrapper}>
@@ -33,9 +49,18 @@ class BibleViewPage extends Component {
             <Popup
               trigger={<Label content="111" />}
               className={styles.bibleSelectorPopup}
+              open={bibleSelectorIsOpen.book}
+              on="click"
+              onOpen={this.handleBibleSelectorToggle.bind(this, 'book', true)}
+              onClose={this.handleBibleSelectorToggle.bind(this, 'book', false)}
               content={
                 <BibleSelector
                   value={value}
+                  showClose
+                  onCloseClick={this.handleBibleSelectorCloseClick.bind(
+                    this,
+                    'book'
+                  )}
                   onChange={this.handleBibleSelectorChange}
                   columnClassNames={{
                     'bible-selector-height': true
