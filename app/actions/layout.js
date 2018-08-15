@@ -62,7 +62,7 @@ export const tabUpdate = (
 const makeTabUrl = tabItem => {
   let url = `/bible/${tabItem.id}`
   if (tabItem.bookId) {
-    url = `${url}/${tabItem.bookId}/${tabItem.chapter}`
+    url = `${url}/${tabItem.bookId}/${tabItem.chapter}/${tabItem.verse}`
   }
   return url
 }

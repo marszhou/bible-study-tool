@@ -20,17 +20,15 @@ class BibleViewPage extends Component {
     return {
       bookId: +match.params.bookId || 0,
       chapter: +match.params.chapter || 0,
-      verse: 0
+      verse: +match.params.verse || 0,
     }
   }
 
   handleBibleSelectorChange = value => {
     const {match, tabUpdate} = this.props
     const tabId = match.params.tabId
-    const title = value.bookId ? getBook(value.bookId).name_cn : null
     const tabItem = {
       id: tabId,
-      title,
       ...value
     }
     tabUpdate(tabId, tabItem)

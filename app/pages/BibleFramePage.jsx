@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import * as layoutActions from '../actions/layout'
 import { layoutSelectors } from '../reducers'
 import { TabPane } from '../components/tabs'
+import { getTabTitle } from 'app/components/bible-selector/BibleSelector'
 
 class BibleFramePage extends Component {
   componentDidMount() {
@@ -58,7 +59,7 @@ class BibleFramePage extends Component {
             />,
             <Route
               key="view"
-              path={`${match.path}/:tabId/:bookId?/:chapter?`}
+              path={`${match.path}/:tabId/:bookId?/:chapter?/:verse?`}
               component={require('./BibleViewPage')}
             />
             ]
@@ -70,8 +71,12 @@ class BibleFramePage extends Component {
 
 BibleFramePage = connect(
   state => {
+    const tabs = layoutSelectors
+      .getTabs(state)
+      .map(tabItem => ({ ...tabItem, title: getTabTitle(tabItem) }))
+
     return {
-      tabs: layoutSelectors.getTabs(state),
+      tabs,
       activated: layoutSelectors.getActivated(state)
     }
   },

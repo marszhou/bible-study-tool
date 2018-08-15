@@ -7,8 +7,16 @@ import {
   getSelectorBookGroups,
   getVerseCountOf,
   filterBooks,
+  getBook,
 } from '../../consts/bible'
 import styles from './BibleSelector.css'
+
+export const getTabTitle = (tabItem) => {
+  if (tabItem.bookId) {
+    let title = getBook(tabItem.bookId).name_cn+(tabItem.chapter ? `:${tabItem.chapter}`:'')
+    return title
+  }
+}
 
 class BibleSelector extends React.Component {
   static propTypes = {
