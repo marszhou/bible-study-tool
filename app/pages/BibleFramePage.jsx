@@ -57,7 +57,7 @@ class BibleFramePage extends Component {
             />,
             <Route
               key="view"
-              path={`${match.path}/:tabId/:bookId?/:chapterIndex?`}
+              path={`${match.path}/:tabId/:bookId?/:chapter?`}
               component={require('./BibleViewPage')}
             />
             ]

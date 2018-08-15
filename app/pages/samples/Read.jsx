@@ -18,7 +18,7 @@ class Read extends React.PureComponent {
       <div>
         <BibleDisplayContainer
           book={book}
-          chapterIndex={1}
+          chapter={1}
           versions={versions}
         />
       </div>

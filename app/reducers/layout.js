@@ -21,7 +21,7 @@ const splitPane = combineReducers({ on, size })
 
 const parseUrl = action =>
   parseUrlParams(
-    '/bible/:tabId/:bookId?/:chapterIndex?',
+    '/bible/:tabId/:bookId?/:chapter?',
     action.payload.location.pathname
   )
 
@@ -35,7 +35,7 @@ const byId = (state = {}, action) => {
           [match.tabId]: {
             id: match.tabId,
             bookId: match.bookId,
-            chapterIndex: +match.chapterIndex
+            chapter: +match.chapter
           }
         }
       }

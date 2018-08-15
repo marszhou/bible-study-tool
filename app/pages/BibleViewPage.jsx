@@ -10,7 +10,6 @@ class BibleViewPage extends Component {
     super(props)
     this.state = {
       bibleSelectorIsOpen: {},
-      bookId: 0,
       value: {
         bookId: -1,
         chapter: 0,
@@ -20,7 +19,7 @@ class BibleViewPage extends Component {
   }
 
   handleBibleSelectorChange = value => {
-    this.setState({ value })
+
   }
 
   handleBibleSelectorCloseClick = type => {
@@ -122,8 +121,8 @@ class BibleViewPage extends Component {
           match.params.bookId:
           {match.params.bookId}
           <br />
-          match.params.chapterIndex:
-          {match.params.chapterIndex}
+          match.params.chapter:
+          {match.params.chapter}
         </div>
       </div>
     )

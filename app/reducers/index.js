@@ -40,9 +40,9 @@ export const getOldTestmentBooks = (state) =>
 export const getNewTestmentBooks = (state) =>
   getGroupedBooks(state, 2)
 
-export const getVerseCountByBookAndChapter = (state, bookId, chapterIndex) =>
+export const getVerseCountByBookAndChapter = (state, bookId, chapter) =>
   fromVerseCount.getVerseCountByBookAndChapter(
     state.verseCount,
     bookId,
-    chapterIndex
+    chapter
   )

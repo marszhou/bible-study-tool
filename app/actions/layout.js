@@ -55,7 +55,7 @@ export const tabRecoverActivated = () => (dispatch, getState) => {
 const makeTabUrl = tabItem => {
   let url = `/bible/${tabItem.id}`
   if (tabItem.bookId) {
-    url += `${url}/${tabItem.bookId}/${tabItem.chapterIndex}}`
+    url += `${url}/${tabItem.bookId}/${tabItem.chapter}}`
   }
   return url
 }
