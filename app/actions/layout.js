@@ -51,11 +51,18 @@ export const tabRecoverActivated = () => (dispatch, getState) => {
   const tabItem = layoutSelectors.getActivatedTab(state)
   dispatch(replace(makeTabUrl(tabItem)))
 }
+export const tabUpdate = (
+  id,
+  params
+) => dispatch => {
+  const tabItem = { id, ...params }
+  dispatch(replace(makeTabUrl(tabItem)))
+}
 
 const makeTabUrl = tabItem => {
   let url = `/bible/${tabItem.id}`
   if (tabItem.bookId) {
-    url += `${url}/${tabItem.bookId}/${tabItem.chapterIndex}}`
+    url = `${url}/${tabItem.bookId}/${tabItem.chapter}/${tabItem.verse}`
   }
   return url
 }

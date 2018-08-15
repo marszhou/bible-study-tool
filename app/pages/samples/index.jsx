@@ -51,8 +51,11 @@ const sampleRoutes = [
   }
 ]
 const Samples = () => {
-  return [
-    <div key="menu" style={{ position: 'fixed', bottom: 0, right: 0, zIndex: 1 }}>
+  return (
+    <div
+      key="menu"
+      style={{ position: 'fixed', bottom: 0, right: 0, zIndex: 1 }}
+    >
       <ul>
         <li>
           <Link to="/">home</Link>
@@ -63,12 +66,14 @@ const Samples = () => {
           </li>
         ))}
       </ul>
-    </div>,
-    ...sampleRoutes.map(route => {
-      const params = { ...route, key: route.name }
-      return <Route {...params} />
-    })
-  ]
+    </div>
+  )
 }
+
+export const getSampleRoutes = () =>
+  sampleRoutes.map(route => {
+    const params = { ...route, key: route.name }
+    return <Route {...params} />
+  })
 
 export default Samples

@@ -7,5 +7,5 @@ export default verseCount
 export const getVerseCountByBookAndChapter = (
   state,
   bookId,
-  chapterIndex
-) => state[bookId][chapterIndex]
+  chapter
+) => state[bookId][chapter]

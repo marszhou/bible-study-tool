@@ -5,21 +5,17 @@ import { connect } from 'react-redux'
 import * as layoutActions from '../actions/layout'
 import { layoutSelectors } from '../reducers'
 import { TabPane } from '../components/tabs'
-import getConnectedBibleView from 'app/components/bible-view/BibleView'
+import { getTabTitle } from 'app/components/bible-selector/BibleSelector'
 
 class BibleFramePage extends Component {
   componentDidMount() {
-    const { tabs, history, match, tabRecoverActivated, tabNew } = this.props
+    const { tabs, tabRecoverActivated, tabNew } = this.props
     if (tabs.length === 0) {
+      // @todo 恢复当前的url上的book/chapter设置
       tabNew()
     } else {
       tabRecoverActivated()
     }
-  }
-
-  handleItemRenderer = item => {
-    const BibleView = getConnectedBibleView(item.id)
-    return <BibleView />
   }
 
   handleTabSort = (sourceId, targetId, before) => {
@@ -63,7 +59,7 @@ class BibleFramePage extends Component {
             />,
             <Route
               key="view"
-              path={`${match.path}/:tabId/:bookId?/:chapterIndex?`}
+              path={`${match.path}/:tabId/:bookId?/:chapter?/:verse?`}
               component={require('./BibleViewPage')}
             />
             ]
@@ -75,8 +71,12 @@ class BibleFramePage extends Component {
 
 BibleFramePage = connect(
   state => {
+    const tabs = layoutSelectors
+      .getTabs(state)
+      .map(tabItem => ({ ...tabItem, title: getTabTitle(tabItem) }))
+
     return {
-      tabs: layoutSelectors.getTabs(state),
+      tabs,
       activated: layoutSelectors.getActivated(state)
     }
   },
