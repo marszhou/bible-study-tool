@@ -63,14 +63,14 @@ class TabPane extends React.Component {
     window.addEventListener('resize', this.handleResize)
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize)
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.items.length !== this.props.items.length) {
       this.dealWithTabTitleScroll()
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize)
   }
 
   handleResize = () => {

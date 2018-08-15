@@ -50,15 +50,13 @@ class BibleSelector extends React.Component {
     return { ...props.value }
   }
 
-  tryTriggerChange() {
+  triggerChange() {
     const { bookId, chapter, verse } = this.state
-    if (bookId > 0 && chapter > 0 && verse > 0) {
-      this.props.onChange({ bookId, chapter, verse })
-    }
+    this.props.onChange({ bookId, chapterIndex: chapter, verseIndex: verse })
   }
 
   handleChange(change) {
-    this.setState(change, () => this.tryTriggerChange())
+    this.setState(change, () => this.triggerChange())
   }
 
   handleBookSelect = book => {
