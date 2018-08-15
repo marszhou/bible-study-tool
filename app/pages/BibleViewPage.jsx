@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { Breadcrumb, Button, Grid, Popup, Label, Icon } from 'semantic-ui-react'
 import styles from './BibleViewPage.css'
 import BibleSelector from '../components/bible-selector/BibleSelector'
+import { getBook } from 'app/consts/bible'
 
 class BibleViewPage extends Component {
   constructor(props: {}) {
@@ -19,7 +20,6 @@ class BibleViewPage extends Component {
   }
 
   handleBibleSelectorChange = value => {
-    console.log('select', value)
     this.setState({ value })
   }
 
@@ -39,107 +39,81 @@ class BibleViewPage extends Component {
     })
   }
 
+  renderBibleSelector({ type, isOpen, selectorName, value }) {
+    return (
+      <Breadcrumb.Section link>
+        {' '}
+        <Popup
+          position="bottom left"
+          trigger={
+            <Label size="large" >
+              {selectorName}{' '}
+              <Icon name="caret down" size='small' />
+            </Label>
+          }
+          className={styles.bibleSelectorPopup}
+          open={isOpen}
+          on="click"
+          onOpen={this.handleBibleSelectorToggle.bind(this, type, true)}
+          onClose={this.handleBibleSelectorToggle.bind(this, type, false)}
+          content={
+            <BibleSelector
+              viewMode={type === 'book' ? 'full' : 'chapter'}
+              value={value}
+              showClose
+              onCloseClick={this.handleBibleSelectorCloseClick.bind(this, type)}
+              onChange={this.handleBibleSelectorChange}
+              columnClassNames={{
+                'bible-selector-height': true
+              }}
+            />
+          }
+        />
+      </Breadcrumb.Section>
+    )
+  }
+
+  renderBreadcrumb() {
+    const { value, bibleSelectorIsOpen } = this.state
+    const bookSelectorName =
+      value.bookId > 0 ? getBook(value.bookId).name_cn : '选择书本...'
+    const chapterSelectorName =
+      value.bookId > 0
+        ? value.chapter > 0
+          ? `第${value.chapter}章`
+          : '选择章...'
+        : null
+    const bookSelector = this.renderBibleSelector({
+      type: 'book',
+      isOpen: bibleSelectorIsOpen.book,
+      selectorName: bookSelectorName,
+      value
+    })
+    const chapterSelector =
+      value.bookId > 0
+        ? this.renderBibleSelector({
+            type: 'chapter',
+            isOpen: bibleSelectorIsOpen.chapter,
+            selectorName: chapterSelectorName,
+            value
+          })
+        : null
+
+    return (
+      <Breadcrumb size="big">
+        {bookSelector}
+        {value.bookId > 0 ? <Breadcrumb.Divider icon='right angle'/> : null}
+        {chapterSelector}
+      </Breadcrumb>
+    )
+  }
+
   render() {
     const { match } = this.props
-    const { value, bibleSelectorIsOpen } = this.state
 
     return (
       <div className={styles.bibleViewWrapper}>
-        <Breadcrumb>
-          <Breadcrumb.Section link>
-            <Popup
-              position='bottom left'
-              trigger={<Label content="Book" />}
-              className={styles.bibleSelectorPopup}
-              open={bibleSelectorIsOpen.book}
-              on="click"
-              onOpen={this.handleBibleSelectorToggle.bind(this, 'book', true)}
-              onClose={this.handleBibleSelectorToggle.bind(this, 'book', false)}
-              content={
-                <BibleSelector
-                  value={value}
-                  showClose
-                  onCloseClick={this.handleBibleSelectorCloseClick.bind(
-                    this,
-                    'book'
-                  )}
-                  onChange={this.handleBibleSelectorChange}
-                  columnClassNames={{
-                    'bible-selector-height': true
-                  }}
-                />
-              }
-            />
-          </Breadcrumb.Section>
-          <Breadcrumb.Divider />
-          <Breadcrumb.Section link>
-            <Popup
-              position='bottom left'
-              trigger={<Label content="chapter" />}
-              className={styles.bibleSelectorPopup}
-              open={bibleSelectorIsOpen.chapter}
-              on="click"
-              onOpen={this.handleBibleSelectorToggle.bind(
-                this,
-                'chapter',
-                true
-              )}
-              onClose={this.handleBibleSelectorToggle.bind(
-                this,
-                'chapter',
-                false
-              )}
-              content={
-                <BibleSelector
-                  value={value}
-                  showClose
-                  onCloseClick={this.handleBibleSelectorCloseClick.bind(
-                    this,
-                    'chapter'
-                  )}
-                  onChange={this.handleBibleSelectorChange}
-                  columnClassNames={{
-                    'bible-selector-height': true
-                  }}
-                />
-              }
-            />
-          </Breadcrumb.Section>
-          <Breadcrumb.Divider />
-          <Breadcrumb.Section active>
-            <Popup
-              position='bottom left'
-              trigger={<Label content="verse" />}
-              className={styles.bibleSelectorPopup}
-              open={bibleSelectorIsOpen.verse}
-              on="click"
-              onOpen={this.handleBibleSelectorToggle.bind(
-                this,
-                'verse',
-                true
-              )}
-              onClose={this.handleBibleSelectorToggle.bind(
-                this,
-                'verse',
-                false
-              )}
-              content={
-                <BibleSelector
-                  value={value}
-                  showClose
-                  onCloseClick={this.handleBibleSelectorCloseClick.bind(
-                    this,
-                    'verse'
-                  )}
-                  onChange={this.handleBibleSelectorChange}
-                  columnClassNames={{
-                    'bible-selector-height': true
-                  }}
-                />
-              }
-            />
-          </Breadcrumb.Section>
-        </Breadcrumb>
+        {this.renderBreadcrumb()}
 
         <div>
           match.params.tabId:

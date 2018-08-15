@@ -6,7 +6,7 @@ import Close from '../icons/Close'
 import {
   getSelectorBookGroups,
   getVerseCountOf,
-  filterBooks
+  filterBooks,
 } from '../../consts/bible'
 import styles from './BibleSelector.css'
 

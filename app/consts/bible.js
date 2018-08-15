@@ -44,6 +44,8 @@ export const getVerseCountOf = (bookId, chapter) => {
   return null
 }
 
+export const getBook = (bookId) => booksById[bookId]
+
 export const booksById = {
   '1153072783907': {
     id: '1153072783907',
