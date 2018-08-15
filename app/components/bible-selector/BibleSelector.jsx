@@ -10,16 +10,24 @@ import {
 
 class BibleSelector extends React.Component {
   static propTypes = {
+    viewMode: PropTypes.oneOf([
+      'full',
+      'bookOnly',
+      'chapter',
+      'chapterOnly',
+      'verse'
+    ]),
     value: PropTypes.shape({
       bookId: PropTypes.number,
       chapter: PropTypes.number,
       verse: PropTypes.number
     }),
     columnClassNames: PropTypes.object,
-    onChange: PropTypes.func,
+    onChange: PropTypes.func
   }
 
   static defaultProps = {
+    viewMode: 'full',
     value: {
       bookId: -1,
       chapter: 0,
@@ -27,7 +35,7 @@ class BibleSelector extends React.Component {
     },
     bookGroups: [],
     columnClassNames: {},
-    onChange: () => {},
+    onChange: () => {}
   }
 
   constructor(props) {
@@ -102,35 +110,43 @@ class BibleSelector extends React.Component {
 
   hanldeListStyleToggle = () => {
     const bookListStyle = this.state.bookListStyle === 'list' ? 'grid' : 'list'
-    this.setState({bookListStyle})
+    this.setState({ bookListStyle })
   }
 
   render() {
-    const {
-      columnClassNames,
-    } = this.props
+    const { columnClassNames, viewMode } = this.props
     const { bookId, chapter, verse, bookListStyle } = this.state
 
     const book = this.getBookFromID(
       bookId,
       filterBooks(this.state.bookFilter, this.getAllBooks())
     )
-
-    const showBook = book && book.chapterCount > 1
-    const showVerse = book && chapter
+    const showBook = viewMode === 'full' || viewMode === 'bookOnly'
+    const showChapter =
+      (viewMode === 'full' ||
+        viewMode === 'chapter' ||
+        viewMode === 'chapterOnly') &&
+      book &&
+      book.chapterCount > 1
+    const showVerse =
+      (viewMode === 'full' || viewMode === 'chapter' || viewMode === 'verse') &&
+      book &&
+      chapter
 
     return (
-      <div style={{ display: 'flex' }} className='bible-selector-height'>
-        <BookSelector
-          currentBookId={bookId}
-          bookGroups={this.bookGroups}
-          classNames={columnClassNames}
-          listStyle={bookListStyle}
-          onSelect={this.handleBookSelect}
-          onListStyleToggle={this.hanldeListStyleToggle}
-          onFilterChange={this.handleBookFilterChange}
-        />
+      <div style={{ display: 'flex' }} className="bible-selector-height">
         {showBook ? (
+          <BookSelector
+            currentBookId={bookId}
+            bookGroups={this.bookGroups}
+            classNames={columnClassNames}
+            listStyle={bookListStyle}
+            onSelect={this.handleBookSelect}
+            onListStyleToggle={this.hanldeListStyleToggle}
+            onFilterChange={this.handleBookFilterChange}
+          />
+        ) : null}
+        {showChapter ? (
           <ChapterSelector
             count={book.chapterCount}
             selected={chapter}
