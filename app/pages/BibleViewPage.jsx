@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 // import update from 'immutability-helper'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { Breadcrumb, Button, Grid, Popup, Label, Icon } from 'semantic-ui-react'
 import styles from './BibleViewPage.css'
 import BibleSelector from '../components/bible-selector/BibleSelector'
@@ -11,21 +11,21 @@ class BibleViewPage extends Component {
   constructor(props: {}) {
     super(props)
     this.state = {
-      bibleSelectorIsOpen: {},
+      bibleSelectorIsOpen: {}
     }
   }
 
   get value() {
-    const {match} = this.props
+    const { match } = this.props
     return {
       bookId: +match.params.bookId || 0,
       chapter: +match.params.chapter || 0,
-      verse: +match.params.verse || 0,
+      verse: +match.params.verse || 0
     }
   }
 
   handleBibleSelectorChange = value => {
-    const {match, tabUpdate} = this.props
+    const { match, tabUpdate } = this.props
     const tabId = match.params.tabId
     const tabItem = {
       id: tabId,
@@ -50,6 +50,10 @@ class BibleViewPage extends Component {
     })
   }
 
+  handleChaterSwitch = () => {
+
+  }
+
   renderBibleSelector({ type, isOpen, selectorName, value }) {
     return (
       <Breadcrumb.Section link>
@@ -57,9 +61,8 @@ class BibleViewPage extends Component {
         <Popup
           position="bottom left"
           trigger={
-            <Label size="large" >
-              {selectorName}{' '}
-              <Icon name="caret down" size='small' />
+            <Label size="large">
+              {selectorName} <Icon name="caret down" size="small" />
             </Label>
           }
           className={styles.bibleSelectorPopup}
@@ -115,10 +118,30 @@ class BibleViewPage extends Component {
     return (
       <Breadcrumb size="big">
         {bookSelector}
-        {value.bookId > 0 ? <Breadcrumb.Divider icon='right angle'/> : null}
+        {value.bookId > 0 ? <Breadcrumb.Divider icon="right angle" /> : null}
         {chapterSelector}
       </Breadcrumb>
     )
+  }
+
+  renderChapterSwitch() {
+    return this.value.bookId && this.value.chapter ? (
+      <div className={styles.chapterSwitch}>
+        <Button
+          circular
+          icon="angle double left"
+          color="facebook"
+          onClick={this.handleChaterSwitch.bind(this, -1)}
+        />
+        <Button
+          disabled
+          circular
+          icon="angle double right"
+          color="facebook"
+          onClick={this.handleChaterSwitch.bind(this, 1)}
+        />
+      </div>
+    ) : null
   }
 
   render() {
@@ -126,7 +149,10 @@ class BibleViewPage extends Component {
 
     return (
       <div className={styles.bibleViewWrapper}>
-        {this.renderBreadcrumb()}
+        <div>
+          {this.renderBreadcrumb()}
+          {this.renderChapterSwitch()}
+        </div>
 
         <div>
           match.params.tabId:
@@ -143,4 +169,7 @@ class BibleViewPage extends Component {
   }
 }
 
-export default connect(null, layoutActions)(BibleViewPage)
+export default connect(
+  null,
+  layoutActions
+)(BibleViewPage)
