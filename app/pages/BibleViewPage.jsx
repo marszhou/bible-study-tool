@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Breadcrumb, Button, Grid, Popup, Label, Icon } from 'semantic-ui-react'
 import styles from './BibleViewPage.css'
 import BibleSelector from '../components/bible-selector/BibleSelector'
-import { getBook } from 'app/consts/bible'
+import { getBook, getNextChapter, getPreviousChapter } from 'app/consts/bible'
 import * as layoutActions from '../actions/layout'
 
 class BibleViewPage extends Component {
@@ -21,6 +21,18 @@ class BibleViewPage extends Component {
       bookId: +match.params.bookId || 0,
       chapter: +match.params.chapter || 0,
       verse: +match.params.verse || 0
+    }
+  }
+
+  get next() {
+    if (this.value.bookId && this.value.chapter) {
+      return getNextChapter(this.value)
+    }
+  }
+
+  get previous() {
+    if (this.value.bookId && this.value.chapter) {
+      return getPreviousChapter(this.value)
     }
   }
 
@@ -48,10 +60,6 @@ class BibleViewPage extends Component {
         [type]: isOpen
       }
     })
-  }
-
-  handleChaterSwitch = () => {
-
   }
 
   renderBibleSelector({ type, isOpen, selectorName, value }) {
@@ -125,23 +133,26 @@ class BibleViewPage extends Component {
   }
 
   renderChapterSwitch() {
-    return this.value.bookId && this.value.chapter ? (
+    const { previous, next } = this
+
+    return (
       <div className={styles.chapterSwitch}>
         <Button
+          disabled={!previous}
           circular
           icon="angle double left"
           color="facebook"
-          onClick={this.handleChaterSwitch.bind(this, -1)}
+          onClick={this.handleBibleSelectorChange.bind(this, previous)}
         />
         <Button
-          disabled
+          disabled={!next}
           circular
           icon="angle double right"
           color="facebook"
-          onClick={this.handleChaterSwitch.bind(this, 1)}
+          onClick={this.handleBibleSelectorChange.bind(this, next)}
         />
       </div>
-    ) : null
+    )
   }
 
   render() {

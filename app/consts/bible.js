@@ -44,7 +44,44 @@ export const getVerseCountOf = (bookId, chapter) => {
   return null
 }
 
-export const getBook = (bookId) => booksById[bookId]
+export const getBook = bookId => booksById[bookId]
+
+export const getPreviousChapter = ({ bookId, chapter }) => {
+  const bookIndex = bookAllIds.indexOf(bookId+'')
+  if (chapter === 1) {
+    const previousBookId = bookAllIds[bookIndex - 1]
+    if (previousBookId) {
+      return {
+        bookId: +previousBookId,
+        chapter: +booksById[previousBookId].chapter_count
+      }
+    }
+  } else {
+    return {
+      bookId,
+      chapter: chapter - 1
+    }
+  }
+}
+
+export const getNextChapter = ({ bookId, chapter }) => {
+  const bookIndex = bookAllIds.indexOf(bookId+'')
+  const book = booksById[bookId]
+  if (chapter === +book.chapter_count) {
+    const nextBookId = bookAllIds[bookIndex + 1]
+    if (nextBookId) {
+      return {
+        bookId: +nextBookId,
+        chapter: 1
+      }
+    }
+  } else {
+    return {
+      bookId,
+      chapter: chapter + 1
+    }
+  }
+}
 
 export const booksById = {
   '1153072783907': {
