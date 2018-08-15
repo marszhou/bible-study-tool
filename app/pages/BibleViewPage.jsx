@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+// import update from 'immutability-helper'
 import { Breadcrumb, Button, Grid, Popup, Label, Icon } from 'semantic-ui-react'
 import styles from './BibleViewPage.css'
 import BibleSelector from '../components/bible-selector/BibleSelector'
@@ -47,7 +48,8 @@ class BibleViewPage extends Component {
         <Breadcrumb>
           <Breadcrumb.Section link>
             <Popup
-              trigger={<Label content="111" />}
+              position='bottom left'
+              trigger={<Label content="Book" />}
               className={styles.bibleSelectorPopup}
               open={bibleSelectorIsOpen.book}
               on="click"
@@ -67,13 +69,76 @@ class BibleViewPage extends Component {
                   }}
                 />
               }
-              on="click"
             />
           </Breadcrumb.Section>
           <Breadcrumb.Divider />
-          <Breadcrumb.Section link>Store</Breadcrumb.Section>
+          <Breadcrumb.Section link>
+            <Popup
+              position='bottom left'
+              trigger={<Label content="chapter" />}
+              className={styles.bibleSelectorPopup}
+              open={bibleSelectorIsOpen.chapter}
+              on="click"
+              onOpen={this.handleBibleSelectorToggle.bind(
+                this,
+                'chapter',
+                true
+              )}
+              onClose={this.handleBibleSelectorToggle.bind(
+                this,
+                'chapter',
+                false
+              )}
+              content={
+                <BibleSelector
+                  value={value}
+                  showClose
+                  onCloseClick={this.handleBibleSelectorCloseClick.bind(
+                    this,
+                    'chapter'
+                  )}
+                  onChange={this.handleBibleSelectorChange}
+                  columnClassNames={{
+                    'bible-selector-height': true
+                  }}
+                />
+              }
+            />
+          </Breadcrumb.Section>
           <Breadcrumb.Divider />
-          <Breadcrumb.Section active>T-Shirt</Breadcrumb.Section>
+          <Breadcrumb.Section active>
+            <Popup
+              position='bottom left'
+              trigger={<Label content="verse" />}
+              className={styles.bibleSelectorPopup}
+              open={bibleSelectorIsOpen.verse}
+              on="click"
+              onOpen={this.handleBibleSelectorToggle.bind(
+                this,
+                'verse',
+                true
+              )}
+              onClose={this.handleBibleSelectorToggle.bind(
+                this,
+                'verse',
+                false
+              )}
+              content={
+                <BibleSelector
+                  value={value}
+                  showClose
+                  onCloseClick={this.handleBibleSelectorCloseClick.bind(
+                    this,
+                    'verse'
+                  )}
+                  onChange={this.handleBibleSelectorChange}
+                  columnClassNames={{
+                    'bible-selector-height': true
+                  }}
+                />
+              }
+            />
+          </Breadcrumb.Section>
         </Breadcrumb>
 
         <div>

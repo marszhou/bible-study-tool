@@ -151,7 +151,11 @@ ul.grid li {
   text-align: center;
 }
 .close {
+  color: rgba(0, 0, 0, 0.37);
   position: absolute;
-  top: 0;
-  right: 0;
+  right: 3px;
+  top: 1px;
+}
+.close:hover {
+  color: rgba(0, 0, 0, 0.87);
 }

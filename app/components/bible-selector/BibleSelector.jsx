@@ -49,50 +49,40 @@ class BibleSelector extends React.Component {
     this.state = {
       bookFilter: '',
       bookListStyle: 'list', // or grid
-      ...this.getStateFromProps(props)
     }
     this.bookGroups = getSelectorBookGroups()
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.value !== nextProps.value) {
-      this.setState(this.getStateFromProps(nextProps))
-    }
-  }
-
-  getStateFromProps(props) {
-    return { ...props.value }
-  }
-
-  triggerChange() {
-    const { bookId, chapter, verse } = this.state
-    this.props.onChange({ bookId, chapterIndex: chapter, verseIndex: verse })
-  }
-
   handleChange(change) {
-    this.setState(change, () => this.triggerChange())
+    this.props.onChange(change)
   }
 
   handleBookSelect = book => {
     if (book.id === this.props.value.bookId) return
-    const newState = {
+    const change = {
       bookId: book.id,
       chapter: 0,
       verse: 0
     }
     if (book.chapterCount === 1) {
-      newState.chapter = 1
+      change.chapter = 1
     }
-    this.handleChange(newState)
+    this.handleChange(change)
   }
 
   handleChapterSelect = chapter => {
     if (chapter === this.props.value.chapter) return
-    this.handleChange({ chapter, verse: 0 })
+    this.handleChange({
+      ...this.props.value,
+      ...{ chapter, verse: 0 }
+    })
   }
 
   handleVerseSelect = verse => {
-    this.handleChange({ verse })
+    this.handleChange({
+      ...this.props.value,
+      verse
+    })
   }
 
   getAllBooks() {
@@ -120,8 +110,9 @@ class BibleSelector extends React.Component {
   }
 
   render() {
-    const { columnClassNames, viewMode, onCloseClick } = this.props
-    const { bookId, chapter, verse, bookListStyle } = this.state
+    const { value, columnClassNames, viewMode, onCloseClick } = this.props
+    const { bookId, chapter, verse } = value
+    const { bookListStyle } = this.state
 
     const book = this.getBookFromID(
       bookId,
