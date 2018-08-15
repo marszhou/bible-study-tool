@@ -79,7 +79,6 @@ class TabPane extends React.Component {
 
   dealWithTabTitleScroll() {
     this.tabTitleScrollInfo = this.tab.getTabTitleScrollInfo()
-    console.log(this.tabTitleScrollInfo)
 
     const { width, scrollLeft, scrollWidth } = this.tabTitleScrollInfo
     const showLeftScrollBtn = scrollLeft > 0
