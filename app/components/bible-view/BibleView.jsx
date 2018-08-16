@@ -1,21 +1,23 @@
-import React, { Component } from 'react';
-import {connect} from 'react-redux'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import styles from './styles.css'
 
-const getConnectedBibleView = (tabId) => {
-  class BibleView extends Component {
-    render() {
-      return (
-        <div>
-          aaa1
+class BibleView extends Component {
+  static propTypes = {}
+
+  static defaultProps = {}
+
+  render() {
+    return (
+        <div
+          className={'bible-view-height ' + styles.bibleView}
+          ref={el => (this.el = el)}
+        >
+          content
         </div>
-      );
-    }
+    )
   }
-
-  return connect()(BibleView)
 }
 
-export default getConnectedBibleView
-
-
-
+export default BibleView

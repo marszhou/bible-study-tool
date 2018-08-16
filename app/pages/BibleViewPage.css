@@ -1,11 +1,16 @@
 .bibleViewWrapper {
-  padding: 16px;
+  padding: 0;
 }
 .bibleSelectorPopup {
   /* padding: 10px!important; */
 }
 .bibleSelectorPopup::before {
   /* opacity: 0!important; */
+}
+.bibleViewTop {
+  height: 36px;
+  padding: 16px;
+  box-sizing: content-box;
 }
 .chapterSwitch {
   float: right;

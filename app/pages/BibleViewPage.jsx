@@ -6,6 +6,7 @@ import styles from './BibleViewPage.css'
 import BibleSelector from '../components/bible-selector/BibleSelector'
 import { getBook, getNextChapter, getPreviousChapter } from 'app/consts/bible'
 import * as layoutActions from '../actions/layout'
+import BibleView from 'app/components/bible-view/BibleView';
 
 class BibleViewPage extends Component {
   constructor(props: {}) {
@@ -160,21 +161,12 @@ class BibleViewPage extends Component {
 
     return (
       <div className={styles.bibleViewWrapper}>
-        <div>
+        <div className={styles.bibleViewTop}>
           {this.renderBreadcrumb()}
           {this.renderChapterSwitch()}
         </div>
 
-        <div>
-          match.params.tabId:
-          {match.params.tabId}
-          <br />
-          match.params.bookId:
-          {match.params.bookId}
-          <br />
-          match.params.chapter:
-          {match.params.chapter}
-        </div>
+        <BibleView />
       </div>
     )
   }
