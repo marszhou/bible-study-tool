@@ -6,10 +6,10 @@ export const filterBooks = (filter, books) => {
   return books.filter(book => {
     const regex = new RegExp(escapeStringRegexp(filter), 'i')
     return (
-      book.name.match(regex) ||
-      book.nameEn.match(regex) ||
-      book.namePy.match(regex) ||
-      book.namePyInitial.match(regex)
+      book.name_cn.match(regex) ||
+      book.name_en.match(regex) ||
+      book.pinyin.match(regex) ||
+      book.pinyin_initial.match(regex)
     )
   })
 }
@@ -19,17 +19,17 @@ export const getSelectorBookGroups = (lang = 'cn') => {
     const group = groupsById[groupId]
     return {
       id: +group.id,
-      name: group.name_cn,
+      name_cn: group.name_cn,
       books: group.books.map(bookId => {
         const book = booksById[bookId]
         return {
           id: +book.id,
-          name: book.name_cn,
-          nameAbbr: book.abbr_cn,
-          nameEn: book.name_en,
-          namePy: book.pinyin,
-          namePyInitial: book.pinyin_initial,
-          chapterCount: +book.chapter_count
+          name_cn: book.name_cn,
+          abbr_cn: book.abbr_cn,
+          name_en: book.name_en,
+          pinyin: book.pinyin,
+          pinyin_initial: book.pinyin_initial,
+          chapter_count: +book.chapter_count
         }
       })
     }

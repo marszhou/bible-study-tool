@@ -7,7 +7,7 @@ const BookGroup = ({ group, currentBookId, listStyle, filter, onSelect }) => {
   const books = filterBooks(filter, group.books);
   return books.length > 0 ? (
     <div className={styles.bookGroup}>
-      <div className={styles.title}>{group.name}</div>
+      <div className={styles.title}>{group.name_cn}</div>
       {
         <ul className={styles[listStyle]}>
           {books.map(book => (
