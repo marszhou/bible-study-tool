@@ -15,3 +15,6 @@
 .chapterSwitch {
   float: right;
 }
+.bibleView{
+  overflow-y: auto;
+}

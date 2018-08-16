@@ -9,14 +9,7 @@ class BibleView extends Component {
   static defaultProps = {}
 
   render() {
-    return (
-        <div
-          className={'bible-view-height ' + styles.bibleView}
-          ref={el => (this.el = el)}
-        >
-          content
-        </div>
-    )
+    return <div>content</div>
   }
 }
 
