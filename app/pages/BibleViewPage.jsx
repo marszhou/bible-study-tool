@@ -7,7 +7,7 @@ import BibleSelector from '../components/bible-selector/BibleSelector'
 import { getBook, getNextChapter, getPreviousChapter } from 'app/consts/bible'
 import * as layoutActions from '../actions/layout'
 import BibleView from 'app/components/bible-view/BibleView'
-import { layoutSelectors } from 'app/reducers';
+import { layoutSelectors } from 'app/reducers'
 
 class BibleViewPage extends Component {
   constructor(props: {}) {
@@ -159,6 +159,7 @@ class BibleViewPage extends Component {
 
   render() {
     const { activatedTab } = this.props
+    const { id: tabId, ...bibleInfo } = activatedTab
     return (
       <div className={styles.bibleViewWrapper}>
         <div className={styles.bibleViewTop}>
@@ -166,7 +167,7 @@ class BibleViewPage extends Component {
           {this.renderChapterSwitch()}
         </div>
         <div className={'bible-view-height ' + styles.bibleView}>
-          <BibleView {...activatedTab}/>
+          <BibleView tabId={tabId} {...bibleInfo} />
         </div>
       </div>
     )
@@ -174,7 +175,7 @@ class BibleViewPage extends Component {
 }
 
 export default connect(
-  (state) => {
+  state => {
     return {
       activatedTab: layoutSelectors.getActivatedTab(state)
     }

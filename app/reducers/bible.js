@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { Types } from '../actions/bible'
+import { Types as LayoutTypes } from '../actions/layout'
 
 const info = (state = { versions: ['cuvs'] }, action) => {
   switch (action.type) {
@@ -10,35 +11,78 @@ const info = (state = { versions: ['cuvs'] }, action) => {
   }
 }
 
-const selectedVerses = (state=[], action) => {
+const selectedVerses = (state = [], action) => {
   return state
 }
 
-const verses = (state=[], action) => {
-
+const versionVerses = (state = {}, action) => {
+  switch (action.type) {
+    case Types.FETCH_VERSES_COMPLETED:
+      return Object.keys(action.response).reduce(
+        (ret, version) => ({
+          ...ret,
+          [version]: action.response[version].map(verse => verse.id)
+        }),
+        {}
+      )
+    default:
+      return state
+  }
 }
 
-const bibleView = combineReducers({
-  info
+const tabView = combineReducers({
+  info,
+  selectedVerses,
+  versionVerses
 })
 
-const bibleViews = (state = {}, action) => {
-  if (action.tabId) {
-    return {
-      ...state,
-      [action.tabId]: bibleView(state[action.tabId], action)
+const tabViews = (state = {}, action) => {
+  switch (action.type) {
+    case LayoutTypes.TAB_REMOVE: {
+      const nextState = { ...state }
+      delete nextState[action.id]
+      return nextState
+    }
+    default: {
+      const { tabId } = action
+      if (tabId) {
+        return {
+          ...state,
+          [tabId]: tabView(state[tabId], action)
+        }
+      }
+      return state
     }
   }
-  return state
 }
 
-const versesById = (state = {}, action) => {
-  return state
+const versesById = (state = {}, verses) =>
+  verses.reduce(
+    (ret, verse) => ({
+      ...ret,
+      [verse.id]: verse
+    }),
+    state
+  )
+
+const versionVersesById = (state = {}, action) => {
+  switch (action.type) {
+    case Types.FETCH_VERSES_COMPLETED:
+      return Object.keys(action.response).reduce(
+        (ret, version) => ({
+          ...ret,
+          [version]: versesById(ret[version], action.response[version])
+        }),
+        state
+      )
+    default:
+      return state
+  }
 }
 
 const bible = combineReducers({
-  bibleViews,
-  versesById
+  tabViews,
+  versionVersesById
 })
 
 export default bible
