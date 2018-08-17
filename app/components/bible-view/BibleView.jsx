@@ -4,9 +4,37 @@ import { connect } from 'react-redux'
 import styles from './styles.css'
 
 class BibleView extends Component {
-  static propTypes = {}
+  static propTypes = {
+    bookId: PropTypes.number,
+    chapter: PropTypes.number,
+    verse: PropTypes.number,
+    versions: PropTypes.array,
+  }
 
-  static defaultProps = {}
+  static defaultProps = {
+    bookId: 0,
+    chapter: 0,
+    verse: 0,
+    versions: ['cuvs']
+  }
+
+  componentWillMount() {
+    const {bookId, chapter, versions} = this.props
+    this.tryQuery(bookId, chapter, versions)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.bookId !== this.props.bookId || nextProps.chapter !== this.props.chapter || nextProps.versions!==this.props.versions) {
+      this.tryQuery(nextProps.bookId, nextProps.chapter, nextProps.versions)
+    }
+  }
+
+  tryQuery(bookId, chapter, versions) {
+    if (bookId && chapter && versions.length > 0) {
+      console.log('query', {bookId, chapter, versions})
+    }
+  }
+
 
   render() {
     return <div>content</div>

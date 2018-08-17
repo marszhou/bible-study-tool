@@ -61,6 +61,7 @@ class BibleDisplayContainer extends React.PureComponent {
       chapter,
       selectedVersions
     )
+    console.log(verses)
     return verses.map(verse => ({
       index: verse[0].verse,
       versions: verse.map(version => version.org_text || version.scripture)
