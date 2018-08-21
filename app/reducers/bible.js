@@ -3,10 +3,19 @@ import { Types } from '../actions/bible'
 import { Types as LayoutTypes } from '../actions/layout'
 import versions from 'app/consts/versions';
 
-const info = (state = { versions: ['cuvs'], isDisplayCode: false }, action) => {
-  switch (action.type) {
-    case Types.SET_DISPLAY_INFO:
-      return { ...state, ...action.info }
+const selectedVersions = (state = ['cuvs'], action) => {
+  switch(action.type) {
+    case Types.SET_VERSIONS:
+      return action.versions
+    default:
+      return state
+  }
+}
+
+const isDisplayCode = (state = false, action) => {
+  switch(action.type) {
+    case Types.SET_IS_DISPLAY_CODE:
+      return action.isDisplayCode
     default:
       return state
   }
@@ -39,7 +48,8 @@ const versionVerses = (state = {}, action) => {
 }
 
 const view = combineReducers({
-  info,
+  selectedVersions,
+  isDisplayCode,
   selectedVerses,
   versionVerses
 })
@@ -109,9 +119,9 @@ export const getVersesByTabId = (state, tabId) => {
 export const getSelectedVersesByTabId = (state, tabId) =>
   state.views[tabId].selectedVerses
 export const getVersionsByTabId = (state, tabId) =>
-  state.views[tabId].info.versions
+  state.views[tabId].selectedVersions
 export const getIsDisplayCodeByTabId = (state, tabId) =>
-  state.views[tabId].info.isDisplayCode
+  state.views[tabId].isDisplayCode
 export const getVersions = () => versions
 export const getIsShowCodeDisabled = (state, tabId) => {
   const versions = getVersions()
