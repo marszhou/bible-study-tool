@@ -1,19 +1,24 @@
 import { combineReducers } from 'redux'
 import { Types } from '../actions/bible'
 import { Types as LayoutTypes } from '../actions/layout'
-import versions from 'app/consts/versions';
+import versions from 'app/consts/versions'
 
 const selectedVersions = (state = ['cuvs'], action) => {
-  switch(action.type) {
-    case Types.SET_VERSIONS:
-      return action.versions
+  switch (action.type) {
+    case Types.TOGGLE_VERSION: {
+      const { version } = action
+      const index = state.indexOf(version)
+      if (index === -1) return [...state, version]
+      if (state.length === 1) return state
+      return state.filter(v => v !== version)
+    }
     default:
       return state
   }
 }
 
 const isDisplayCode = (state = false, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case Types.SET_IS_DISPLAY_CODE:
       return action.isDisplayCode
     default:
@@ -128,6 +133,7 @@ export const getIsShowCodeDisabled = (state, tabId) => {
   const selectedVersions = getVersionsByTabId(state, tabId)
   return (
     selectedVersions.length > 1 ||
-    !selectedVersions.map(id => versions.find(version => id === version.id))[0].hasCode
+    !selectedVersions.map(id => versions.find(version => id === version.id))[0]
+      .hasCode
   )
 }

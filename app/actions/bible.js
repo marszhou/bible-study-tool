@@ -1,17 +1,21 @@
 import Promise from 'bluebird'
 import * as db from '../utils/databases'
+import { bibleSelectors } from 'app/reducers';
 
 export const Types = {
   TOGGLE_VERSE: 'TOGGLE_VERSE',
   SET_DISPLAY_INFO: 'SET_DISPLAY_INFO',
   FETCH_VERSES_REQUEST: 'FETCH_VERSES_REQUEST',
   FETCH_VERSES_COMPLETED: 'FETCH_VERSES_COMPLETED',
-  SET_VERSIONS: 'SET_VERSIONS',
+  TOGGLE_VERSION: 'TOGGLE_VERSION',
   SET_IS_DISPLAY_CODE: 'SET_IS_DISPLAY_CODE'
 }
 
-export const setVersions = (tabId, versions) =>
-  setDisplayInfo(tabId, { versions })
+export const toggleVersion = (tabId, version) => ({
+  type: Types.TOGGLE_VERSION,
+  tabId,
+  version
+})
 
 export const setIsDisplayCode = (tabId, isDisplayCode) => ({
   type: Types.SET_IS_DISPLAY_CODE,

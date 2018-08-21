@@ -74,7 +74,8 @@ class BibleViewPage extends Component {
   }
 
   handleVersionChoose = (e, version) => {
-    console.log(version)
+    const {toggleVersion, activatedTab} = this.props
+    toggleVersion(activatedTab.id, version.id)
   }
 
   handleIsDisplayCode = () => {
