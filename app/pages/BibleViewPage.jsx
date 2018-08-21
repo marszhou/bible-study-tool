@@ -255,14 +255,14 @@ class BibleViewPage extends Component {
     const { id: tabId, ...bibleInfo } = activatedTab
     return (
       <div className={styles.bibleViewWrapper}>
-        <div className={styles.bibleViewTop}>
+        <Segment className={styles.bibleViewTop}>
           {this.renderBreadcrumb()}
           <div className={styles.toolkits}>
             {this.renderIsDisplayCode()}{' '}
             {this.renderVersionDropdown()}{' '}
             {this.renderChapterSwitch()}
           </div>
-        </div>
+        </Segment>
         <div className={'bible-view-height ' + styles.bibleView}>
           <BibleView tabId={tabId} {...bibleInfo} />
         </div>
