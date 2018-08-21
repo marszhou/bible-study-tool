@@ -30,13 +30,13 @@ const versionVerses = (state = {}, action) => {
   }
 }
 
-const tabView = combineReducers({
+const view = combineReducers({
   info,
   selectedVerses,
   versionVerses
 })
 
-const tabViews = (state = {}, action) => {
+const views = (state = {}, action) => {
   switch (action.type) {
     case LayoutTypes.TAB_REMOVE: {
       const nextState = { ...state }
@@ -48,7 +48,7 @@ const tabViews = (state = {}, action) => {
       if (tabId) {
         return {
           ...state,
-          [tabId]: tabView(state[tabId], action)
+          [tabId]: view(state[tabId], action)
         }
       }
       return state
@@ -81,7 +81,7 @@ const versionVersesById = (state = {}, action) => {
 }
 
 const bible = combineReducers({
-  tabViews,
+  views,
   versionVersesById
 })
 
