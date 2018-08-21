@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import { Types } from '../actions/bible'
 import { Types as LayoutTypes } from '../actions/layout'
 
-const info = (state = { versions: ['cuvs'] }, action) => {
+const info = (state = { versions: ['cuvs'], isDisplayCode: false }, action) => {
   switch (action.type) {
     case Types.SET_DISPLAY_INFO:
       return { ...state, ...action.info }
@@ -12,7 +12,14 @@ const info = (state = { versions: ['cuvs'] }, action) => {
 }
 
 const selectedVerses = (state = [], action) => {
-  return state
+  switch (action.type) {
+    case Types.TOGGLE_VERSE:
+      return state.indexOf(action.verseId) === -1
+        ? [...state, action.verseId]
+        : state.filter(vid => vid !== action.verseId)
+    default:
+      return state
+  }
 }
 
 const versionVerses = (state = {}, action) => {
@@ -86,3 +93,21 @@ const bible = combineReducers({
 })
 
 export default bible
+
+export const getVersesByTabId = (state, tabId) => {
+  const view = state.views[tabId]
+  return Object.keys(view.versionVerses).reduce((ret, version) => {
+    return {
+      ...ret,
+      [version]: view.versionVerses[version].map(
+        verseId => state.versionVersesById[version][verseId]
+      )
+    }
+  }, {})
+}
+export const getSelectedVersesByTabId = (state, tabId) =>
+  state.views[tabId].selectedVerses
+export const getVersionsByTabId = (state, tabId) =>
+  state.views[tabId].info.versions
+export const getIsDisplayCodeByTabId = (state, tabId) =>
+  state.views[tabId].info.isDisplayCode

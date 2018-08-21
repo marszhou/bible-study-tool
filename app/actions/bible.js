@@ -2,7 +2,7 @@ import Promise from 'bluebird'
 import * as db from '../utils/databases'
 
 export const Types = {
-  SELECT_VERSE: 'SELECT_VERSE',
+  TOGGLE_VERSE: 'TOGGLE_VERSE',
   SET_DISPLAY_INFO: 'SET_DISPLAY_INFO',
   FETCH_VERSES_REQUEST: 'FETCH_VERSES_REQUEST',
   FETCH_VERSES_COMPLETED: 'FETCH_VERSES_COMPLETED'
@@ -45,6 +45,6 @@ export const fetchVersesForChapter = (tabId, bookId, chapter, versions) => (
 }
 
 export const selectVerse = verseId => ({
-  type: Types.SELECT_VERSE,
+  type: Types.TOGGLE_VERSE,
   verseId
 })
