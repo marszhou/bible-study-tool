@@ -9,17 +9,15 @@ export const Types = {
   SET_VERSIONS: 'SET_VERSIONS',
   SET_IS_DISPLAY_CODE: 'SET_IS_DISPLAY_CODE'
 }
-export const setDisplayInfo = (tabId, info) => ({
-  type: Types.SET_DISPLAY_INFO,
-  tabId,
-  info
-})
 
 export const setVersions = (tabId, versions) =>
   setDisplayInfo(tabId, { versions })
 
-export const displayCode = (tabId, isDisplayCode) =>
-  setDisplayInfo(tabId, { isDisplayCode })
+export const setIsDisplayCode = (tabId, isDisplayCode) => ({
+  type: Types.SET_IS_DISPLAY_CODE,
+  tabId,
+  isDisplayCode
+})
 
 export const fetchVersesForChapter = (tabId, bookId, chapter, versions) => (
   dispatch,

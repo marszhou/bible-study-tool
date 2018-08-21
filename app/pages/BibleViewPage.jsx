@@ -78,8 +78,8 @@ class BibleViewPage extends Component {
   }
 
   handleIsDisplayCode = () => {
-    const {displayCode, activatedTab, isDisplayCode} = this.props
-    displayCode(activatedTab.id, !isDisplayCode)
+    const {setIsDisplayCode, activatedTab, isDisplayCode} = this.props
+    setIsDisplayCode(activatedTab.id, !isDisplayCode)
   }
 
   renderBibleSelector({ type, isOpen, selectorName, value }) {
