@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { Types } from '../actions/bible'
 import { Types as LayoutTypes } from '../actions/layout'
+import versions from 'app/consts/versions';
 
 const info = (state = { versions: ['cuvs'], isDisplayCode: false }, action) => {
   switch (action.type) {
@@ -111,9 +112,12 @@ export const getVersionsByTabId = (state, tabId) =>
   state.views[tabId].info.versions
 export const getIsDisplayCodeByTabId = (state, tabId) =>
   state.views[tabId].info.isDisplayCode
-export const getVersions = () => [
-  { name: '和合本', id: 'cuvs', hasCode: true, lang: 'cn', abbr: '和合本' },
-  { name: '吕振中中文译本', id: 'lzz', lang: 'cn' , abbr: '吕振中'},
-  { name: 'Holman Christian Standard Bible', id: 'HCSB', hasCode: true, lang: 'en' , abbr: 'HCSB'},
-  { name: 'Lexham English Bible', id: 'leb', lang: 'en', abbr: 'LEB'}
-]
+export const getVersions = () => versions
+export const getIsShowCodeDisabled = (state, tabId) => {
+  const versions = getVersions()
+  const selectedVersions = getVersionsByTabId(state, tabId)
+  return (
+    selectedVersions.length > 1 ||
+    !selectedVersions.map(id => versions.find(version => id === version.id))[0].hasCode
+  )
+}

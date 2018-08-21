@@ -14,6 +14,7 @@ import styles from './BibleViewPage.css'
 import BibleSelector from '../components/bible-selector/BibleSelector'
 import { getBook, getNextChapter, getPreviousChapter } from 'app/consts/bible'
 import * as layoutActions from '../actions/layout'
+import * as bibleActions from '../actions/bible'
 import BibleView from 'app/components/bible-view/BibleView'
 import { layoutSelectors, bibleSelectors } from 'app/reducers'
 
@@ -74,7 +75,10 @@ class BibleViewPage extends Component {
 
   handleVersionChoose = (e, version) => {}
 
-  handleIsDisplayCode = () => {}
+  handleIsDisplayCode = () => {
+    const {displayCode, activatedTab, isDisplayCode} = this.props
+    displayCode(activatedTab.id, !isDisplayCode)
+  }
 
   renderBibleSelector({ type, isOpen, selectorName, value }) {
     return (
@@ -147,24 +151,23 @@ class BibleViewPage extends Component {
   }
 
   renderIsDisplayCode() {
-    const showCodeDisabled = false
-    const displayCode = false
+    const { isDisplayCode, isShowCodeDisabled } = this.props
     return (
       <Button
-        as='a'
-        size='tiny'
-        color='blue'
+        as="a"
+        size="tiny"
+        color="blue"
         onClick={this.handleIsDisplayCode}
-        disabled={showCodeDisabled}
+        disabled={isShowCodeDisabled}
       >
-        <Icon name={`toggle ${displayCode ? 'on' : 'off'}`} />
-        {displayCode ? '不显示原文' : '显示原文'}
+        <Icon name={`toggle ${isDisplayCode ? 'on' : 'off'}`} />
+        {isDisplayCode ? '不显示原文' : '显示原文'}
       </Button>
     )
   }
 
   renderVersionDropdown() {
-    const { versions, selectedVersions } = this.props
+    const { versions, selectedVersions, isDisplayCode } = this.props
     let description = ''
     if (selectedVersions.length === 1) {
       description = versions.find(version => version.id === selectedVersions[0])
@@ -178,10 +181,10 @@ class BibleViewPage extends Component {
         pointing="top right"
         closeOnChange={false}
         floating
-        disabled={this.state.displayCode}
+        disabled={isDisplayCode}
         trigger={
-          <Button size="tiny" as="div" labelPosition="right" color='blue'>
-            <Button icon size="tiny" color='blue'>
+          <Button size="tiny" as="div" labelPosition="right" color="blue">
+            <Button icon size="tiny" color="blue">
               <Icon name="book" />
               选择版本
             </Button>
@@ -258,8 +261,7 @@ class BibleViewPage extends Component {
         <Segment className={styles.bibleViewTop}>
           {this.renderBreadcrumb()}
           <div className={styles.toolkits}>
-            {this.renderIsDisplayCode()}{' '}
-            {this.renderVersionDropdown()}{' '}
+            {this.renderIsDisplayCode()} {this.renderVersionDropdown()}{' '}
             {this.renderChapterSwitch()}
           </div>
         </Segment>
@@ -274,14 +276,14 @@ class BibleViewPage extends Component {
 export default connect(
   state => {
     const activatedTab = layoutSelectors.getActivatedTab(state)
+    const tabId = activatedTab.id
     return {
       activatedTab,
       versions: bibleSelectors.getVersions(),
-      selectedVersions: bibleSelectors.getVersionsByTabId(
-        state,
-        activatedTab.id
-      )
+      selectedVersions: bibleSelectors.getVersionsByTabId(state, tabId),
+      isDisplayCode: bibleSelectors.getIsDisplayCodeByTabId(state, tabId),
+      isShowCodeDisabled: bibleSelectors.getIsShowCodeDisabled(state, tabId)
     }
   },
-  layoutActions
+  {...layoutActions,...bibleActions}
 )(BibleViewPage)
