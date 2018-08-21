@@ -18,3 +18,6 @@
 .bibleView{
   overflow-y: auto;
 }
+.toolkits {
+  float: right;
+}

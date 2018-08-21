@@ -1,13 +1,21 @@
 import React, { Component } from 'react'
 // import update from 'immutability-helper'
 import { connect } from 'react-redux'
-import { Breadcrumb, Button, Grid, Popup, Label, Icon } from 'semantic-ui-react'
+import {
+  Breadcrumb,
+  Button,
+  Dropdown,
+  Popup,
+  Label,
+  Icon,
+  Segment
+} from 'semantic-ui-react'
 import styles from './BibleViewPage.css'
 import BibleSelector from '../components/bible-selector/BibleSelector'
 import { getBook, getNextChapter, getPreviousChapter } from 'app/consts/bible'
 import * as layoutActions from '../actions/layout'
 import BibleView from 'app/components/bible-view/BibleView'
-import { layoutSelectors } from 'app/reducers'
+import { layoutSelectors, bibleSelectors } from 'app/reducers'
 
 class BibleViewPage extends Component {
   constructor(props: {}) {
@@ -63,6 +71,10 @@ class BibleViewPage extends Component {
       }
     })
   }
+
+  handleVersionChoose = (e, version) => {}
+
+  handleIsDisplayCode = () => {}
 
   renderBibleSelector({ type, isOpen, selectorName, value }) {
     return (
@@ -134,23 +146,104 @@ class BibleViewPage extends Component {
     )
   }
 
+  renderIsDisplayCode() {
+    const showCodeDisabled = false
+    const displayCode = false
+    return (
+      <Button
+        as='a'
+        size='tiny'
+        color='blue'
+        onClick={this.handleIsDisplayCode}
+        disabled={showCodeDisabled}
+      >
+        <Icon name={`toggle ${displayCode ? 'on' : 'off'}`} />
+        {displayCode ? '不显示原文' : '显示原文'}
+      </Button>
+    )
+  }
+
+  renderVersionDropdown() {
+    const { versions, selectedVersions } = this.props
+    let description = ''
+    if (selectedVersions.length === 1) {
+      description = versions.find(version => version.id === selectedVersions[0])
+        .name
+    } else if (selectedVersions.length > 1) {
+      description = `${selectedVersions.length}个版本`
+    }
+    return (
+      <Dropdown
+        icon={null}
+        pointing="top right"
+        closeOnChange={false}
+        floating
+        disabled={this.state.displayCode}
+        trigger={
+          <Button size="tiny" as="div" labelPosition="right" color='blue'>
+            <Button icon size="tiny" color='blue'>
+              <Icon name="book" />
+              选择版本
+            </Button>
+            <Label as="a" basic pointing="left">
+              {description}
+            </Label>
+          </Button>
+        }
+      >
+        <Dropdown.Menu>
+          <Dropdown.Header>
+            <Icon name="info circle" />
+            红色 <Label circular color="red" empty size="mini" />{' '}
+            代表该版本有原文编号
+          </Dropdown.Header>
+          <Dropdown.Menu scrolling>
+            {versions.map(version => (
+              <Dropdown.Item
+                key={version.id}
+                className="small"
+                selected={selectedVersions.indexOf(version.id) > -1}
+                onClick={e => this.handleVersionChoose(e, version)}
+              >
+                {selectedVersions.indexOf(version.id) > -1 ? (
+                  <Icon name="checkmark" className="right floated" />
+                ) : null}
+                <div className={styles.versionItem}>
+                  <Label
+                    circular
+                    color={version.hasCode ? 'red' : 'black'}
+                    empty
+                    size="mini"
+                  />{' '}
+                  <span>{version.name}</span>
+                </div>
+              </Dropdown.Item>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown.Menu>
+      </Dropdown>
+    )
+  }
+
   renderChapterSwitch() {
     const { previous, next } = this
 
     return (
       <div className={styles.chapterSwitch}>
         <Button
+          size="tiny"
           disabled={!previous}
           circular
           icon="angle double left"
-          color="facebook"
+          color="blue"
           onClick={this.handleBibleSelectorChange.bind(this, previous)}
         />
         <Button
+          size="tiny"
           disabled={!next}
           circular
           icon="angle double right"
-          color="facebook"
+          color="blue"
           onClick={this.handleBibleSelectorChange.bind(this, next)}
         />
       </div>
@@ -164,7 +257,11 @@ class BibleViewPage extends Component {
       <div className={styles.bibleViewWrapper}>
         <div className={styles.bibleViewTop}>
           {this.renderBreadcrumb()}
-          {this.renderChapterSwitch()}
+          <div className={styles.toolkits}>
+            {this.renderIsDisplayCode()}{' '}
+            {this.renderVersionDropdown()}{' '}
+            {this.renderChapterSwitch()}
+          </div>
         </div>
         <div className={'bible-view-height ' + styles.bibleView}>
           <BibleView tabId={tabId} {...bibleInfo} />
@@ -176,8 +273,14 @@ class BibleViewPage extends Component {
 
 export default connect(
   state => {
+    const activatedTab = layoutSelectors.getActivatedTab(state)
     return {
-      activatedTab: layoutSelectors.getActivatedTab(state)
+      activatedTab,
+      versions: bibleSelectors.getVersions(),
+      selectedVersions: bibleSelectors.getVersionsByTabId(
+        state,
+        activatedTab.id
+      )
     }
   },
   layoutActions

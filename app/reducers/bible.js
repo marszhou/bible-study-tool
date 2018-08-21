@@ -111,3 +111,9 @@ export const getVersionsByTabId = (state, tabId) =>
   state.views[tabId].info.versions
 export const getIsDisplayCodeByTabId = (state, tabId) =>
   state.views[tabId].info.isDisplayCode
+export const getVersions = () => [
+  { name: '和合本', id: 'cuvs', hasCode: true, lang: 'cn', abbr: '和合本' },
+  { name: '吕振中中文译本', id: 'lzz', lang: 'cn' , abbr: '吕振中'},
+  { name: 'Holman Christian Standard Bible', id: 'HCSB', hasCode: true, lang: 'en' , abbr: 'HCSB'},
+  { name: 'Lexham English Bible', id: 'leb', lang: 'en', abbr: 'LEB'}
+]
