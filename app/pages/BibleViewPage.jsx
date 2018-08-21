@@ -8,7 +8,8 @@ import {
   Popup,
   Label,
   Icon,
-  Segment
+  Segment,
+  Ref
 } from 'semantic-ui-react'
 import styles from './BibleViewPage.css'
 import BibleSelector from '../components/bible-selector/BibleSelector'
@@ -17,12 +18,14 @@ import * as layoutActions from '../actions/layout'
 import * as bibleActions from '../actions/bible'
 import BibleView from 'app/components/bible-view/BibleView'
 import { layoutSelectors, bibleSelectors } from 'app/reducers'
+import { isDescendant } from '../utils/dom'
 
 class BibleViewPage extends Component {
   constructor(props: {}) {
     super(props)
     this.state = {
-      bibleSelectorIsOpen: {}
+      bibleSelectorIsOpen: {},
+      versionSelectorIsOpen: false
     }
   }
 
@@ -74,12 +77,12 @@ class BibleViewPage extends Component {
   }
 
   handleVersionChoose = (e, version) => {
-    const {toggleVersion, activatedTab} = this.props
+    const { toggleVersion, activatedTab } = this.props
     toggleVersion(activatedTab.id, version.id)
   }
 
   handleIsDisplayCode = () => {
-    const {setIsDisplayCode, activatedTab, isDisplayCode} = this.props
+    const { setIsDisplayCode, activatedTab, isDisplayCode } = this.props
     setIsDisplayCode(activatedTab.id, !isDisplayCode)
   }
 
@@ -171,6 +174,7 @@ class BibleViewPage extends Component {
 
   renderVersionDropdown() {
     const { versions, selectedVersions, isDisplayCode } = this.props
+    const { versionSelectorIsOpen } = this.state
     let description = ''
     if (selectedVersions.length === 1) {
       description = versions.find(version => version.id === selectedVersions[0])
@@ -179,55 +183,72 @@ class BibleViewPage extends Component {
       description = `${selectedVersions.length}个版本`
     }
     return (
-      <Dropdown
-        icon={null}
-        pointing="top right"
-        closeOnChange={false}
-        floating
-        disabled={isDisplayCode}
-        trigger={
-          <Button size="tiny" as="div" labelPosition="right" color="blue">
-            <Button icon size="tiny" color="blue">
-              <Icon name="book" />
-              选择版本
+      <Ref innerRef={ref => (this.versionMenuRef = ref)}>
+        <Dropdown
+          icon={null}
+          pointing="top right"
+          open={versionSelectorIsOpen}
+          floating
+          disabled={isDisplayCode}
+          onOpen={() =>
+            this.setState({
+              versionSelectorIsOpen: true
+            })
+          }
+          onClose={e => {
+            const menu = this.versionMenuRef.querySelector('.versionDropMenu')
+            if (!e || !isDescendant(menu, e.target)) {
+              this.setState({
+                versionSelectorIsOpen: false
+              })
+            }
+
+
+          }}
+          trigger={
+            <Button size="tiny" as="div" labelPosition="right" color="blue">
+              <Button icon size="tiny" color="blue">
+                <Icon name="book" />
+                选择版本
+              </Button>
+              <Label as="a" basic pointing="left">
+                {description}
+              </Label>
             </Button>
-            <Label as="a" basic pointing="left">
-              {description}
-            </Label>
-          </Button>
-        }
-      >
-        <Dropdown.Menu>
-          <Dropdown.Header>
-            <Icon name="info circle" />
-            红色 <Label circular color="red" empty size="mini" />{' '}
-            代表该版本有原文编号
-          </Dropdown.Header>
-          <Dropdown.Menu scrolling>
-            {versions.map(version => (
-              <Dropdown.Item
-                key={version.id}
-                className="small"
-                selected={selectedVersions.indexOf(version.id) > -1}
-                onClick={e => this.handleVersionChoose(e, version)}
-              >
-                {selectedVersions.indexOf(version.id) > -1 ? (
-                  <Icon name="checkmark" className="right floated" />
-                ) : null}
-                <div className={styles.versionItem}>
-                  <Label
-                    circular
-                    color={version.hasCode ? 'red' : 'black'}
-                    empty
-                    size="mini"
-                  />{' '}
-                  <span>{version.name}</span>
-                </div>
-              </Dropdown.Item>
-            ))}
+          }
+        >
+          <Dropdown.Menu className="versionDropMenu">
+            <Dropdown.Header>
+              <Icon name="info circle" />
+              红色 <Label circular color="red" empty size="mini" />{' '}
+              代表该版本有原文编号
+            </Dropdown.Header>
+            <Dropdown.Menu scrolling>
+              {versions.map(version => (
+                <Dropdown.Item
+                  key={version.id}
+                  className="small"
+                  selected={selectedVersions.indexOf(version.id) > -1}
+                  onClick={e => this.handleVersionChoose(e, version)}
+                >
+                  {selectedVersions.indexOf(version.id) > -1 ? (
+                    <Icon name="checkmark" className="right floated" />
+                  ) : null}
+                  <div className={styles.versionItem}>
+                    <Label
+                      circular
+                      color={version.hasCode ? 'red' : 'black'}
+                      empty
+                      size="mini"
+                    />{' '}
+                    <span>{version.name}</span>
+                  </div>
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
           </Dropdown.Menu>
-        </Dropdown.Menu>
-      </Dropdown>
+        </Dropdown>
+      </Ref>
     )
   }
 
@@ -288,5 +309,5 @@ export default connect(
       isShowCodeDisabled: bibleSelectors.getIsShowCodeDisabled(state, tabId)
     }
   },
-  {...layoutActions,...bibleActions}
+  { ...layoutActions, ...bibleActions }
 )(BibleViewPage)
