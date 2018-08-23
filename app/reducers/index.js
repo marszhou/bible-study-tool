@@ -3,12 +3,14 @@ import books, * as fromBooks from './books'
 import bookGroups, * as fromBookGroups from './bookGroups'
 import verseCount, * as fromVerseCount from './verseCount'
 import layout, * as fromLayout from './layout'
+import bible, * as fromBible from './bible'
 
 const rootReducer = combineReducers({
   books,
   bookGroups,
   verseCount,
-  layout
+  layout,
+  bible
 })
 
 export default rootReducer
@@ -24,6 +26,7 @@ const makeGroupSelectors = (namespace, statePath) =>
   )
 
 export const layoutSelectors = makeGroupSelectors(fromLayout, 'layout')
+export const bibleSelectors = makeGroupSelectors(fromBible, 'bible')
 
 export const getGroupedBooks = (state, groupId) =>
   fromBooks.getGroupedBooks(

@@ -1,12 +1,6 @@
 import _ from 'lodash'
 import db from './databases'
 
-// export const fetchVersesForChapter = (bookId, chapter, versionId) => {
-//   const sql = `select * from ${bookTableName(versionId)}
-//                 where book_id=@bookId and chapter=@chapter`
-//   return db.prepare(sql).all({ bookId, chapter })
-// }
-
 export const fetchVersesForChapterByVersions = async (
   bookId,
   chapter,
@@ -20,8 +14,3 @@ export const fetchVersesForChapterByVersions = async (
   }
   return _.zip(...verses)
 }
-  // _.zip(
-  //   ...versions.map(versionId => {
-  //     return fetchVersesForChapter(bookId, chapter, versionId)
-  //   })
-  // )
