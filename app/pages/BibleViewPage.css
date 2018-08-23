@@ -18,6 +18,8 @@
 }
 .bibleView{
   overflow-y: auto;
+  padding-left: 16px;
+  font-size: 16px;
 }
 .toolkits {
   float: right;

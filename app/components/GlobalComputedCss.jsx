@@ -12,6 +12,7 @@ class GlobalComputedCss extends React.Component {
 
   render() {
     const bibleView = document.querySelector('.bible-view-height')
+
     return (
       <style>
         {
@@ -24,6 +25,9 @@ class GlobalComputedCss extends React.Component {
           }
           .bible-selector-height {
             height: 400px;
+          }
+          .bible-view-height {
+            height: ${window.document.documentElement.clientHeight - 125}px;
           }
           `
         }

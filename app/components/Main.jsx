@@ -52,7 +52,6 @@ class Main extends Component {
           }
           <Redirect to="/bible" />
         </Switch>
-        <Samples />
       </div>
     )
   }

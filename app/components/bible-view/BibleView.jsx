@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import styles from './styles.css'
 import * as bibleActions from '../../actions/bible'
 import { bibleSelectors } from 'app/reducers'
+import VerseDisplay from 'app/components/bible-display/VerseDisplay'
 
 class BibleView extends Component {
   static propTypes = {
@@ -39,7 +40,6 @@ class BibleView extends Component {
 
   tryFetch(bookId, chapter, versions) {
     if (bookId && chapter && versions.length > 0) {
-      console.log('query', { bookId, chapter, versions })
       this.props.fetchVersesForChapter(
         this.props.tabId,
         bookId,
@@ -49,10 +49,31 @@ class BibleView extends Component {
     }
   }
 
+  handleVerseClick = () => {}
+
+  handeCodeClick = () => {}
+
+  handleCodeHover = () => {}
+
   render() {
-    const { versesByVersion } = this.props
-    console.log(this.props)
-    return <div>content</div>
+    const { verses, versions, isDisplayCode, selectedVerses } = this.props
+    // console.log(verses, versions, isDisplayCode, selectedVerses)
+    return (
+      <div>
+        {verses.map(verse => (
+          <VerseDisplay
+            key={verse.index}
+            verse={verse}
+            versions={versions}
+            displayCode={isDisplayCode}
+            selected={selectedVerses.indexOf(verse.index) > -1}
+            onVerseClick={this.handleVerseClick}
+            onCodeClick={this.handeCodeClick}
+            onCodeHover={this.handleCodeHover}
+          />
+        ))}
+      </div>
+    )
   }
 }
 
@@ -60,7 +81,7 @@ export default connect(
   (state, ownProps) => {
     const { tabId } = ownProps
     return {
-      versesByVersion: bibleSelectors.getVersesByTabId(state, tabId),
+      verses: bibleSelectors.getVersesByTabId(state, tabId),
       versions: bibleSelectors.getVersionsByTabId(state, tabId),
       isDisplayCode: bibleSelectors.getIsDisplayCodeByTabId(state, tabId),
       selectedVerses: bibleSelectors.getSelectedVersesByTabId(state, tabId)

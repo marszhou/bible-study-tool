@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import zip from 'lodash/zip'
 import { Types } from '../actions/bible'
 import { Types as LayoutTypes } from '../actions/layout'
 import versions from 'app/consts/versions'
@@ -112,14 +113,14 @@ export default bible
 
 export const getVersesByTabId = (state, tabId) => {
   const view = state.views[tabId]
-  return Object.keys(view.versionVerses).reduce((ret, version) => {
-    return {
-      ...ret,
-      [version]: view.versionVerses[version].map(
-        verseId => state.versionVersesById[version][verseId]
-      )
-    }
-  }, {})
+  return zip(...Object.keys(view.versionVerses).map(version =>
+    view.versionVerses[version].map(
+      verseId => state.versionVersesById[version][verseId]
+    )
+  )).map(verse => ({
+    index: verse[0].verse,
+    versions: verse.map(version => version.org_text || version.scripture)
+  }))
 }
 export const getSelectedVersesByTabId = (state, tabId) =>
   state.views[tabId].selectedVerses
