@@ -19,7 +19,12 @@ export const setSplitPaneSize = size => ({
   size
 })
 export const tabNew = () => dispatch => {
-  dispatch(push('/bible/' + v1()))
+  const tabId = v1()
+  dispatch(push('/bible/' + tabId))
+  dispatch({
+    type: Types.TAB_ADD,
+    tabId
+  })
 }
 export const tabRemove = id => (dispatch, getState) => {
   const state = getState()

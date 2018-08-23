@@ -43,27 +43,31 @@ class BibleFramePage extends Component {
       match
     } = this.props
     return (
-      <div style={{ marginTop: 10 }}>
-        {tabs.length > 0
-          ? [
-            <TabPane
-              key="tab"
-              ref={tabPane => (this.tabPane = tabPane)}
-              items={tabs}
-              selectedId={activated}
-              bodyRendererComponent={({ children }) => <div>{children}</div>}
-              onTabClick={tabActivate}
-              onTabClose={tabRemove}
-              onTabSort={this.handleTabSort}
-              onAdd={() => tabNew()}
-            />,
-            <Route
-              key="view"
-              path={`${match.path}/:tabId/:bookId?/:chapter?/:verse?`}
-              component={require('./BibleViewPage')}
-            />
-            ]
-          : null}
+      <div className="client-height">
+        <div style={{ marginTop: 10, height: '100%' }}>
+          {tabs.length > 0
+            ? [
+              <TabPane
+                key="tab"
+                ref={tabPane => (this.tabPane = tabPane)}
+                items={tabs}
+                selectedId={activated}
+                bodyRendererComponent={({ children }) => (
+                  <div>{children}</div>
+                  )}
+                onTabClick={tabActivate}
+                onTabClose={tabRemove}
+                onTabSort={this.handleTabSort}
+                onAdd={() => tabNew()}
+              />,
+              <Route
+                key="view"
+                path={`${match.path}/:tabId/:bookId?/:chapter?/:verse?`}
+                component={require('./BibleViewPage')}
+              />
+              ]
+            : null}
+        </div>
       </div>
     )
   }

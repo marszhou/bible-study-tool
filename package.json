@@ -183,6 +183,7 @@
   },
   "dependencies": {
     "antd": "^2.13.7",
+    "bluebird": "^3.5.1",
     "camelcase": "^5.0.0",
     "classnames": "^2.2.5",
     "connected-react-router": "^4.3.0",

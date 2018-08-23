@@ -28,8 +28,8 @@ export default class HomePage extends Component {
     const { cssLoaded } = this.state
     return cssLoaded ? (
       <div>
-        <GlobalComputedCss />
         <Main />
+        <GlobalComputedCss />
       </div>
     ) : null
   }

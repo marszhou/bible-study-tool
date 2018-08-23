@@ -1,21 +1,91 @@
-import React, { Component } from 'react';
-import {connect} from 'react-redux'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import styles from './styles.css'
+import * as bibleActions from '../../actions/bible'
+import { bibleSelectors } from 'app/reducers'
+import VerseDisplay from 'app/components/bible-display/VerseDisplay'
 
-const getConnectedBibleView = (tabId) => {
-  class BibleView extends Component {
-    render() {
-      return (
-        <div>
-          aaa1
-        </div>
-      );
+class BibleView extends Component {
+  static propTypes = {
+    tabId: PropTypes.string,
+    bookId: PropTypes.number,
+    chapter: PropTypes.number,
+    verse: PropTypes.number,
+    versions: PropTypes.array
+  }
+
+  static defaultProps = {
+    tabId: null,
+    bookId: 0,
+    chapter: 0,
+    verse: 0,
+    versions: ['cuvs']
+  }
+
+  componentWillMount() {
+    const { bookId, chapter, versions } = this.props
+    this.tryFetch(bookId, chapter, versions)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (
+      nextProps.bookId !== this.props.bookId ||
+      nextProps.chapter !== this.props.chapter ||
+      nextProps.versions !== this.props.versions
+    ) {
+      this.tryFetch(nextProps.bookId, nextProps.chapter, nextProps.versions)
     }
   }
 
-  return connect()(BibleView)
+  tryFetch(bookId, chapter, versions) {
+    if (bookId && chapter && versions.length > 0) {
+      this.props.fetchVersesForChapter(
+        this.props.tabId,
+        bookId,
+        chapter,
+        versions
+      )
+    }
+  }
+
+  handleVerseClick = () => {}
+
+  handeCodeClick = () => {}
+
+  handleCodeHover = () => {}
+
+  render() {
+    const { verses, versions, isDisplayCode, selectedVerses } = this.props
+    // console.log(verses, versions, isDisplayCode, selectedVerses)
+    return (
+      <div>
+        {verses.map(verse => (
+          <VerseDisplay
+            key={verse.index}
+            verse={verse}
+            versions={versions}
+            displayCode={isDisplayCode}
+            selected={selectedVerses.indexOf(verse.index) > -1}
+            onVerseClick={this.handleVerseClick}
+            onCodeClick={this.handeCodeClick}
+            onCodeHover={this.handleCodeHover}
+          />
+        ))}
+      </div>
+    )
+  }
 }
 
-export default getConnectedBibleView
-
-
-
+export default connect(
+  (state, ownProps) => {
+    const { tabId } = ownProps
+    return {
+      verses: bibleSelectors.getVersesByTabId(state, tabId),
+      versions: bibleSelectors.getVersionsByTabId(state, tabId),
+      isDisplayCode: bibleSelectors.getIsDisplayCodeByTabId(state, tabId),
+      selectedVerses: bibleSelectors.getSelectedVersesByTabId(state, tabId)
+    }
+  },
+  bibleActions
+)(BibleView)

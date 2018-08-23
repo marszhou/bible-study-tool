@@ -7,13 +7,15 @@ import {
   getSelectorBookGroups,
   getVerseCountOf,
   filterBooks,
-  getBook,
+  getBook
 } from '../../consts/bible'
 import styles from './BibleSelector.css'
 
-export const getTabTitle = (tabItem) => {
+export const getTabTitle = tabItem => {
   if (tabItem.bookId) {
-    let title = getBook(tabItem.bookId).abbr_cn+(tabItem.chapter ? `:${tabItem.chapter}`:'')
+    let title =
+      getBook(tabItem.bookId).abbr_cn +
+      (tabItem.chapter ? `:${tabItem.chapter}` : '')
     return title
   }
 }
@@ -56,7 +58,7 @@ class BibleSelector extends React.Component {
     super(props)
     this.state = {
       bookFilter: '',
-      bookListStyle: 'list', // or grid
+      bookListStyle: 'list' // or grid
     }
     this.bookGroups = getSelectorBookGroups()
   }
@@ -72,7 +74,7 @@ class BibleSelector extends React.Component {
       chapter: 0,
       verse: 0
     }
-    if (book.chapterCount === 1) {
+    if (book.chapter_count === 1) {
       change.chapter = 1
     }
     this.handleChange(change)
@@ -131,8 +133,7 @@ class BibleSelector extends React.Component {
       (viewMode === 'full' ||
         viewMode === 'chapter' ||
         viewMode === 'chapterOnly') &&
-      book &&
-      book.chapterCount > 1
+      book
     const showVerse =
       (viewMode === 'full' || viewMode === 'chapter' || viewMode === 'verse') &&
       book &&
@@ -164,7 +165,7 @@ class BibleSelector extends React.Component {
         ) : null}
         {showChapter ? (
           <ChapterSelector
-            count={book.chapterCount}
+            count={book.chapter_count}
             selected={chapter}
             classNames={columnClassNames}
             onSelect={this.handleChapterSelect}
