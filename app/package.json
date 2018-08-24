@@ -10,12 +10,12 @@
     "url": "https://github.com/chentsulin"
   },
   "scripts": {
-    "postinstall": "npm rebuild --runtime=electron --target=1.6.10 --disturl=https://atom.io/download/atom-shell --build-from-source",
-    "install-app-deps": "install-app-deps"
+    "//postinstall": "npm rebuild --runtime=electron --target=1.6.10 --disturl=https://atom.io/download/atom-shell --build-from-source",
+    "install-app-deps": "install-app-deps",
+    "postinstall": "electron-builder install-app-deps"
   },
   "license": "MIT",
   "dependencies": {
-    "electron-rebuild": "^1.7.3",
     "sqlite3": "^3.1.13"
   },
   "devDependencies": {
