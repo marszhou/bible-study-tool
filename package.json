@@ -40,9 +40,6 @@
       "main.prod.js.map",
       "package.json"
     ],
-    "extraFiles": [
-      "app/resources/databases/bible_YHWH.sqlite"
-    ],
     "dmg": {
       "contents": [
         {
