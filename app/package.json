@@ -12,7 +12,8 @@
   "scripts": {
     "//postinstall": "npm rebuild --runtime=electron --target=1.6.10 --disturl=https://atom.io/download/atom-shell --build-from-source",
     "install-app-deps": "install-app-deps",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps",
+    "rebuild": "electron-rebuild -f -w sqlite3"
   },
   "license": "MIT",
   "dependencies": {
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "electron": "^1.6.10",
-    "electron-builder": "^19.43.4"
+    "electron-builder": "^19.43.4",
+    "electron-rebuild": "^1.8.2"
   }
 }
