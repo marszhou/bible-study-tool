@@ -8,7 +8,8 @@ export const Types = {
   FETCH_VERSES_REQUEST: 'FETCH_VERSES_REQUEST',
   FETCH_VERSES_COMPLETED: 'FETCH_VERSES_COMPLETED',
   TOGGLE_VERSION: 'TOGGLE_VERSION',
-  SET_IS_DISPLAY_CODE: 'SET_IS_DISPLAY_CODE'
+  SET_IS_DISPLAY_CODE: 'SET_IS_DISPLAY_CODE',
+  CLEAN_VERSE_SELECTION: 'CLEAN_VERSE_SELECTION'
 }
 
 export const toggleVersion = (tabId, version) => ({
@@ -48,8 +49,13 @@ export const fetchVersesForChapter = (tabId, bookId, chapter, versions) => (
   })
 }
 
-export const toggleVerse = (tabId, index) => ({
+export const toggleVerseSelection = (tabId, index) => ({
   type: Types.TOGGLE_VERSE,
   tabId,
   index
+})
+
+export const cleanVerseSelection = (tabId) => ({
+  type: Types.CLEAN_VERSE_SELECTION,
+  tabId
 })

@@ -33,6 +33,8 @@ const selectedVerses = (state = [], action) => {
       return state.indexOf(action.index) === -1
         ? [...state, action.index]
         : state.filter(vid => vid !== action.index)
+    case Types.CLEAN_VERSE_SELECTION:
+      return []
     default:
       return state
   }

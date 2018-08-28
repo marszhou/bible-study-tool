@@ -34,6 +34,9 @@ class BibleView extends Component {
       nextProps.chapter !== this.props.chapter ||
       nextProps.versions !== this.props.versions
     ) {
+      if (nextProps.tabId === this.props.tabId) {
+        this.props.cleanVerseSelection(nextProps.tabId)
+      }
       this.tryFetch(
         nextProps.tabId,
         nextProps.bookId,
@@ -50,7 +53,7 @@ class BibleView extends Component {
   }
 
   handleVerseClick = (e, index, verseId, version) => {
-    this.props.toggleVerse(this.props.tabId, index)
+    this.props.toggleVerseSelection(this.props.tabId, index)
   }
 
   handeCodeClick = () => {}
