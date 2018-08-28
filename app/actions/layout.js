@@ -25,6 +25,7 @@ export const tabNew = () => dispatch => {
     type: Types.TAB_ADD,
     tabId
   })
+  return tabId
 }
 export const tabRemove = id => (dispatch, getState) => {
   const state = getState()
