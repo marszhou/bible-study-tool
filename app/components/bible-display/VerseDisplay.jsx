@@ -6,7 +6,7 @@ class VerseDisplay extends React.Component {
   static propTypes = {
     verse: PropTypes.shape({
       index: PropTypes.number,
-      versions: PropTypes.arrayOf(PropTypes.string)
+      versions: PropTypes.arrayOf(PropTypes.object)
     }),
     versions: PropTypes.arrayOf(PropTypes.string),
     selected: PropTypes.bool,

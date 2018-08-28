@@ -113,13 +113,18 @@ export default bible
 
 export const getVersesByTabId = (state, tabId) => {
   const view = state.views[tabId]
-  return zip(...Object.keys(view.versionVerses).map(version =>
-    view.versionVerses[version].map(
-      verseId => state.versionVersesById[version][verseId]
+  return zip(
+    ...Object.keys(view.versionVerses).map(version =>
+      view.versionVerses[version].map(
+        verseId => state.versionVersesById[version][verseId]
+      )
     )
-  )).map(verse => ({
+  ).map(verse => ({
     index: verse[0].verse,
-    versions: verse.map(version => version.org_text || version.scripture)
+    versions: verse.map(version => ({
+      verseId: version.id,
+      text: version.org_text || version.scripture
+    }))
   }))
 }
 export const getSelectedVersesByTabId = (state, tabId) =>

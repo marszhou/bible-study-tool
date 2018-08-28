@@ -78,7 +78,7 @@ const Line = ({
           [styles.lineContent]: true,
           [styles.hasVersion]: displayVersion
         })}
-        onClick={e => onClick(e, index, version)}
+        onClick={e => onClick(e, line.verseId, index, version)}
         role="link"
         tabIndex="0"
       >
@@ -91,10 +91,10 @@ const Line = ({
         <div className={styles.verseIndex} data-index={index} />
         <div className={styles.content}>
           {!displayCode ? (
-            stripCode(line)
+            stripCode(line.text)
           ) : (
             <WithCodeDisplay
-              line={line}
+              line={line.text}
               onCodeClick={onCodeClick}
               onCodeHover={onCodeHover}
             />
@@ -107,7 +107,10 @@ const Line = ({
 
 Line.propTypes = {
   index: PropTypes.number.isRequired,
-  line: PropTypes.string.isRequired,
+  line: PropTypes.shape({
+    verseId: PropTypes.any,
+    text: PropTypes.string
+  }).isRequired,
   version: PropTypes.string,
   displayCode: PropTypes.bool.isRequired, // 是否显示原文编号
   displayVersion: PropTypes.bool,
