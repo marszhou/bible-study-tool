@@ -9,10 +9,11 @@ import { getTabTitle } from 'app/components/bible-selector/BibleSelector'
 
 class BibleFramePage extends Component {
   componentDidMount() {
-    const { tabs, tabRecoverActivated, tabNew } = this.props
+    const { tabs, tabRecoverActivated, tabNew, tabUpdate } = this.props
     if (tabs.length === 0) {
       // @todo 恢复当前的url上的book/chapter设置
-      tabNew()
+      const tabId = tabNew()
+      tabUpdate(tabId, {bookId: 1153072783907, chapter: 1})
     } else {
       tabRecoverActivated()
     }
