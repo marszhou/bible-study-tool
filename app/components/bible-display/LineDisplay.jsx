@@ -1,6 +1,7 @@
 import { React, PropTypes, cx } from 'app/bootstrap' // eslint-disable-line
 import styles from './styles.css'
 import { stripCode, splitCode } from './utils'
+import { getVersion } from 'app/consts/versions';
 
 // --
 const Code = ({ data, onClick, onHover }) => (
@@ -85,7 +86,7 @@ const Line = ({
         {displayVersion ? (
           <div
             className={cx({ [styles.verseVersion]: true, show: true })}
-            data-version={version}
+            data-version={getVersion(version).abbr}
           />
         ) : null}
         <div className={styles.verseIndex} data-index={index} />
