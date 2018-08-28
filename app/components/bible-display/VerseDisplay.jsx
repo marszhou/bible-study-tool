@@ -6,7 +6,7 @@ class VerseDisplay extends React.Component {
   static propTypes = {
     verse: PropTypes.shape({
       index: PropTypes.number,
-      versions: PropTypes.arrayOf(PropTypes.string)
+      versions: PropTypes.arrayOf(PropTypes.object)
     }),
     versions: PropTypes.arrayOf(PropTypes.string),
     selected: PropTypes.bool,
@@ -51,9 +51,10 @@ class VerseDisplay extends React.Component {
       },
       lines.map((line, index) => (
         <LineDisplay
-          key={index}
+          key={line.version}
           index={verse.index}
-          version={versions.length === 1 ? null : versions[index]}
+          version={line.version}
+          displayVersion={versions.length > 1}
           line={line}
           displayCode={displayCode}
           onClick={onVerseClick}
