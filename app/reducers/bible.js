@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import zip from 'lodash/zip'
 import { Types } from '../actions/bible'
 import { Types as LayoutTypes } from '../actions/layout'
-import versions from 'app/consts/versions'
+import versions, { sortVersions } from 'app/consts/versions'
 
 const selectedVersions = (state = ['cuvs'], action) => {
   switch (action.type) {
@@ -30,9 +30,11 @@ const isDisplayCode = (state = false, action) => {
 const selectedVerses = (state = [], action) => {
   switch (action.type) {
     case Types.TOGGLE_VERSE:
-      return state.indexOf(action.verseId) === -1
-        ? [...state, action.verseId]
-        : state.filter(vid => vid !== action.verseId)
+      return state.indexOf(action.index) === -1
+        ? [...state, action.index]
+        : state.filter(vid => vid !== action.index)
+    case Types.CLEAN_VERSE_SELECTION:
+      return []
     default:
       return state
   }
@@ -56,8 +58,8 @@ const versionVerses = (state = {}, action) => {
 const view = combineReducers({
   selectedVersions,
   isDisplayCode,
-  selectedVerses,
-  versionVerses
+  versionVerses,
+  selectedVerses
 })
 
 const views = (state = {}, action) => {
@@ -113,13 +115,26 @@ export default bible
 
 export const getVersesByTabId = (state, tabId) => {
   const view = state.views[tabId]
-  return zip(...Object.keys(view.versionVerses).map(version =>
-    view.versionVerses[version].map(
-      verseId => state.versionVersesById[version][verseId]
+  const selectedVersions = getVersionsByTabId(state, tabId)
+  const currentVersions = sortVersions(
+    Object.keys(view.versionVerses).filter(
+      v => selectedVersions.indexOf(v) > -1
     )
-  )).map(verse => ({
+  )
+  return zip(
+    ...currentVersions.map(version =>
+      view.versionVerses[version].map(verseId => ({
+        ...state.versionVersesById[version][verseId],
+        version
+      }))
+    )
+  ).map(verse => ({
     index: verse[0].verse,
-    versions: verse.map(version => version.org_text || version.scripture)
+    versions: verse.map(version => ({
+      version: version.version,
+      verseId: version.id,
+      text: version.org_text || version.scripture
+    }))
   }))
 }
 export const getSelectedVersesByTabId = (state, tabId) =>

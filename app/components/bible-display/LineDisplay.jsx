@@ -1,6 +1,7 @@
 import { React, PropTypes, cx } from 'app/bootstrap' // eslint-disable-line
 import styles from './styles.css'
 import { stripCode, splitCode } from './utils'
+import { getVersion } from 'app/consts/versions'
 
 // --
 const Code = ({ data, onClick, onHover }) => (
@@ -66,6 +67,7 @@ const Line = ({
   line,
   version,
   displayCode = false,
+  displayVersion,
   onClick,
   onCodeClick,
   onCodeHover
@@ -75,25 +77,27 @@ const Line = ({
       <div
         className={cx({
           [styles.lineContent]: true,
-          [styles.hasVersion]: !!version
+          [styles.hasVersion]: displayVersion
         })}
-        onClick={e => onClick(e, index)}
+        onClick={function(e) {
+          onClick(e, index, line.verseId, version)
+        }}
         role="link"
         tabIndex="0"
       >
-        {version ? (
+        {displayVersion ? (
           <div
             className={cx({ [styles.verseVersion]: true, show: true })}
-            data-version={version}
+            data-version={getVersion(version).abbr}
           />
         ) : null}
         <div className={styles.verseIndex} data-index={index} />
         <div className={styles.content}>
           {!displayCode ? (
-            stripCode(line)
+            stripCode(line.text)
           ) : (
             <WithCodeDisplay
-              line={line}
+              line={line.text}
               onCodeClick={onCodeClick}
               onCodeHover={onCodeHover}
             />
@@ -106,9 +110,13 @@ const Line = ({
 
 Line.propTypes = {
   index: PropTypes.number.isRequired,
-  line: PropTypes.string.isRequired,
+  line: PropTypes.shape({
+    verseId: PropTypes.any,
+    text: PropTypes.string
+  }).isRequired,
   version: PropTypes.string,
   displayCode: PropTypes.bool.isRequired, // 是否显示原文编号
+  displayVersion: PropTypes.bool,
   onClick: PropTypes.func,
   onCodeClick: PropTypes.func,
   onCodeHover: PropTypes.func
@@ -118,7 +126,8 @@ Line.defaultProps = {
   onClick: verseIndex => {},
   onCodeClick: (e, data) => {},
   onCodeHover: (e, data) => {},
-  version: null
+  version: null,
+  displayVersion: true
 }
 
 export default Line

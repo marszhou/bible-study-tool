@@ -35,7 +35,7 @@
 
 .lineContent.hasVersion {
   display:inline-grid;
-  grid-template-columns: 60px auto auto;
+  grid-template-columns: 80px auto auto;
   grid-auto-flow: column;
 }
 

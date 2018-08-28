@@ -24,8 +24,8 @@ class BibleView extends Component {
   }
 
   componentWillMount() {
-    const { bookId, chapter, versions } = this.props
-    this.tryFetch(bookId, chapter, versions)
+    const { bookId, chapter, versions, tabId } = this.props
+    this.tryFetch(tabId, bookId, chapter, versions)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -34,22 +34,27 @@ class BibleView extends Component {
       nextProps.chapter !== this.props.chapter ||
       nextProps.versions !== this.props.versions
     ) {
-      this.tryFetch(nextProps.bookId, nextProps.chapter, nextProps.versions)
-    }
-  }
-
-  tryFetch(bookId, chapter, versions) {
-    if (bookId && chapter && versions.length > 0) {
-      this.props.fetchVersesForChapter(
-        this.props.tabId,
-        bookId,
-        chapter,
-        versions
+      if (nextProps.tabId === this.props.tabId) {
+        this.props.cleanVerseSelection(nextProps.tabId)
+      }
+      this.tryFetch(
+        nextProps.tabId,
+        nextProps.bookId,
+        nextProps.chapter,
+        nextProps.versions
       )
     }
   }
 
-  handleVerseClick = () => {}
+  tryFetch(tabId, bookId, chapter, versions) {
+    if (bookId && chapter && versions.length > 0) {
+      this.props.fetchVersesForChapter(tabId, bookId, chapter, versions)
+    }
+  }
+
+  handleVerseClick = (e, index, verseId, version) => {
+    this.props.toggleVerseSelection(this.props.tabId, index)
+  }
 
   handeCodeClick = () => {}
 
@@ -57,7 +62,6 @@ class BibleView extends Component {
 
   render() {
     const { verses, versions, isDisplayCode, selectedVerses } = this.props
-    // console.log(verses, versions, isDisplayCode, selectedVerses)
     return (
       <div>
         {verses.map(verse => (
