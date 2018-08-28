@@ -66,6 +66,7 @@ const Line = ({
   line,
   version,
   displayCode = false,
+  displayVersion,
   onClick,
   onCodeClick,
   onCodeHover
@@ -75,13 +76,13 @@ const Line = ({
       <div
         className={cx({
           [styles.lineContent]: true,
-          [styles.hasVersion]: !!version
+          [styles.hasVersion]: displayVersion
         })}
-        onClick={e => onClick(e, index)}
+        onClick={e => onClick(e, index, version)}
         role="link"
         tabIndex="0"
       >
-        {version ? (
+        {displayVersion ? (
           <div
             className={cx({ [styles.verseVersion]: true, show: true })}
             data-version={version}
@@ -109,6 +110,7 @@ Line.propTypes = {
   line: PropTypes.string.isRequired,
   version: PropTypes.string,
   displayCode: PropTypes.bool.isRequired, // 是否显示原文编号
+  displayVersion: PropTypes.bool,
   onClick: PropTypes.func,
   onCodeClick: PropTypes.func,
   onCodeHover: PropTypes.func
@@ -118,7 +120,8 @@ Line.defaultProps = {
   onClick: verseIndex => {},
   onCodeClick: (e, data) => {},
   onCodeHover: (e, data) => {},
-  version: null
+  version: null,
+  displayVersion: true
 }
 
 export default Line

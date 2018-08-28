@@ -11,7 +11,6 @@ class BibleFramePage extends Component {
   componentDidMount() {
     const { tabs, tabRecoverActivated, tabNew, tabUpdate } = this.props
     if (tabs.length === 0) {
-      // @todo 恢复当前的url上的book/chapter设置
       const tabId = tabNew()
       tabUpdate(tabId, {bookId: 1153072783907, chapter: 1})
     } else {

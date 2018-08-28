@@ -53,7 +53,8 @@ class VerseDisplay extends React.Component {
         <LineDisplay
           key={index}
           index={verse.index}
-          version={versions.length === 1 ? null : versions[index]}
+          version={versions[index]}
+          displayVersion={versions.length > 1}
           line={line}
           displayCode={displayCode}
           onClick={onVerseClick}
