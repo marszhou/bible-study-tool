@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import zip from 'lodash/zip'
 import { Types } from '../actions/bible'
 import { Types as LayoutTypes } from '../actions/layout'
-import versions from 'app/consts/versions'
+import versions, { sortVersions } from 'app/consts/versions'
 
 const selectedVersions = (state = ['cuvs'], action) => {
   switch (action.type) {
@@ -115,15 +115,23 @@ export default bible
 
 export const getVersesByTabId = (state, tabId) => {
   const view = state.views[tabId]
+  const selectedVersions = getVersionsByTabId(state, tabId)
+  const currentVersions = sortVersions(
+    Object.keys(view.versionVerses).filter(
+      v => selectedVersions.indexOf(v) > -1
+    )
+  )
   return zip(
-    ...Object.keys(view.versionVerses).map(version =>
-      view.versionVerses[version].map(
-        verseId => state.versionVersesById[version][verseId]
-      )
+    ...currentVersions.map(version =>
+      view.versionVerses[version].map(verseId => ({
+        ...state.versionVersesById[version][verseId],
+        version
+      }))
     )
   ).map(verse => ({
     index: verse[0].verse,
     versions: verse.map(version => ({
+      version: version.version,
       verseId: version.id,
       text: version.org_text || version.scripture
     }))

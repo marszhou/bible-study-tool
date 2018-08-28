@@ -51,9 +51,9 @@ class VerseDisplay extends React.Component {
       },
       lines.map((line, index) => (
         <LineDisplay
-          key={index}
+          key={line.version}
           index={verse.index}
-          version={versions[index]}
+          version={line.version}
           displayVersion={versions.length > 1}
           line={line}
           displayCode={displayCode}

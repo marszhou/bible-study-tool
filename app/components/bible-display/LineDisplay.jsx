@@ -1,7 +1,7 @@
 import { React, PropTypes, cx } from 'app/bootstrap' // eslint-disable-line
 import styles from './styles.css'
 import { stripCode, splitCode } from './utils'
-import { getVersion } from 'app/consts/versions';
+import { getVersion } from 'app/consts/versions'
 
 // --
 const Code = ({ data, onClick, onHover }) => (
@@ -79,7 +79,9 @@ const Line = ({
           [styles.lineContent]: true,
           [styles.hasVersion]: displayVersion
         })}
-        onClick={e => onClick(e, index, line.verseId, version)}
+        onClick={function(e) {
+          onClick(e, index, line.verseId, version)
+        }}
         role="link"
         tabIndex="0"
       >
