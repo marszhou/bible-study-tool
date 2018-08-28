@@ -48,7 +48,8 @@ export const fetchVersesForChapter = (tabId, bookId, chapter, versions) => (
   })
 }
 
-export const selectVerse = verseId => ({
+export const selectVerse = ({verseId, version}) => ({
   type: Types.TOGGLE_VERSE,
-  verseId
+  verseId,
+  version // explicitly
 })

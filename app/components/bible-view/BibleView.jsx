@@ -49,8 +49,8 @@ class BibleView extends Component {
     }
   }
 
-  handleVerseClick = (...args) => {
-    console.log(args)
+  handleVerseClick = (e, index, verseId, version) => {
+    this.props.selectVerse({verseId, version})
   }
 
   handeCodeClick = () => {}

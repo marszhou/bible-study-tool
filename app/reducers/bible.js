@@ -27,7 +27,7 @@ const isDisplayCode = (state = false, action) => {
   }
 }
 
-const selectedVerses = (state = [], action) => {
+const selectedVersesByVersion = (state = [], action) => {
   switch (action.type) {
     case Types.TOGGLE_VERSE:
       return state.indexOf(action.verseId) === -1
@@ -36,6 +36,16 @@ const selectedVerses = (state = [], action) => {
     default:
       return state
   }
+}
+
+const selectedVerses = (selectedVersions, state = {}, action) => {
+  return selectedVersions.reduce((ret, version) => {
+    if ((action.version && version === action.version) || !action.version) {
+      ret[version] = selectedVersesByVersion(ret[version], action)
+    }
+
+    return ret
+  }, {...state})
 }
 
 const versionVerses = (state = {}, action) => {
@@ -53,12 +63,24 @@ const versionVerses = (state = {}, action) => {
   }
 }
 
-const view = combineReducers({
-  selectedVersions,
-  isDisplayCode,
-  selectedVerses,
-  versionVerses
-})
+const view = (state = {}, action) => {
+  const {selectedVerses: selectedVersesState, ...otherState} = state
+
+  const reducer = combineReducers({
+    selectedVersions,
+    isDisplayCode,
+    versionVerses
+  })
+
+  const nextState = reducer(otherState, action)
+  nextState.selectedVerses = selectedVerses(
+    nextState.selectedVersions,
+    selectedVersesState,
+    action
+  )
+
+  return nextState
+}
 
 const views = (state = {}, action) => {
   switch (action.type) {

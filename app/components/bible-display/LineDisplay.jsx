@@ -78,7 +78,7 @@ const Line = ({
           [styles.lineContent]: true,
           [styles.hasVersion]: displayVersion
         })}
-        onClick={e => onClick(e, line.verseId, index, version)}
+        onClick={e => onClick(e, index, line.verseId, version)}
         role="link"
         tabIndex="0"
       >
