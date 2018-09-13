@@ -23,12 +23,17 @@ class BibleView extends Component {
     versions: ['cuvs']
   }
 
+  currentNavVerse = 0 // 当前将会跳转到的节
+
   componentWillMount() {
     const { bookId, chapter, versions, tabId } = this.props
     this.tryFetch(tabId, bookId, chapter, versions)
   }
 
   componentWillReceiveProps(nextProps) {
+    if (this.props.verse !== nextProps.verse) {
+      this.currentNavVerse = nextProps.verse
+    }
     if (
       nextProps.bookId !== this.props.bookId ||
       nextProps.chapter !== this.props.chapter ||
@@ -43,12 +48,29 @@ class BibleView extends Component {
         nextProps.chapter,
         nextProps.versions
       )
+    } else {
+      this.tryNavToVerse()
     }
   }
 
   tryFetch(tabId, bookId, chapter, versions) {
     if (bookId && chapter && versions.length > 0) {
-      this.props.fetchVersesForChapter(tabId, bookId, chapter, versions)
+      this.props.fetchVersesForChapter(tabId, bookId, chapter, versions).then(() => {
+        this.tryNavToVerse()
+      })
+    }
+  }
+
+  tryNavToVerse() {
+    if (this.currentNavVerse) {
+      const el = document.getElementById('verse-'+this.currentNavVerse)
+      el.scrollIntoView()
+      el.classList.add('emphasis')
+      setTimeout(() => {
+        el.classList.remove('emphasis')
+      }, 4000);
+
+      this.currentNavVerse = 0
     }
   }
 
