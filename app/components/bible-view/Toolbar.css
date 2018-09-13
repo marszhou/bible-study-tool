@@ -8,3 +8,6 @@
 .toolbar {
   display: inline-block;
 }
+.dontDisturb {
+  opacity: 0.6;
+}
