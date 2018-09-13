@@ -4,13 +4,15 @@ import bookGroups, * as fromBookGroups from './bookGroups'
 import verseCount, * as fromVerseCount from './verseCount'
 import layout, * as fromLayout from './layout'
 import bible, * as fromBible from './bible'
+import toolbar from './toolbar'
 
 const rootReducer = combineReducers({
   books,
   bookGroups,
   verseCount,
   layout,
-  bible
+  bible,
+  toolbar
 })
 
 export default rootReducer
