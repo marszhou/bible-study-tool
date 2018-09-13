@@ -19,6 +19,7 @@ import * as bibleActions from '../actions/bible'
 import BibleView from 'app/components/bible-view/BibleView'
 import { layoutSelectors, bibleSelectors } from 'app/reducers'
 import { isDescendant } from '../utils/dom'
+import Toolbar from 'app/components/bible-view/Toolbar';
 
 class BibleViewPage extends Component {
   constructor(props: {}) {
@@ -292,6 +293,7 @@ class BibleViewPage extends Component {
         <div className={'bible-view-height ' + styles.bibleView}>
           <BibleView tabId={tabId} {...bibleInfo} />
         </div>
+        <Toolbar />
       </div>
     )
   }

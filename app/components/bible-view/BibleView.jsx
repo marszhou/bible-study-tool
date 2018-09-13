@@ -85,7 +85,7 @@ class BibleView extends Component {
   render() {
     const { verses, versions, isDisplayCode, selectedVerses } = this.props
     return (
-      <div>
+      <div className={styles.bibleView}>
         {verses.map(verse => (
           <VerseDisplay
             key={verse.index}

@@ -1,0 +1,10 @@
+.toolbarFrame {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  border: 1px solid red;
+}
+.toolbar {
+  margin: auto;
+  width:300px;
+}
