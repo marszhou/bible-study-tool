@@ -1,4 +1,4 @@
-import { bibleSelectors } from 'app/reducers'
+import { bibleSelectors, layoutSelectors } from 'app/reducers'
 
 const { clipboard } = require('electron')
 
@@ -20,13 +20,20 @@ export const setDontDisturb = value => ({
 
 export const doCopyVerses = tabId => (dispatch, getState) => {
   const state = getState()
+  const activatedTab = layoutSelectors.getActivatedTab(state)
   const selectedVerses = bibleSelectors.getSelectedVersesByTabId(state, tabId)
   const versions = bibleSelectors.getVersionsByTabId(state, tabId)
 
-  const text = bibleSelectors.getCopyVerseText(state, selectedVerses, versions)
+  const text = bibleSelectors.getCopyVerseText(
+    state,
+    activatedTab.bookId,
+    activatedTab.chapter,
+    selectedVerses,
+    versions
+  )
 
-  console.log(text)
+  // console.log(text)
 
   ToastStore.success('复制成功！')
-  // clipboard.writeText(text)
+  clipboard.writeText(text)
 }
