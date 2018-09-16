@@ -4,8 +4,8 @@ import { Button, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { toolbarSelectors, layoutSelectors, bibleSelectors } from 'app/reducers'
 import cx from 'classnames'
-import { ToastStore } from 'react-toasts'
 import * as bibleActions from '../../actions/bible'
+import * as toolbarActions from '../../actions/toolbar'
 
 class Toolbar extends React.Component {
   constructor(props) {
@@ -13,10 +13,9 @@ class Toolbar extends React.Component {
   }
 
   handleCopy = () => {
-    const { activatedTabId, cleanVerseSelection} = this.props
-    const { clipboard } = require('electron')
-    ToastStore.success('复制成功！')
-    clipboard.writeText('Electron 示例!')
+    const { activatedTabId, cleanVerseSelection, doCopyVerses } = this.props
+
+    doCopyVerses(activatedTabId)
     cleanVerseSelection(activatedTabId)
   }
 
@@ -54,10 +53,11 @@ export default connect(
     return {
       activatedTabId: tabId,
       dontDisturb: toolbarSelectors.getDontDisturb(state),
-      isShow: bibleSelectors.getSelectedVersesByTabId(state, tabId).length >0
+      isShow: bibleSelectors.getSelectedVersesByTabId(state, tabId).length > 0
     }
   },
   {
-    ...bibleActions
+    ...bibleActions,
+    ...toolbarActions
   }
 )(Toolbar)

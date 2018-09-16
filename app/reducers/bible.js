@@ -113,6 +113,7 @@ const bible = combineReducers({
 
 export default bible
 
+// selectors
 export const getVersesByTabId = (state, tabId) => {
   const view = state.views[tabId]
   const selectedVersions = getVersionsByTabId(state, tabId)
@@ -138,7 +139,7 @@ export const getVersesByTabId = (state, tabId) => {
   }))
 }
 export const getSelectedVersesByTabId = (state, tabId) =>
-  state.views[tabId].selectedVerses
+  [...state.views[tabId].selectedVerses].sort((a, b) => a<b?-1:1)
 export const getVersionsByTabId = (state, tabId) =>
   state.views[tabId].selectedVersions
 export const getIsDisplayCodeByTabId = (state, tabId) =>
