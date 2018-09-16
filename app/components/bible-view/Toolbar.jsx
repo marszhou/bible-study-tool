@@ -29,8 +29,8 @@ class Toolbar extends React.Component {
       <div className={cx(classNames)}>
         <div className={styles.toolbar}>
           <Button.Group>
-            <Button icon>
-              <Icon name="copy" onClick={this.handleCopy} />
+            <Button icon onClick={this.handleCopy}>
+              <Icon name="copy" />
             </Button>
             <Button icon>
               <Icon name="thumbtack" />
