@@ -2,9 +2,10 @@ import React from 'react'
 import styles from './Toolbar.css'
 import { Button, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { toolbarSelectors } from 'app/reducers'
+import { toolbarSelectors, layoutSelectors, bibleSelectors } from 'app/reducers'
 import cx from 'classnames'
-import {ToastStore} from 'react-toasts';
+import { ToastStore } from 'react-toasts'
+
 class Toolbar extends React.Component {
   constructor(props) {
     super(props)
@@ -17,12 +18,12 @@ class Toolbar extends React.Component {
   }
 
   render() {
-    const { dontDisturb } = this.props
+    const { dontDisturb, isShow } = this.props
     const classNames = {
       [styles.toolbarFrame]: true,
       [styles.dontDisturb]: dontDisturb
     }
-    return (
+    return isShow ? (
       <div className={cx(classNames)}>
         <div className={styles.toolbar}>
           <Button.Group>
@@ -38,13 +39,19 @@ class Toolbar extends React.Component {
           </Button.Group>
         </div>
       </div>
-    )
+    ) : null
   }
 }
 
 export default connect(
-  state => ({
-    dontDisturb: toolbarSelectors.getDontDisturb(state)
-  }),
+  state => {
+    const activatedTab = layoutSelectors.getActivatedTab(state)
+    const tabId = activatedTab.id
+
+    return {
+      dontDisturb: toolbarSelectors.getDontDisturb(state),
+      isShow: bibleSelectors.getSelectedVersesByTabId(state, tabId).length >0
+    }
+  },
   {}
 )(Toolbar)
