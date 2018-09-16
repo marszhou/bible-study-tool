@@ -1,0 +1,14 @@
+.toolbarFrame {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  /* border: 1px solid red; */
+  text-align: center;
+  transition: all 0.4s ease-in-out;
+}
+.toolbar {
+  display: inline-block;
+}
+.dontDisturb {
+  opacity: 0.6;
+}
