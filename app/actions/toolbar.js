@@ -1,5 +1,7 @@
 import { bibleSelectors } from 'app/reducers'
+
 const { clipboard } = require('electron')
+
 import { ToastStore } from 'react-toasts'
 
 export const Types = {
@@ -16,17 +18,15 @@ export const setDontDisturb = value => ({
   value
 })
 
-const getCopyVerseText = (selectedVerses, versions, state) => {
-  return '123'
-}
-
 export const doCopyVerses = tabId => (dispatch, getState) => {
   const state = getState()
   const selectedVerses = bibleSelectors.getSelectedVersesByTabId(state, tabId)
   const versions = bibleSelectors.getVersionsByTabId(state, tabId)
 
-  const text = getCopyVerseText(selectedVerses, versions, state)
+  const text = bibleSelectors.getCopyVerseText(state, selectedVerses, versions)
+
+  console.log(text)
 
   ToastStore.success('复制成功！')
-  clipboard.writeText(text)
+  // clipboard.writeText(text)
 }

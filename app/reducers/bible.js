@@ -154,3 +154,12 @@ export const getIsShowCodeDisabled = (state, tabId) => {
       .hasCode
   )
 }
+export const getCopyVerseText = (state, selectedVerses, versions) => {
+  return versions.reduce((ret, version) => {
+    const versesById = state.versionVersesById[version]
+    ret[version] = selectedVerses.reduce((ret2, index) => {
+      return [...ret2, versesById[index]]
+    }, [])
+    return ret
+  }, {})
+}
