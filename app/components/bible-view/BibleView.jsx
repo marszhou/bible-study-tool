@@ -39,7 +39,11 @@ class BibleView extends Component {
       nextProps.chapter !== this.props.chapter ||
       nextProps.versions !== this.props.versions
     ) {
-      if (nextProps.tabId === this.props.tabId) {
+      if (
+        nextProps.tabId === this.props.tabId &&
+        (nextProps.bookId !== this.props.bookId ||
+          nextProps.chapter !== this.props.chapter)
+      ) {
         this.props.cleanVerseSelection(nextProps.tabId)
       }
       this.tryFetch(
@@ -55,20 +59,22 @@ class BibleView extends Component {
 
   tryFetch(tabId, bookId, chapter, versions) {
     if (bookId && chapter && versions.length > 0) {
-      this.props.fetchVersesForChapter(tabId, bookId, chapter, versions).then(() => {
-        this.tryNavToVerse()
-      })
+      this.props
+        .fetchVersesForChapter(tabId, bookId, chapter, versions)
+        .then(() => {
+          this.tryNavToVerse()
+        })
     }
   }
 
   tryNavToVerse() {
     if (this.currentNavVerse) {
-      const el = document.getElementById('verse-'+this.currentNavVerse)
+      const el = document.getElementById('verse-' + this.currentNavVerse)
       el.scrollIntoView()
       el.classList.add('emphasis')
       setTimeout(() => {
         el.classList.remove('emphasis')
-      }, 4000);
+      }, 4000)
 
       this.currentNavVerse = 0
     }
