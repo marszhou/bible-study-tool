@@ -207,6 +207,7 @@
     "react-dom": "^16.0.0",
     "react-hot-loader": "3.0.0-beta.6",
     "react-icon-base": "^2.1.1",
+    "react-notifications": "^1.4.3",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",

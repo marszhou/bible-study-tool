@@ -4,7 +4,7 @@ import { Button, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { toolbarSelectors } from 'app/reducers'
 import cx from 'classnames'
-
+import {ToastStore} from 'react-toasts';
 class Toolbar extends React.Component {
   constructor(props) {
     super(props)
@@ -12,7 +12,7 @@ class Toolbar extends React.Component {
 
   handleCopy = () => {
     const { clipboard } = require('electron')
-
+    ToastStore.success('复制成功！')
     clipboard.writeText('Electron 示例!')
   }
 
