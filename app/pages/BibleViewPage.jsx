@@ -19,6 +19,10 @@ import * as bibleActions from '../actions/bible'
 import BibleView from 'app/components/bible-view/BibleView'
 import { layoutSelectors, bibleSelectors } from 'app/reducers'
 import { isDescendant } from '../utils/dom'
+import Toolbar from 'app/components/bible-view/Toolbar';
+import * as toolbarActions from '../actions/toolbar'
+import debounce from 'lodash/debounce'
+import throttle from 'lodash/throttle'
 
 class BibleViewPage extends Component {
   constructor(props: {}) {
@@ -27,6 +31,9 @@ class BibleViewPage extends Component {
       bibleSelectorIsOpen: {},
       versionSelectorIsOpen: false
     }
+    this.setToolbarDontDisturb_debounce = debounce
+    (this.props.setDontDisturb, 1000)
+    this.setToolbarDontDisturb_throttle = throttle(this.props.setDontDisturb, 500, {leading: true})
   }
 
   get value() {
@@ -84,6 +91,11 @@ class BibleViewPage extends Component {
   handleIsDisplayCode = () => {
     const { setIsDisplayCode, activatedTab, isDisplayCode } = this.props
     setIsDisplayCode(activatedTab.id, !isDisplayCode)
+  }
+
+  handleScroll = () => {
+    this.setToolbarDontDisturb_throttle(true)
+    this.setToolbarDontDisturb_debounce(false)
   }
 
   renderBibleSelector({ type, isOpen, selectorName, value }) {
@@ -289,9 +301,10 @@ class BibleViewPage extends Component {
             {this.renderChapterSwitch()}
           </div>
         </Segment>
-        <div className={'bible-view-height ' + styles.bibleView}>
+        <div className={'bible-view-height ' + styles.bibleView} onScroll={this.handleScroll}>
           <BibleView tabId={tabId} {...bibleInfo} />
         </div>
+        <Toolbar />
       </div>
     )
   }
@@ -309,5 +322,5 @@ export default connect(
       isShowCodeDisabled: bibleSelectors.getIsShowCodeDisabled(state, tabId)
     }
   },
-  { ...layoutActions, ...bibleActions }
+  { ...layoutActions, ...bibleActions, ...toolbarActions }
 )(BibleViewPage)

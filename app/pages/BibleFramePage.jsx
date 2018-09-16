@@ -18,6 +18,13 @@ class BibleFramePage extends Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const {location, tabRecoverActivated} = this.props
+    if (location.pathname === '/bible') {
+      tabRecoverActivated()
+    }
+  }
+
   handleTabSort = (sourceId, targetId, before) => {
     const { tabs, tabSort } = this.props
 

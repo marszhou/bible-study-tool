@@ -2,7 +2,9 @@ import { combineReducers } from 'redux'
 import zip from 'lodash/zip'
 import { Types } from '../actions/bible'
 import { Types as LayoutTypes } from '../actions/layout'
-import versions, { sortVersions } from 'app/consts/versions'
+import versions, { sortVersions, getVersion } from 'app/consts/versions'
+import { stripCode } from 'app/components/bible-display/utils'
+import { getBook } from 'app/consts/bible'
 
 const selectedVersions = (state = ['cuvs'], action) => {
   switch (action.type) {
@@ -46,7 +48,7 @@ const versionVerses = (state = {}, action) => {
       return Object.keys(action.response).reduce(
         (ret, version) => ({
           ...ret,
-          [version]: action.response[version].map(verse => verse.id)
+          [version]: action.response[version].map(verse => getVerseId(verse))
         }),
         {}
       )
@@ -86,7 +88,7 @@ const versesById = (state = {}, verses) =>
   verses.reduce(
     (ret, verse) => ({
       ...ret,
-      [verse.id]: verse
+      [getVerseId(verse)]: verse
     }),
     state
   )
@@ -113,6 +115,10 @@ const bible = combineReducers({
 
 export default bible
 
+//
+const getVerseId = verse => `${verse.book_id}_${verse.chapter}_${verse.verse}`
+
+// selectors
 export const getVersesByTabId = (state, tabId) => {
   const view = state.views[tabId]
   const selectedVersions = getVersionsByTabId(state, tabId)
@@ -138,7 +144,7 @@ export const getVersesByTabId = (state, tabId) => {
   }))
 }
 export const getSelectedVersesByTabId = (state, tabId) =>
-  state.views[tabId].selectedVerses
+  [...state.views[tabId].selectedVerses].sort((a, b) => (a < b ? -1 : 1))
 export const getVersionsByTabId = (state, tabId) =>
   state.views[tabId].selectedVersions
 export const getIsDisplayCodeByTabId = (state, tabId) =>
@@ -152,4 +158,33 @@ export const getIsShowCodeDisabled = (state, tabId) => {
     !selectedVersions.map(id => versions.find(version => id === version.id))[0]
       .hasCode
   )
+}
+export const getCopyVerseText = (state, bookId, chapter, selectedVerses, versions) => {
+  const verses = selectedVerses.reduce((ret, index) => {
+    ret[index] = versions.reduce((ret2, version) => {
+      ret2[version] = state.versionVersesById[version][getVerseId({
+        book_id: bookId, chapter, verse: index
+      })]
+      return ret2
+    }, {})
+    return ret
+  }, {})
+
+  // const versions = getVersions()
+
+  return Object.keys(verses)
+    .map(index => {
+      return Object.keys(verses[index])
+        .map(version => {
+          const verse = verses[index][version]
+          const book = getBook(verse.book_id)
+          const versionName =
+            versions.length > 1 ? `[${getVersion(version).name}] ` : ''
+          return `${versionName}${book.abbr_cn}${verse.chapter}:${
+            verse.verse
+          } ${stripCode(verse.scripture)}`
+        })
+        .join('\n')
+    })
+    .join('\n')
 }

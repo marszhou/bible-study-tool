@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Main from '../components/Main'
 import GlobalComputedCss from '../components/GlobalComputedCss'
+import {ToastContainer, ToastStore} from 'react-toasts';
 
 export default class HomePage extends Component {
   state = {}
@@ -28,6 +29,7 @@ export default class HomePage extends Component {
     const { cssLoaded } = this.state
     return cssLoaded ? (
       <div>
+        <ToastContainer store={ToastStore} />
         <Main />
         <GlobalComputedCss />
       </div>
