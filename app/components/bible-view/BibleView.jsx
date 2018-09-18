@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import styles from './styles.css'
 import * as bibleActions from '../../actions/bible'
+import * as dictionaryActions from '../../actions/dictionary'
 import { bibleSelectors } from 'app/reducers'
 import VerseDisplay from 'app/components/bible-display/VerseDisplay'
 
@@ -84,12 +85,13 @@ class BibleView extends Component {
     this.props.toggleVerseSelection(this.props.tabId, index)
   }
 
-  handeCodeClick = (...args) => {
-    console.log('Click', args)
+  handeCodeClick = (e, {lang, type, value}) => {
+    // console.log('Click', args)
+    this.props.dictionaryQuery(lang, type, value)
   }
 
   handleCodeHover = (...args) => {
-    console.log('hover', args)
+    // console.log('hover', args)
   }
 
   render() {
@@ -123,5 +125,5 @@ export default connect(
       selectedVerses: bibleSelectors.getSelectedVersesByTabId(state, tabId)
     }
   },
-  bibleActions
+  { ...bibleActions, ...dictionaryActions }
 )(BibleView)

@@ -5,6 +5,7 @@ import verseCount, * as fromVerseCount from './verseCount'
 import layout, * as fromLayout from './layout'
 import bible, * as fromBible from './bible'
 import toolbar, * as fromToolbar from './toolbar'
+import dictionary, * as fromDictionary from './dictionary'
 
 const rootReducer = combineReducers({
   books,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   verseCount,
   layout,
   bible,
-  toolbar
+  toolbar,
+  dictionary
 })
 
 export default rootReducer
@@ -30,6 +32,7 @@ const makeGroupSelectors = (namespace, statePath) =>
 export const layoutSelectors = makeGroupSelectors(fromLayout, 'layout')
 export const bibleSelectors = makeGroupSelectors(fromBible, 'bible')
 export const toolbarSelectors = makeGroupSelectors(fromToolbar, 'toolbar')
+export const dictionarySelectors = makeGroupSelectors(fromDictionary, 'dictionary')
 
 export const getGroupedBooks = (state, groupId) =>
   fromBooks.getGroupedBooks(
