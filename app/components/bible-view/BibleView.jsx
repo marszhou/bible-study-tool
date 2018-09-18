@@ -84,9 +84,13 @@ class BibleView extends Component {
     this.props.toggleVerseSelection(this.props.tabId, index)
   }
 
-  handeCodeClick = () => {}
+  handeCodeClick = (...args) => {
+    console.log('Click', args)
+  }
 
-  handleCodeHover = () => {}
+  handleCodeHover = (...args) => {
+    console.log('hover', args)
+  }
 
   render() {
     const { verses, versions, isDisplayCode, selectedVerses } = this.props
