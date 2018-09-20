@@ -2,12 +2,12 @@ import { combineReducers } from 'redux'
 import { Types } from '../actions/dictionary'
 
 const byId = (state = {}, action) => {
-  if (!action.response) return state
+  if (!action.def) return state
   switch (action.type) {
     case Types.DICT_QUERY_SUCCESS:
       return {
         ...state,
-        [action.response.str_no]: action.response
+        [action.def.str_no]: action.def
       }
     default:
       return state
@@ -17,3 +17,7 @@ const byId = (state = {}, action) => {
 export default combineReducers({
   byId
 })
+
+//
+
+export const getDefById = (state, id) => state.byId[id]

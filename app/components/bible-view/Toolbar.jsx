@@ -7,9 +7,25 @@ import cx from 'classnames'
 import * as bibleActions from '../../actions/bible'
 import * as toolbarActions from '../../actions/toolbar'
 
+import { remote, ipcRenderer } from 'electron'
+const appMenu = remote.app.getApplicationMenu()
+const copyMenuItem = appMenu.items[1].submenu.items[0]
+
 class Toolbar extends React.Component {
   constructor(props) {
     super(props)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    copyMenuItem.enabled = nextProps.isShow
+  }
+
+  componentDidMount() {
+    ipcRenderer.on('copy', this.handleCopy)
+  }
+
+  componentWillUnmount() {
+    ipcRenderer.off('copy', this.handleCopy)
   }
 
   handleCopy = () => {
