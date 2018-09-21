@@ -64,6 +64,15 @@ class BibleViewPage extends Component {
       id: tabId,
       ...value
     }
+    console.log(value)
+    if (value.verse) {
+      this.setState({
+        bibleSelectorIsOpen: {
+          'book': false,
+          'chapter': false
+        }
+      })
+    }
     tabUpdate(tabId, tabItem)
   }
 
