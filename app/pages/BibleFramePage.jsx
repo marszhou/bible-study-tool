@@ -50,8 +50,8 @@ class BibleFramePage extends Component {
       match
     } = this.props
     return (
-      <div className="client-height">
-        <div style={{ marginTop: 10, height: '100%' }}>
+      <div className="client-height" style={{paddingTop: 10}}>
+        <div style={{ height: '100%' }}>
           {tabs.length > 0
             ? [
               <TabPane
