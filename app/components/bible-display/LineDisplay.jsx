@@ -4,7 +4,7 @@ import { stripCode, splitCode } from './utils'
 import { getVersion } from 'app/consts/versions'
 
 // --
-const Code = ({ data, onClick, onHover }) => (
+const Code = ({ data, onClick, onHover, onOut }) => (
   <a
     role="button"
     href="###"
@@ -17,6 +17,12 @@ const Code = ({ data, onClick, onHover }) => (
       e.stopPropagation()
       onHover(e, data)
     }}
+    onMouseOut={
+      e => {
+        e.stopPropagation()
+        onOut(e)
+      }
+    }
     className={styles.code}
     data-value={data.value}
     data-lang={data.lang}
@@ -25,7 +31,8 @@ const Code = ({ data, onClick, onHover }) => (
 Code.propTypes = {
   data: PropTypes.any.isRequired,
   onClick: PropTypes.func.isRequired,
-  onHover: PropTypes.func.isRequired
+  onHover: PropTypes.func.isRequired,
+  onOut: PropTypes.func.isRequired
 }
 
 const Word = ({ data }) => <span className={styles.word}>{data.value}</span>
@@ -33,7 +40,7 @@ Word.propTypes = {
   data: PropTypes.any.isRequired
 }
 
-const WithCodeDisplay = ({ line, onClick, onCodeClick, onCodeHover }) => {
+const WithCodeDisplay = ({ line, onClick, onCodeClick, onCodeHover, onCodeOut }) => {
   const codes = splitCode(line)
   return codes.map(
     (code, index) =>
@@ -45,6 +52,7 @@ const WithCodeDisplay = ({ line, onClick, onCodeClick, onCodeHover }) => {
           key={index}
           onClick={onCodeClick}
           onHover={onCodeHover}
+          onOut={onCodeOut}
         />
       )
   )
@@ -53,12 +61,14 @@ const WithCodeDisplay = ({ line, onClick, onCodeClick, onCodeHover }) => {
 WithCodeDisplay.propTypes = {
   line: PropTypes.string.isRequired,
   onCodeClick: PropTypes.func,
-  onCodeHover: PropTypes.func
+  onCodeHover: PropTypes.func,
+  onCodeOut: PropTypes.func
 }
 
 WithCodeDisplay.defaultProps = {
   onCodeClick: (e, data) => {},
-  onCodeHover: (e, data) => {}
+  onCodeHover: (e, data) => {},
+  onCodeOut: (e, data) => {}
 }
 
 // --
@@ -70,7 +80,8 @@ const Line = ({
   displayVersion,
   onClick,
   onCodeClick,
-  onCodeHover
+  onCodeHover,
+  onCodeOut
 }) => {
   return (
     <li className={styles.line} role="button">
@@ -100,6 +111,7 @@ const Line = ({
               line={line.text}
               onCodeClick={onCodeClick}
               onCodeHover={onCodeHover}
+              onCodeOut={onCodeOut}
             />
           )}
         </div>
@@ -119,13 +131,15 @@ Line.propTypes = {
   displayVersion: PropTypes.bool,
   onClick: PropTypes.func,
   onCodeClick: PropTypes.func,
-  onCodeHover: PropTypes.func
+  onCodeHover: PropTypes.func,
+  onCodeOut: PropTypes.func
 }
 
 Line.defaultProps = {
   onClick: verseIndex => {},
   onCodeClick: (e, data) => {},
   onCodeHover: (e, data) => {},
+  onCodeOut: (e, data) => {},
   version: null,
   displayVersion: true
 }

@@ -13,7 +13,8 @@ class VerseDisplay extends React.Component {
     displayCode: PropTypes.bool,
     onVerseClick: PropTypes.func,
     onCodeClick: PropTypes.func,
-    onCodeHover: PropTypes.func
+    onCodeHover: PropTypes.func,
+    onCodeOut: PropTypes.func
   }
 
   static defaultProps = {
@@ -23,7 +24,8 @@ class VerseDisplay extends React.Component {
     displayCode: false,
     onVerseClick: (e, verseIndex) => {},
     onCodeClick: (e, data) => {},
-    onCodeHover: (e, data) => {}
+    onCodeHover: (e, data) => {},
+    onCodeOut: (e, data) => {}
   }
 
   constructor(props) {
@@ -39,7 +41,8 @@ class VerseDisplay extends React.Component {
       versions,
       onVerseClick,
       onCodeClick,
-      onCodeHover
+      onCodeHover,
+      onCodeOut
     } = this.props
     if (!verse) return null
     const { versions: lines } = verse
@@ -61,6 +64,7 @@ class VerseDisplay extends React.Component {
           onClick={onVerseClick}
           onCodeClick={onCodeClick}
           onCodeHover={onCodeHover}
+          onCodeOut={onCodeOut}
         />
       ))
     )

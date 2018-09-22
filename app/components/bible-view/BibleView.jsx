@@ -6,6 +6,7 @@ import * as bibleActions from '../../actions/bible'
 import * as dictionaryActions from '../../actions/dictionary'
 import { bibleSelectors } from 'app/reducers'
 import VerseDisplay from 'app/components/bible-display/VerseDisplay'
+import { Popup } from 'semantic-ui-react'
 
 class BibleView extends Component {
   static propTypes = {
@@ -25,6 +26,8 @@ class BibleView extends Component {
   }
 
   currentNavVerse = 0 // 当前将会跳转到的节
+
+  state = {}
 
   componentWillMount() {
     const { bookId, chapter, versions, tabId } = this.props
@@ -90,12 +93,20 @@ class BibleView extends Component {
     this.props.dictionaryQuery(lang, type, value)
   }
 
-  handleCodeHover = (...args) => {
-    // console.log('hover', args)
+  handleCodeHover = (e, {lang, type, value}) => {
+    this.setState({
+      popupNode: e.target
+    })
+  }
+
+  handleCodeOut = e => {
+    console.log('out')
   }
 
   render() {
     const { verses, versions, isDisplayCode, selectedVerses } = this.props
+    const {popupNode} = this.state
+    console.log(popupNode)
     return (
       <div className={styles.bibleView}>
         {verses.map(verse => (
@@ -108,8 +119,10 @@ class BibleView extends Component {
             onVerseClick={this.handleVerseClick}
             onCodeClick={this.handeCodeClick}
             onCodeHover={this.handleCodeHover}
+            onCodeOut={this.handleCodeOut}
           />
         ))}
+        <Popup context={popupNode} content='Hello' position='top center' open={!!popupNode} />
       </div>
     )
   }
