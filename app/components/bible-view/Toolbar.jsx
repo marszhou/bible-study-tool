@@ -29,8 +29,10 @@ class Toolbar extends React.Component {
   }
 
   componentWillUnmount() {
-    ipcRenderer.off('copy', this.handleCopy)
-    ipcRenderer.off('cleanSelection', this.handleCleanSelection)
+    // ipcRenderer.off('copy', this.handleCopy)
+    // ipcRenderer.off('cleanSelection', this.handleCleanSelection)
+    ipcRenderer.removeAllListeners('copy')
+    ipcRenderer.removeAllListeners('cleanSelection')
   }
 
   handleCopy = () => {

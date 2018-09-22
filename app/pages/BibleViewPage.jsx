@@ -311,7 +311,7 @@ class BibleViewPage extends Component {
           </div>
         </Segment>
         <div className={'bible-view-height ' + styles.bibleView} onScroll={this.handleScroll}>
-          <BibleView tabId={tabId} {...bibleInfo} />
+          <BibleView key={tabId} tabId={tabId} {...bibleInfo} />
         </div>
         <Toolbar />
       </div>

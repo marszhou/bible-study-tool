@@ -6,7 +6,7 @@ import * as bibleActions from '../../actions/bible'
 import * as dictionaryActions from '../../actions/dictionary'
 import { bibleSelectors } from 'app/reducers'
 import VerseDisplay from 'app/components/bible-display/VerseDisplay'
-import { Popup } from 'semantic-ui-react'
+import DictionaryPopup from 'app/components/dictionary/DictionaryPopup'
 
 class BibleView extends Component {
   static propTypes = {
@@ -88,25 +88,24 @@ class BibleView extends Component {
     this.props.toggleVerseSelection(this.props.tabId, index)
   }
 
-  handeCodeClick = (e, {lang, type, value}) => {
+  handeCodeClick = (e, { lang, type, value }) => {
     // console.log('Click', args)
     this.props.dictionaryQuery(lang, type, value)
-  }
-
-  handleCodeHover = (e, {lang, type, value}) => {
-    this.setState({
-      popupNode: e.target
-    })
-  }
-
-  handleCodeOut = e => {
-    console.log('out')
+    const popupNode = e.target
+    this.setState(
+      {
+        popupNode: null
+      },
+      () =>
+        this.setState({
+          popupNode
+        })
+    )
   }
 
   render() {
     const { verses, versions, isDisplayCode, selectedVerses } = this.props
-    const {popupNode} = this.state
-    console.log(popupNode)
+    const { popupNode } = this.state
     return (
       <div className={styles.bibleView}>
         {verses.map(verse => (
@@ -118,11 +117,9 @@ class BibleView extends Component {
             selected={selectedVerses.indexOf(verse.index) > -1}
             onVerseClick={this.handleVerseClick}
             onCodeClick={this.handeCodeClick}
-            onCodeHover={this.handleCodeHover}
-            onCodeOut={this.handleCodeOut}
           />
         ))}
-        <Popup context={popupNode} content='Hello' position='top center' open={!!popupNode} />
+        <DictionaryPopup contextNode={popupNode} />
       </div>
     )
   }
