@@ -23,6 +23,7 @@ import Toolbar from 'app/components/bible-view/Toolbar';
 import * as toolbarActions from '../actions/toolbar'
 import debounce from 'lodash/debounce'
 import throttle from 'lodash/throttle'
+import DictionaryPopup from 'app/components/dictionary/DictionaryPopup'
 
 class BibleViewPage extends Component {
   constructor(props: {}) {
@@ -311,9 +312,10 @@ class BibleViewPage extends Component {
           </div>
         </Segment>
         <div className={'bible-view-height ' + styles.bibleView} onScroll={this.handleScroll}>
-          <BibleView key={tabId} tabId={tabId} {...bibleInfo} />
+          <BibleView tabId={tabId} {...bibleInfo} />
         </div>
         <Toolbar />
+        <DictionaryPopup />
       </div>
     )
   }

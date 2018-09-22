@@ -14,10 +14,22 @@ const byId = (state = {}, action) => {
   }
 }
 
+const popupNode = (state = null, action) => {
+  switch (action.type) {
+    case Types.DICT_POPUP_HIDE:
+      return null
+    case Types.DICT_POPUP_SHOW:
+      return action.node
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
-  byId
+  byId, popupNode
 })
 
 //
 
 export const getDefById = (state, id) => state.byId[id]
+export const getPopupNode = (state) => state.popupNode

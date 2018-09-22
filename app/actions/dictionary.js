@@ -23,16 +23,15 @@ export const dictionaryQuery = (lang, type, no) => dispatch => {
   }
 }
 
-export const dictionaryPopup = (lang, type, no) => (dispatch, getState) => {
-  const def = dictionarySelectors.getDefById(getState(), getId(lang, no))
-  if (def) {
+export const dictionaryPopdown = () => ({
+  type: Types.DICT_POPUP_HIDE
+})
+
+export const dictionaryPopup = (node) => (dispatch, getState) => {
+  // dispatch(dictionaryPopdown())
+  setTimeout(() => {
     dispatch({
-      type: Types.DICT_POPUP_SHOW,
-      def
+      type: Types.DICT_POPUP_SHOW, node
     })
-  } else {
-    return dispatch(dictionaryQuery(lang, type, no)).then(def => {
-      console(def)
-    })
-  }
+  })
 }
