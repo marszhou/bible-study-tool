@@ -5,7 +5,8 @@ import { getDictionaryId } from 'app/utils/dictionary';
 export const Types = {
   DICT_QUERY_SUCCESS: 'DICT_QUERY_SUCCESS',
   DICT_POPUP_SHOW: 'DICT_POPUP_SHOW',
-  DICT_POPUP_HIDE: 'DICT_POPUP_HIDE'
+  DICT_POPUP_HIDE: 'DICT_POPUP_HIDE',
+  DICT_POPUP_MORE: 'DICT_POPUP_MORE'
 }
 
 export const dictionaryQuery = (lang, type, no) => dispatch => {
@@ -32,5 +33,14 @@ export const dictionaryPopup = (node, id) => (dispatch, getState) => {
     dispatch({
       type: Types.DICT_POPUP_SHOW, node, id
     })
+  })
+}
+
+export const dictionaryShowMore = () => (dispatch, getState) => {
+  const def = dictionarySelectors.getPopupDef(getState())
+  dispatch(dictionaryPopdown())
+  dispatch({
+    type: Types.DICT_POPUP_MORE,
+    def
   })
 }

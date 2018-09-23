@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Popup, Ref, Loader, Grid } from 'semantic-ui-react'
+import { Popup, Ref, Loader, Grid, Icon, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import * as dictionaryActions from '../../actions/dictionary'
 import { dictionarySelectors } from 'app/reducers'
@@ -26,7 +26,7 @@ class DictionaryPopup extends Component {
   }
 
   render() {
-    const { contextNode, def } = this.props
+    const { contextNode, def, dictionaryShowMore } = this.props
     return contextNode ? (
       <Ref innerRef={ref => (this.popup = ref)}>
         {!def ? (
@@ -36,15 +36,18 @@ class DictionaryPopup extends Component {
         ) : (
           <Popup key="def" context={contextNode} open wide>
             <Popup.Header>
-              <Grid columns={2} >
+              <Grid columns={3}>
                 <Grid.Row>
                   <Grid.Column>{def.str_no}</Grid.Column>
                   <Grid.Column>{def.bible_word}</Grid.Column>
+                  <Grid.Column textAlign="right">
+                    <Button icon="share" size="mini" />
+                  </Grid.Column>
                 </Grid.Row>
               </Grid>
             </Popup.Header>
             <Popup.Content>
-              <DictionaryDef def={def} />
+              <DictionaryDef def={def} onMoreClick={dictionaryShowMore} />
             </Popup.Content>
           </Popup>
         )}

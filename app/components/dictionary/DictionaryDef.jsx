@@ -2,7 +2,8 @@ import React from 'react'
 import { Segment, Label, Image, Popup, List } from 'semantic-ui-react'
 import { dictionaryDefCnEllipsis } from 'app/utils/dictionary'
 
-const DictionaryDef = ({ def }) => {
+const DictionaryDef = ({ def, onMoreClick }) => {
+  const [cn, more] = dictionaryDefCnEllipsis(def.def_cn)
   return (
     <List>
       <List.Item>
@@ -21,7 +22,13 @@ const DictionaryDef = ({ def }) => {
         <Label horizontal color='brown'>中</Label>
         <span
           dangerouslySetInnerHTML={{
-            __html: dictionaryDefCnEllipsis(def.def_cn)
+            __html: cn
+          }}
+          onClick={e => {
+            e.preventDefault()
+            if (e.target.tagName === 'A' && e.target.classList.contains('more')) {
+              onMoreClick()
+            }
           }}
         />
       </List.Item>
