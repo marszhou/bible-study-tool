@@ -7,7 +7,7 @@ export const Types = {
   DICT_POPUP_HIDE: 'DICT_POPUP_HIDE'
 }
 
-const getId = (lang, no) => (lang === 'WH' ? 'H' : 'G') + no
+const getId = (lang, no) => (lang === 'WH' ? 'H' : 'G') + '0'.repeat(4-(no.length+'')) + no
 
 export const dictionaryQuery = (lang, type, no) => dispatch => {
   if ((type === 'code' && lang === 'WH') || lang === 'WG') {
