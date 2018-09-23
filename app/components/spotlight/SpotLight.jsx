@@ -53,8 +53,10 @@ class SpotLight extends Component {
     open: true
   }
 
-  componentWillMount() {
-    this.resetComponent()
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.open && nextProps.open !== this.props.open) {
+      this.resetComponent()
+    }
   }
 
   resetComponent = () =>
