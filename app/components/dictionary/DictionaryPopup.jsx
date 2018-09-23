@@ -47,7 +47,7 @@ class DictionaryPopup extends Component {
               </Grid>
             </Popup.Header>
             <Popup.Content>
-              <DictionaryDef def={def} onMoreClick={dictionaryShowMore} />
+              <DictionaryDef def={def} onMoreClick={dictionaryShowMore} limit/>
             </Popup.Content>
           </Popup>
         )}

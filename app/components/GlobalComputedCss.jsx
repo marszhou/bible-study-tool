@@ -18,7 +18,10 @@ class GlobalComputedCss extends React.Component {
         {
           `
           .client-height {
-            height: ${window.document.documentElement.clientHeight}px;
+            height: ${window.document.documentElement.clientHeight}px!important;
+          }
+          .max-client-height {
+            max-height: ${window.document.documentElement.clientHeight}px!important;
           }
           .client-width {
             width: ${window.document.documentElement.clientWidth}px;

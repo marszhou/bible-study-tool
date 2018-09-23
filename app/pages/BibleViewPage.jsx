@@ -25,6 +25,7 @@ import * as dictionaryActions from '../actions/dictionary'
 import debounce from 'lodash/debounce'
 import throttle from 'lodash/throttle'
 import DictionaryPopup from 'app/components/dictionary/DictionaryPopup'
+import DictionaryMore from 'app/components/dictionary/DictionaryMore';
 
 class BibleViewPage extends Component {
   constructor(props: {}) {
@@ -318,6 +319,7 @@ class BibleViewPage extends Component {
         </div>
         <Toolbar />
         <DictionaryPopup />
+        <DictionaryMore />
       </div>
     )
   }

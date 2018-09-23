@@ -6,7 +6,8 @@ export const Types = {
   DICT_QUERY_SUCCESS: 'DICT_QUERY_SUCCESS',
   DICT_POPUP_SHOW: 'DICT_POPUP_SHOW',
   DICT_POPUP_HIDE: 'DICT_POPUP_HIDE',
-  DICT_POPUP_MORE: 'DICT_POPUP_MORE'
+  DICT_POPUP_MORE: 'DICT_POPUP_MORE',
+  DICT_POPUP_MORE_OFF: 'DICT_POPUP_MORE_OFF'
 }
 
 export const dictionaryQuery = (lang, type, no) => dispatch => {
@@ -44,3 +45,7 @@ export const dictionaryShowMore = () => (dispatch, getState) => {
     def
   })
 }
+
+export const dictionaryCloseMore = () => ({
+  type: Types.DICT_POPUP_MORE_OFF
+})
