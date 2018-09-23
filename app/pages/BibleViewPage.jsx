@@ -21,6 +21,7 @@ import { layoutSelectors, bibleSelectors } from 'app/reducers'
 import { isDescendant } from '../utils/dom'
 import Toolbar from 'app/components/bible-view/Toolbar';
 import * as toolbarActions from '../actions/toolbar'
+import * as dictionaryActions from '../actions/dictionary'
 import debounce from 'lodash/debounce'
 import throttle from 'lodash/throttle'
 import DictionaryPopup from 'app/components/dictionary/DictionaryPopup'
@@ -106,6 +107,7 @@ class BibleViewPage extends Component {
   handleScroll = () => {
     this.setToolbarDontDisturb_throttle(true)
     this.setToolbarDontDisturb_debounce(false)
+    this.props.dictionaryPopdown()
   }
 
   renderBibleSelector({ type, isOpen, selectorName, value }) {
@@ -333,5 +335,5 @@ export default connect(
       isShowCodeDisabled: bibleSelectors.getIsShowCodeDisabled(state, tabId)
     }
   },
-  { ...layoutActions, ...bibleActions, ...toolbarActions }
+  { ...layoutActions, ...bibleActions, ...toolbarActions, ...dictionaryActions }
 )(BibleViewPage)
