@@ -6,6 +6,7 @@ import layout, * as fromLayout from './layout'
 import bible, * as fromBible from './bible'
 import toolbar, * as fromToolbar from './toolbar'
 import dictionary, * as fromDictionary from './dictionary'
+import spotLight, * as fromSpotLight from './spotLight'
 
 const rootReducer = combineReducers({
   books,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   layout,
   bible,
   toolbar,
-  dictionary
+  dictionary,
+  spotLight
 })
 
 export default rootReducer
@@ -33,6 +35,7 @@ export const layoutSelectors = makeGroupSelectors(fromLayout, 'layout')
 export const bibleSelectors = makeGroupSelectors(fromBible, 'bible')
 export const toolbarSelectors = makeGroupSelectors(fromToolbar, 'toolbar')
 export const dictionarySelectors = makeGroupSelectors(fromDictionary, 'dictionary')
+export const spotLightSelectors = makeGroupSelectors(fromSpotLight, 'spotLight')
 
 export const getGroupedBooks = (state, groupId) =>
   fromBooks.getGroupedBooks(

@@ -105,7 +105,17 @@ export default class MenuBuilder {
           label: 'Select All',
           accelerator: 'Command+A',
           selector: 'selectAll:'
-        }
+        },
+        { type: 'separator' },
+        {
+          label: 'Spot Light',
+          accelerator: 'CommandOrControl+J',
+          enabled: true,
+          click: () => {
+            this.mainWindow.webContents.send('spotLight')
+          }
+        },
+
       ]
     }
     const subMenuViewDev = {

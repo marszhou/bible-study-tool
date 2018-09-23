@@ -70,3 +70,10 @@ a:hover {
 .float-right {
   float: right;
 }
+
+.search .input {
+  display: block!important;
+}
+.search .input input{
+  width: 100%;
+}
