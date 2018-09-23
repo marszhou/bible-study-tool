@@ -6,6 +6,7 @@ import * as bibleActions from '../../actions/bible'
 import * as dictionaryActions from '../../actions/dictionary'
 import { bibleSelectors } from 'app/reducers'
 import VerseDisplay from 'app/components/bible-display/VerseDisplay'
+import { getDictionaryId } from 'app/utils/dictionary';
 
 class BibleView extends Component {
   static propTypes = {
@@ -89,10 +90,10 @@ class BibleView extends Component {
 
   handeCodeClick = (e, { lang, type, value }) => {
     // console.log('Click', args)
-    const {dictionaryQuery, dictionaryPopup} = this.props
+    const { dictionaryQuery, dictionaryPopup } = this.props
     dictionaryQuery(lang, type, value)
     const popupNode = e.target
-    dictionaryPopup(popupNode)
+    dictionaryPopup(popupNode, getDictionaryId(lang, value))
   }
 
   render() {

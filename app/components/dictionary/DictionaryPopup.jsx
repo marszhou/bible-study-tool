@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Popup, Ref } from 'semantic-ui-react'
+import { Popup, Ref, Loader } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import * as dictionaryActions from '../../actions/dictionary'
-import { dictionarySelectors } from 'app/reducers';
-import { isDescendant } from 'app/utils/dom';
+import { dictionarySelectors } from 'app/reducers'
+import { isDescendant } from 'app/utils/dom'
 
 class DictionaryPopup extends Component {
   componentWillMount() {
@@ -28,8 +28,8 @@ class DictionaryPopup extends Component {
     const { contextNode } = this.props
     return contextNode ? (
       <Ref innerRef={ref => (this.popup = ref)}>
-        <Popup context={contextNode} position="top center" open>
-          hello
+        <Popup context={contextNode} position="top center" open wide>
+          <Loader active inline size='mini' />
         </Popup>
       </Ref>
     ) : null
@@ -38,7 +38,8 @@ class DictionaryPopup extends Component {
 
 DictionaryPopup = connect(
   state => ({
-    contextNode: dictionarySelectors.getPopupNode(state)
+    contextNode: dictionarySelectors.getPopupNode(state),
+    def: dictionarySelectors.getPopupDef(state)
   }),
   { ...dictionaryActions }
 )(DictionaryPopup)

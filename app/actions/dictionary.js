@@ -1,5 +1,6 @@
 import * as db from '../utils/databases'
 import { dictionarySelectors } from 'app/reducers'
+import { getDictionaryId } from 'app/utils/dictionary';
 
 export const Types = {
   DICT_QUERY_SUCCESS: 'DICT_QUERY_SUCCESS',
@@ -7,11 +8,9 @@ export const Types = {
   DICT_POPUP_HIDE: 'DICT_POPUP_HIDE'
 }
 
-const getId = (lang, no) => (lang === 'WH' ? 'H' : 'G') + '0'.repeat(4-(no.length+'')) + no
-
 export const dictionaryQuery = (lang, type, no) => dispatch => {
   if ((type === 'code' && lang === 'WH') || lang === 'WG') {
-    return db.dictionary.get(getId(lang, no)).then(def => {
+    return db.dictionary.get(getDictionaryId(lang, no)).then(def => {
       dispatch({
         type: Types.DICT_QUERY_SUCCESS,
         def
@@ -27,11 +26,11 @@ export const dictionaryPopdown = () => ({
   type: Types.DICT_POPUP_HIDE
 })
 
-export const dictionaryPopup = (node) => (dispatch, getState) => {
+export const dictionaryPopup = (node, id) => (dispatch, getState) => {
   // dispatch(dictionaryPopdown())
   setTimeout(() => {
     dispatch({
-      type: Types.DICT_POPUP_SHOW, node
+      type: Types.DICT_POPUP_SHOW, node, id
     })
   })
 }
