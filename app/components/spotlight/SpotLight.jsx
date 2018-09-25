@@ -79,6 +79,7 @@ class SpotLight extends Component {
       >
         <Modal.Header>快速跳转</Modal.Header>
         <Modal.Content>
+          输入格式：书 章:节，书名可输入部分中英文自动匹配，如 mt 28：13
           <Search
             autoFocus
             selectFirstResult
