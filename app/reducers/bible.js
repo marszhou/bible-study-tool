@@ -66,7 +66,7 @@ const view = combineReducers({
 
 const views = (state = {}, action) => {
   switch (action.type) {
-    case LayoutTypes.TAB_REMOVE: {
+    case 'TAB_REMOVE': {
       const nextState = { ...state }
       delete nextState[action.id]
       return nextState

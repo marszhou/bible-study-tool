@@ -7,15 +7,43 @@ import cx from 'classnames'
 import * as bibleActions from '../../actions/bible'
 import * as toolbarActions from '../../actions/toolbar'
 
+import { remote, ipcRenderer } from 'electron'
+
+const appMenu = remote.app.getApplicationMenu()
+const copyMenuItem = appMenu.items[1].submenu.items[0]
+const cleanSelectionMenuItem = appMenu.items[1].submenu.items[1]
+
 class Toolbar extends React.Component {
   constructor(props) {
     super(props)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    copyMenuItem.enabled = nextProps.isShow
+    cleanSelectionMenuItem.enabled = nextProps.isShow
+  }
+
+  componentDidMount() {
+    ipcRenderer.on('copy', this.handleCopy)
+    ipcRenderer.on('cleanSelection', this.handleCleanSelection)
+  }
+
+  componentWillUnmount() {
+    // ipcRenderer.off('copy', this.handleCopy)
+    // ipcRenderer.off('cleanSelection', this.handleCleanSelection)
+    ipcRenderer.removeAllListeners('copy')
+    ipcRenderer.removeAllListeners('cleanSelection')
   }
 
   handleCopy = () => {
     const { activatedTabId, cleanVerseSelection, doCopyVerses } = this.props
 
     doCopyVerses(activatedTabId)
+    cleanVerseSelection(activatedTabId)
+  }
+
+  handleCleanSelection = () => {
+    const { cleanVerseSelection, activatedTabId } = this.props
     cleanVerseSelection(activatedTabId)
   }
 
@@ -31,6 +59,9 @@ class Toolbar extends React.Component {
           <Button.Group>
             <Button icon onClick={this.handleCopy}>
               <Icon name="copy" />
+            </Button>
+            <Button icon onClick={this.handleCleanSelection}>
+              <Icon name="ban" />
             </Button>
             <Button icon>
               <Icon name="thumbtack" />

@@ -1,17 +1,16 @@
 import { combineReducers } from 'redux'
 import _ from 'lodash'
-import { Types } from '../actions/layout'
 import { parseUrlParams } from '../utils/url'
 
 const on = (state = false, action) => {
-  if (action.type === Types.DISPLAY_SPLIT_PANE) {
+  if (action.type === 'DISPLAY_SPLIT_PANE') {
     return action.on
   }
   return state
 }
 
 const size = (state = 0, action) => {
-  if (action.type === Types.SET_SPLIT_PANE_SIZE) {
+  if (action.type === 'SET_SPLIT_PANE_SIZE') {
     return action.size
   }
   return state
@@ -42,7 +41,7 @@ const byId = (state = {}, action) => {
       }
       return state
     }
-    case Types.TAB_REMOVE: {
+    case 'TAB_REMOVE': {
       const nextState = { ...state }
       delete nextState[action.id]
       return nextState
@@ -61,9 +60,9 @@ const order = (state = [], action) => {
       }
       return state
     }
-    case Types.TAB_REMOVE:
+    case 'TAB_REMOVE':
       return state.filter(id => id !== action.id)
-    case Types.TAB_SORT:
+    case 'TAB_SORT':
       return action.ids
     default:
       return state

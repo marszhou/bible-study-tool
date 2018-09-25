@@ -3,8 +3,13 @@ import escapeStringRegexp from 'escape-string-regexp'
 export const filterBooks = (filter, books) => {
   if (!filter) return books
 
+  const chars = filter.split('').map(c => escapeStringRegexp(c))
+
+  const newFilter = chars.join('.*')
+
   return books.filter(book => {
-    const regex = new RegExp(escapeStringRegexp(filter), 'i')
+    const regex = new RegExp(newFilter, 'i')
+
     return (
       book.name_cn.match(regex) ||
       book.name_en.match(regex) ||

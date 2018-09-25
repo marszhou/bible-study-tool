@@ -3,8 +3,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import styles from './styles.css'
 import * as bibleActions from '../../actions/bible'
+import * as dictionaryActions from '../../actions/dictionary'
 import { bibleSelectors } from 'app/reducers'
 import VerseDisplay from 'app/components/bible-display/VerseDisplay'
+import { getDictionaryId } from 'app/utils/dictionary';
 
 class BibleView extends Component {
   static propTypes = {
@@ -24,6 +26,8 @@ class BibleView extends Component {
   }
 
   currentNavVerse = 0 // 当前将会跳转到的节
+
+  state = {}
 
   componentWillMount() {
     const { bookId, chapter, versions, tabId } = this.props
@@ -84,12 +88,12 @@ class BibleView extends Component {
     this.props.toggleVerseSelection(this.props.tabId, index)
   }
 
-  handeCodeClick = (...args) => {
-    console.log('Click', args)
-  }
-
-  handleCodeHover = (...args) => {
-    console.log('hover', args)
+  handeCodeClick = (e, { lang, type, value }) => {
+    // console.log('Click', args)
+    const { dictionaryQuery, dictionaryPopup } = this.props
+    dictionaryQuery(lang, type, value)
+    const popupNode = e.target
+    dictionaryPopup(popupNode, getDictionaryId(lang, value))
   }
 
   render() {
@@ -105,7 +109,6 @@ class BibleView extends Component {
             selected={selectedVerses.indexOf(verse.index) > -1}
             onVerseClick={this.handleVerseClick}
             onCodeClick={this.handeCodeClick}
-            onCodeHover={this.handleCodeHover}
           />
         ))}
       </div>
@@ -123,5 +126,5 @@ export default connect(
       selectedVerses: bibleSelectors.getSelectedVersesByTabId(state, tabId)
     }
   },
-  bibleActions
+  { ...bibleActions, ...dictionaryActions }
 )(BibleView)
