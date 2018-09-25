@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import {
   Button,
   Dimmer,
@@ -28,9 +29,25 @@ class SpotLight extends Component {
     open: true
   }
 
+  constructor(props) {
+    super(props)
+  }
+
+  componentDidMount() {
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+
+
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.open && nextProps.open !== this.props.open) {
       this.resetComponent()
+      setTimeout(() => {
+        const el = ReactDOM.findDOMNode(this)
+        el && el.querySelector('input').focus()
+      }, 0);
     }
   }
 
@@ -81,7 +98,7 @@ class SpotLight extends Component {
         <Modal.Content>
           输入格式：书 章:节，书名可输入部分中英文自动匹配，如 mt 28：13
           <Search
-            autoFocus
+            ref={el => this.search = el}
             selectFirstResult
             noResultsMessage="没有符合的记录"
             onResultSelect={this.handleResultSelect}
