@@ -1,12 +1,18 @@
 import React, { Component } from 'react'
 import Main from '../components/Main'
 import GlobalComputedCss from '../components/GlobalComputedCss'
-import {ToastContainer, ToastStore} from 'react-toasts';
+import { ToastContainer, ToastStore } from 'react-toasts'
+import SpotLight from 'app/components/spotlight/SpotLight'
+import { remote, ipcRenderer } from 'electron'
+import { connect } from 'react-redux'
+import * as spotLightActions from '../actions/spotLight'
 
-export default class HomePage extends Component {
+class HomePage extends Component {
   state = {}
 
   componentDidMount() {
+    ipcRenderer.on('spotLight', this.handleSpotLight)
+
     const cssLoaded = e => this.setState({ cssLoaded: true })
 
     Promise.all(
@@ -25,6 +31,14 @@ export default class HomePage extends Component {
       .catch(cssLoaded)
   }
 
+  componentWillUnmount() {
+    ipcRenderer.removeAllListeners('spotLight')
+  }
+
+  handleSpotLight = () => {
+    this.props.spotLightShow()
+  }
+
   render() {
     const { cssLoaded } = this.state
     return cssLoaded ? (
@@ -32,7 +46,13 @@ export default class HomePage extends Component {
         <ToastContainer store={ToastStore} />
         <Main />
         <GlobalComputedCss />
+        <SpotLight />
       </div>
     ) : null
   }
 }
+
+export default connect(
+  null,
+  { ...spotLightActions }
+)(HomePage)

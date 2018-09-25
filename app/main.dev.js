@@ -63,7 +63,7 @@ app.on('ready', async () => {
     width: 1024,
     height: 728,
     minWidth: 800,
-    minHeight: 600
+    minHeight: 500
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);

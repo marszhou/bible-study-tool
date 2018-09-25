@@ -9,5 +9,6 @@ export default {
   bookGroupSet: wrapper(require('./bookGroupSet')),
   verse: (book) => wrapper(require('./verse')[book]),
   verseCount: wrapper(require('./verseCount')),
-  dictionary: (lang) => wrapper(require('./dictionary')[lang])
+  // dictionary: (lang) => wrapper(require('./dictionary')[lang])
+  dictionary: wrapper(require('./dictionary'))
 }
