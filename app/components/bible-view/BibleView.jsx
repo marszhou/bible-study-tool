@@ -6,7 +6,7 @@ import * as bibleActions from '../../actions/bible'
 import * as dictionaryActions from '../../actions/dictionary'
 import { bibleSelectors } from 'app/reducers'
 import VerseDisplay from 'app/components/bible-display/VerseDisplay'
-import { getDictionaryId } from 'app/utils/dictionary';
+import { getDictionaryId } from 'app/utils/dictionary'
 
 class BibleView extends Component {
   static propTypes = {
@@ -57,7 +57,9 @@ class BibleView extends Component {
         nextProps.versions
       )
     } else {
-      this.tryNavToVerse()
+      setTimeout(() => {
+        this.tryNavToVerse()
+      }, 0)
     }
   }
 
