@@ -36,6 +36,8 @@ export const bibleSelectors = makeGroupSelectors(fromBible, 'bible')
 export const toolbarSelectors = makeGroupSelectors(fromToolbar, 'toolbar')
 export const dictionarySelectors = makeGroupSelectors(fromDictionary, 'dictionary')
 export const spotLightSelectors = makeGroupSelectors(fromSpotLight, 'spotLight')
+export const bookSelectors = makeGroupSelectors(fromBooks, 'books')
+export const verseCountSelectors = makeGroupSelectors(fromVerseCount, 'verseCount')
 
 export const getGroupedBooks = (state, groupId) =>
   fromBooks.getGroupedBooks(

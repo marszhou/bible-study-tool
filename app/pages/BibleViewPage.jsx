@@ -67,7 +67,7 @@ class BibleViewPage extends Component {
       id: tabId,
       ...value
     }
-    console.log(value)
+    console.log(tabId, tabItem)
     if (value.verse) {
       this.setState({
         bibleSelectorIsOpen: {

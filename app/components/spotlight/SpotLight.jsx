@@ -9,44 +9,19 @@ import {
   Image,
   Search
 } from 'semantic-ui-react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import * as spotLightActions from '../../actions/spotLight'
-import { spotLightSelectors } from 'app/reducers';
-
-const source = [
-  {
-    title: 'Hilpert, Lockman and Runolfsson',
-    description: 'Versatile discrete success',
-    image: 'https://s3.amazonaws.com/uifaces/faces/twitter/idiot/128.jpg',
-    price: '$99.81'
-  },
-  {
-    title: 'Treutel Group',
-    description: 'Down-sized mobile capacity',
-    image: 'https://s3.amazonaws.com/uifaces/faces/twitter/peachananr/128.jpg',
-    price: '$98.29'
-  },
-  {
-    title: 'Rutherford - Rodriguez',
-    description: 'Reduced optimizing adapter',
-    image:
-      'https://s3.amazonaws.com/uifaces/faces/twitter/alecarpentier/128.jpg',
-    price: '$34.52'
-  },
-  {
-    title: 'Koelpin, Luettgen and Sporer',
-    description: 'Public-key 3rd generation hierarchy',
-    image: 'https://s3.amazonaws.com/uifaces/faces/twitter/designervzm/128.jpg',
-    price: '$35.92'
-  },
-  {
-    title: 'Schumm LLC',
-    description: 'Self-enabling next generation website',
-    image:
-      'https://s3.amazonaws.com/uifaces/faces/twitter/sergeyalmone/128.jpg',
-    price: '$68.15'
-  }
-]
+import { tabUpdate } from '../../actions/layout'
+import {
+  spotLightSelectors,
+  bookSelectors,
+  layoutSelectors
+} from 'app/reducers'
+import { verseCountByBook } from 'app/consts/bible'
+import {
+  parseSpotLightDirective,
+  makeSearchResults
+} from 'app/components/spotlight/utils'
 
 class SpotLight extends Component {
   state = {
@@ -59,24 +34,34 @@ class SpotLight extends Component {
     }
   }
 
-  resetComponent = () =>
-    this.setState({ results: [], value: '' })
+  resetComponent = () => this.setState({ results: [], value: '' })
 
-  handleResultSelect = (e, { result }) => this.setState({ value: result.title })
+  handleResultSelect = (e, { result }) => {
+    const { tabUpdate, activatedTabId, spotLightHide } = this.props
+    const tabItem = {
+      id: activatedTabId,
+      bookId: result.id,
+      chapter: result.chapter,
+      verse: result.verse
+    }
+    tabUpdate(activatedTabId, tabItem)
+    spotLightHide()
+  }
 
   handleSearchChange = (e, { value }) => {
-    this.setState({ value })
-
-    setTimeout(() => {
-      if (this.state.value.length < 1) return this.resetComponent()
-
-      const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
-      const isMatch = result => re.test(result.title)
-
-      this.setState({
-        results: _.filter(source, isMatch)
-      })
-    }, 300)
+    const { allBooks, verseCountByBook } = this.props
+    const parsed = parseSpotLightDirective(value)
+    let results = null
+    if (parsed) {
+      results = makeSearchResults(
+        allBooks,
+        parsed.bookFilter,
+        parsed.chapter,
+        parsed.verse,
+        verseCountByBook
+      )
+    }
+    this.setState({ value, results })
   }
 
   handleClose = () => this.props.spotLightHide()
@@ -90,12 +75,14 @@ class SpotLight extends Component {
         closeOnEscape
         onClose={this.handleClose}
         closeOnDimmerClick
-        size='tiny'
+        size="tiny"
       >
         <Modal.Header>快速跳转</Modal.Header>
         <Modal.Content>
           <Search
             autoFocus
+            selectFirstResult
+            noResultsMessage="没有符合的记录"
             onResultSelect={this.handleResultSelect}
             onSearchChange={_.debounce(this.handleSearchChange, 500, {
               leading: true
@@ -109,6 +96,12 @@ class SpotLight extends Component {
   }
 }
 
-export default connect(state => ({
-  open: spotLightSelectors.getSpotLightShow(state)
-}), {...spotLightActions})(SpotLight)
+export default connect(
+  state => ({
+    activatedTabId: layoutSelectors.getActivated(state),
+    open: spotLightSelectors.getSpotLightShow(state),
+    allBooks: bookSelectors.getAllBooks(state),
+    verseCountByBook
+  }),
+  { ...spotLightActions, tabUpdate }
+)(SpotLight)
