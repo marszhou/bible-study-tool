@@ -6,6 +6,9 @@ import { Switch, Route } from 'react-router'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import HomePage from './pages/HomePage'
+// import { remote, ipcRenderer, BrowserWindow } from 'electron'
+
+// console.log(remote, BrowserWindow)
 
 // import db from './utils/databases'
 // ;
@@ -32,6 +35,29 @@ class Root extends React.Component {
   constructor(props) {
     super(props)
   }
+
+  // componentWillMount() {
+  //   if (remote.process.platform === 'darwin') {
+  //     window.document.documentElement.addEventListener('keypress', this.handleGlobalKeyboard)
+  //   }
+  // }
+
+  // componentWillUnmount() {
+  //   if (remote.process.platform === 'darwin') {
+  //     window.document.documentElement.removeEventListener('keypress', this.handleGlobalKeyboard)
+  //   }
+  // }
+
+  // handleGlobalKeyboard = (e) => {
+  //   alert(e.ctrlKey + e.key)
+  //   if (e.ctrlKey && e.key==='c') {
+  //     remote.getCurrentWebContents().send('copy')
+  //   }
+
+  //   if (e.ctrlKey && e.key==='d') {
+  //     remote.getCurrentWebContents().send('cleanSelection')
+  //   }
+  // }
 
   render() {
     const { store, history } = this.props

@@ -230,7 +230,7 @@ export default class MenuBuilder {
         submenu: [
           {
             label: 'Copy',
-            accelerator: 'CommandOrControl+C',
+            accelerator: 'CommandOrControl+S',
             enabled: false,
             click: () => {
               this.mainWindow.webContents.send('copy')
@@ -238,7 +238,7 @@ export default class MenuBuilder {
           },
           {
             label: 'Clean Selection',
-            accelerator: 'CommandOrControl+D',
+            accelerator: 'CommandOrControl+Q',
             enabled: false,
             click: () => {
               this.mainWindow.webContents.send('cleanSelection')
