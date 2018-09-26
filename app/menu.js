@@ -226,6 +226,43 @@ export default class MenuBuilder {
         ]
       },
       {
+        label: 'Edit',
+        submenu: [
+          {
+            label: 'Copy',
+            accelerator: 'CommandOrControl+S',
+            enabled: false,
+            click: () => {
+              this.mainWindow.webContents.send('copy')
+            }
+          },
+          {
+            label: 'Clean Selection',
+            accelerator: 'CommandOrControl+Q',
+            enabled: false,
+            click: () => {
+              this.mainWindow.webContents.send('cleanSelection')
+            }
+          },
+          // { label: 'Paste', accelerator: 'Command+V', selector: 'paste:' },
+          {
+            label: 'Select All',
+            accelerator: 'Command+A',
+            selector: 'selectAll:'
+          },
+          { type: 'separator' },
+          {
+            label: 'Spot Light',
+            accelerator: 'CommandOrControl+J',
+            enabled: true,
+            click: () => {
+              this.mainWindow.webContents.send('spotLight')
+            }
+          },
+
+        ]
+      },
+      {
         label: '&View',
         submenu:
           process.env.NODE_ENV === 'development'
