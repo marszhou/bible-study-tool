@@ -24,6 +24,8 @@ export const doCopyVerses = tabId => (dispatch, getState) => {
   const selectedVerses = bibleSelectors.getSelectedVersesByTabId(state, tabId)
   const versions = bibleSelectors.getVersionsByTabId(state, tabId)
 
+  if (selectedVerses.length === 0) return
+
   const text = bibleSelectors.getCopyVerseText(
     state,
     activatedTab.bookId,
